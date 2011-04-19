@@ -15,10 +15,12 @@ public class World {
 	private static GameObject theWorld[][] = new GameObject[WORLDSIZE][WORLDSIZE];
 
 	public World() {
-		System.out.println("Intializing the world...");
+		if (Nomads.DEBUGSTATUS)
+			System.out.println("Intializing the world...");
 		// TODO - Implement World Constructor
 
-		System.out.println("World initialization complete");
+		if (Nomads.DEBUGSTATUS)
+			System.out.println("World initialization complete");
 	}
 
 	// Getters and Setters

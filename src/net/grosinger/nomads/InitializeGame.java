@@ -14,7 +14,8 @@ public class InitializeGame {
 	 * Each drone type will be a new DroneTeam
 	 */
 	public static void initializeDrones() {
-		System.out.println("Loading the drones into world...");
+		if (Nomads.DEBUGSTATUS)
+			System.out.println("Loading the drones into world...");
 		/*
 		 * Steps
 		 */
@@ -26,17 +27,21 @@ public class InitializeGame {
 
 		// Create a new DroneTeam which will automatically add it as the first
 		// and last drone.
-		System.out.println("Drone loading complete");
+		if (Nomads.DEBUGSTATUS)
+			System.out.println("Drone loading complete");
 	}
 
 	/*
 	 * Buildings to create: Town Hall, Repair Shop, Upgrade Shop, Police Station
 	 */
 	public static void initializeBuildngs(World awesomeWorld) {
-		System.out.println("Generating and placing required buildings...");
+		if (Nomads.DEBUGSTATUS)
+			System.out.println("Generating and placing required buildings...");
 
-		System.out.println("Building generation complete");
+		if (Nomads.DEBUGSTATUS)
+			System.out.println("Building generation complete");
 
-		System.out.println("Building placement complete");
+		if (Nomads.DEBUGSTATUS)
+			System.out.println("Building placement complete");
 	}
 }

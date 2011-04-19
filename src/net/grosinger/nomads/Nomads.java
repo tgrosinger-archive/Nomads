@@ -8,8 +8,16 @@ public class Nomads {
 	public static DroneListItem firstDrone;
 	public static ArrayList<DroneTeam> allTeams;
 
+	// Debugging Modes
+	public static final boolean DEBUGSTATUS = true;
+	public static final boolean DEBUGMOVES = true;
+	public static final boolean DEBUGDEATHS = true;
+	public static final boolean DEBUGCREATIONS = true;
+	public static final boolean DEBUGBUILDINGS = true;
+
 	public static void main(String[] args) {
-		System.out.println("Game initialization beginning...");
+		if (DEBUGSTATUS)
+			System.out.println("Game initialization beginning...");
 
 		// Load the world
 		awesomeWorld = new World();
@@ -19,7 +27,8 @@ public class Nomads {
 		InitializeGame.initializeDrones();
 
 		// Generate and place all required buildings into world
-		InitializeGame.initializeBuildngs(awesomeWorld);
+		if (DEBUGSTATUS)
+			InitializeGame.initializeBuildngs(awesomeWorld);
 
 		// Check to make sure firstDrone and allTeams have been set up properly
 		if (firstDrone == null || allTeams == null) {
@@ -32,10 +41,13 @@ public class Nomads {
 		// Load the drones in to the world
 
 		// Start the game loop
-		System.out.println("Game initialization finished, going to game loop");
+		if (DEBUGSTATUS)
+			System.out
+					.println("Game initialization finished, going to game loop");
 		DroneTeam winner = running();
 
-		System.out.println("Resolving a winner...");
+		if (DEBUGSTATUS)
+			System.out.println("Resolving a winner...");
 		finishGame(winner);
 	}
 
@@ -45,9 +57,11 @@ public class Nomads {
 	 * was no winner.
 	 */
 	public static DroneTeam running() {
-		System.out.println("Game loop starting...");
+		if (DEBUGSTATUS)
+			System.out.println("Game loop starting...");
 
-		System.out.println("Game loop finished");
+		if (DEBUGSTATUS)
+			System.out.println("Game loop finished");
 		return null;
 	}
 

@@ -15,7 +15,7 @@ public class Drone extends GameObject {
 		if (name == null) {
 			System.out.println("Drone initialization failure, unnammed drone");
 			// TODO - implement method of ending the game prematurely
-		} else
+		} else if (Nomads.DEBUGSTATUS)
 			System.out.println("Drone initialized");
 	}
 

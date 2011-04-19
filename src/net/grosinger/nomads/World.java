@@ -4,6 +4,6 @@ package net.grosinger.nomads;
 public class World {
 
 	public World() {
-		
+		// TODO - Implement World Constructor
 	}
 }

@@ -9,7 +9,6 @@ package net.grosinger.nomads;
  */
 public class LoadDrones {
 
-	// TODO - change the return type
 	public static void initializeDrones() {
 		/*
 		 * Steps

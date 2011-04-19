@@ -1,14 +1,22 @@
 package net.grosinger.nomads;
 
+import java.util.ArrayList;
+
 public class Nomads {
+
+	public static World awesomeWorld;
+	public static DroneListItem firstDrone;
+	public static ArrayList<DroneTeam> allTeams;
 
 	public static void main(String[] args) {
 		// Load the world
-		World awesomeWorld = new World();
+		awesomeWorld = new World();
 
 		// Initialize and save all the drones
-		// TODO - Save what this returns to a variable
+		// This will update firstDrone and allTeams
 		LoadDrones.initializeDrones();
+
+		// Check to make sure firstDrone and allTeams have been set up properly
 
 		// Generate the locations of the main buildings in the world
 

@@ -14,9 +14,13 @@ public class Nomads {
 
 		// Initialize and save all the drones
 		// This will update firstDrone and allTeams
-		LoadDrones.initializeDrones();
+		InitializeGame.initializeDrones();
 
 		// Check to make sure firstDrone and allTeams have been set up properly
+		if (firstDrone == null || allTeams == null) {
+			// Do something awesome
+			// Or catch the error
+		}
 
 		// Generate the locations of the main buildings in the world
 

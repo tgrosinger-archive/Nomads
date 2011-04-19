@@ -6,6 +6,7 @@ package net.grosinger.nomads;
 public class GameObject {
 	private int x;
 	private int y;
+	protected String name;
 
 	// Getters and Setters
 	public int getX() {
@@ -16,11 +17,19 @@ public class GameObject {
 		return y;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public void setX(int newX) {
 		x = newX;
 	}
 
 	public void setY(int newY) {
 		y = newY;
+	}
+
+	public void setName(String newName) {
+		name = newName;
 	}
 }

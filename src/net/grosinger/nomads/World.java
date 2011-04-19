@@ -15,21 +15,24 @@ public class World {
 	private static GameObject theWorld[][] = new GameObject[WORLDSIZE][WORLDSIZE];
 
 	public World() {
+		System.out.println("Intializing the world...");
 		// TODO - Implement World Constructor
+
+		System.out.println("World initialization complete");
 	}
 
 	// Getters and Setters
 	public GameObject[][] getWorldGrid() {
 		return theWorld;
 	}
-	
-	public GameObject getObjectAt(int x, int y){
+
+	public GameObject getObjectAt(int x, int y) {
 		return theWorld[x][y];
 	}
 
 	// Why would we need a setter for theWorld?
-	
-	public void setObjectAt(int x, int y, GameObject newItem){
+
+	public void setObjectAt(int x, int y, GameObject newItem) {
 		theWorld[x][y] = newItem;
 	}
 }

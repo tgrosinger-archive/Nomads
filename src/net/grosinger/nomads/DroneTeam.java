@@ -9,6 +9,9 @@ public class DroneTeam {
 	private DroneListItem first;
 	private DroneListItem last;
 
+	// Taken from the first drone added to the team
+	private String teamName;
+
 	public DroneTeam(DroneListItem firstDrone) {
 		first = firstDrone;
 		last = firstDrone;
@@ -25,12 +28,20 @@ public class DroneTeam {
 		return last;
 	}
 
+	public String getName() {
+		return teamName;
+	}
+
 	public void setFirst(DroneListItem theFirst) {
 		first = theFirst;
 	}
 
 	public void setLast(DroneListItem theLast) {
 		last = theLast;
+	}
+
+	public void setName(String newName) {
+		teamName = newName;
 	}
 
 	/*

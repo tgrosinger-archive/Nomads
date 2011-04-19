@@ -2,9 +2,22 @@ package net.grosinger.nomads;
 
 /*
  * All drones will extend this class to give them the basic set of tools that they need.
+ * Don't forget to set a name
  */
 public class Drone extends GameObject {
 	private int age;
+
+	/*
+	 * All custom drones should call the super constructor at the end of their
+	 * constructor
+	 */
+	public Drone() {
+		if (name == null) {
+			System.out.println("Drone initialization failure, unnammed drone");
+			// TODO - implement method of ending the game prematurely
+		} else
+			System.out.println("Drone initialized");
+	}
 
 	// Probably needs to be made more specific or something
 	public void move() {
@@ -28,5 +41,4 @@ public class Drone extends GameObject {
 	public void incrementAge() {
 		age++;
 	}
-
 }

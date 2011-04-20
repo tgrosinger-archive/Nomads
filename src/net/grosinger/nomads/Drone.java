@@ -14,7 +14,7 @@ public class Drone extends GameObject {
 	public Drone() {
 		if (name == null) {
 			System.out.println("Drone initialization failure, unnammed drone");
-			// TODO - implement method of ending the game prematurely
+			// TODO - Implement method of ending the game prematurely
 		} else if (Nomads.DEBUGSTATUS)
 			System.out.println("Drone initialized");
 	}
@@ -68,8 +68,8 @@ public class Drone extends GameObject {
 			return false;
 	}
 
-	public final void moveHelper(int amountN, int amountS) {
-		// TODO - implement moveHelper method
+	public final void moveHelper(int amountN, int amountE) {
+		Nomads.awesomeWorld.moveObjectAt(getX(), getY(), amountN, amountE);
 	}
 
 	// Checks to see if it can move north
@@ -98,13 +98,11 @@ public class Drone extends GameObject {
 
 	private final boolean canMoveHelper(int amountN, int amountE) {
 		int size = Nomads.awesomeWorld.getWorldSize();
-		if (getY() + amountN >= size || getY() + amountN < 0
-				|| getX() + amountE >= size || getX() + amountE < 0) {
+		if (getY() + amountN >= size || getY() + amountN < 0 || getX() + amountE >= size || getX() + amountE < 0) {
 			if (Nomads.DEBUGMOVES)
 				System.out.println("Cannot move, out of range");
 			return false;
-		} else if (Nomads.awesomeWorld.getObjectAt(getX() + amountE, getY()
-				+ amountN) != null) {
+		} else if (Nomads.awesomeWorld.getObjectAt(getX() + amountE, getY() + amountN) != null) {
 			if (Nomads.DEBUGMOVES)
 				System.out.println("Cannot move, space occupied");
 			return false;

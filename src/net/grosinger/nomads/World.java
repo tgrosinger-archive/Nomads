@@ -12,6 +12,8 @@ public class World {
 	private final static int WORLDSIZE = 100;
 
 	// The 2D array of the entire world
+	// TODO - This will never actually hold a GameObject, will always be a type
+	// of drone or building. Make that work
 	private static GameObject theWorld[][] = new GameObject[WORLDSIZE][WORLDSIZE];
 
 	public World() {
@@ -23,7 +25,13 @@ public class World {
 			System.out.println("World initialization complete");
 	}
 
+	// Moves the object at x,y to a new x,y
+	public void moveObjectAt(int startingX, int startingY, int amountN, int amountE) {
+		// TODO - Implement moveObjectAt
+	}
+
 	// Getters and Setters
+
 	public GameObject[][] getWorldGrid() {
 		return theWorld;
 	}

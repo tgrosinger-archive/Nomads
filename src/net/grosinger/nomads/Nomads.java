@@ -44,8 +44,7 @@ public class Nomads {
 
 		// Start the game loop
 		if (DEBUGSTATUS)
-			System.out
-					.println("Game initialization finished, going to game loop");
+			System.out.println("Game initialization finished, going to game loop");
 		DroneTeam winner = running();
 
 		if (DEBUGSTATUS)

@@ -1,15 +1,15 @@
 package net.grosinger.nomads;
 
-/*
- * All drones will extend this class to give them the basic set of tools that they need.
- * Don't forget to set a name
+/**
+ * All drones will extend this class. Gives them access to basic set of tools
+ * they need such as movement, discovery, and world interaction.
  */
 public class Drone extends GameObject {
 	private int age;
 
-	/*
-	 * All custom drones should call the super constructor at the end of their
-	 * constructor
+	/**
+	 * Class constructor All custom drones should call their super constructor
+	 * at the end of their own.
 	 */
 	public Drone() {
 		if (name == null) {
@@ -22,14 +22,22 @@ public class Drone extends GameObject {
 	// Moving
 	// When moving, North is positive Y axis and East is positive X axis
 
-	// To be overridden by the drones
-	// This will be their turn
+	/**
+	 * The main move method for all Drones. Custom Drones should override this
+	 * with their own.
+	 */
 	public void move() {
 
 	}
 
-	// Checks to see if it can move north
-	// Moves and returns true if it can, returns false if it can not
+	/**
+	 * Tests if a move North is possible. Will make the requested move if
+	 * possible.
+	 * 
+	 * @param Amount
+	 *            of distance to move North
+	 * @return True if the move was made, false if is invalid
+	 */
 	public final boolean moveNorth(int amount) {
 		if (canMoveNorth(amount)) {
 			moveHelper(amount, 0);
@@ -38,8 +46,14 @@ public class Drone extends GameObject {
 			return false;
 	}
 
-	// Checks to see if it can move south
-	// Moves and returns true if it can, returns false if it can not
+	/**
+	 * Tests if a move South is possible. Will make the requested move if
+	 * possible.
+	 * 
+	 * @param Amount
+	 *            of distance to move South
+	 * @return True if the move was made, false if is invalid
+	 */
 	public final boolean moveSouth(int amount) {
 		if (canMoveSouth(amount)) {
 			moveHelper(amount * -1, 0);
@@ -48,8 +62,14 @@ public class Drone extends GameObject {
 			return false;
 	}
 
-	// Checks to see if it can move east
-	// Moves and returns true if it can, returns false if it can not
+	/**
+	 * Tests if a move East is possible. Will make the requested move if
+	 * possible.
+	 * 
+	 * @param Amount
+	 *            of distance to move East
+	 * @return True if the move was made, false if is invalid
+	 */
 	public final boolean moveEast(int amount) {
 		if (canMoveEast(amount)) {
 			moveHelper(0, amount);
@@ -58,8 +78,14 @@ public class Drone extends GameObject {
 			return false;
 	}
 
-	// Checks to see if it can move west
-	// Moves and returns true if it can, returns false if it can not
+	/**
+	 * Tests if a move West is possible. Will make the requested move if
+	 * possible.
+	 * 
+	 * @param Amount
+	 *            of distance to move West
+	 * @return True if the move was made, false if is invalid
+	 */
 	public final boolean moveWest(int amount) {
 		if (canMoveWest(amount)) {
 			moveHelper(0, amount * -1);
@@ -68,34 +94,69 @@ public class Drone extends GameObject {
 			return false;
 	}
 
+	/**
+	 * Performs a move in the specified amounts
+	 * 
+	 * @param amountN
+	 *            Amount of distance to move North (negative will go South)
+	 * @param amountE
+	 *            Amount of distance to move East (negative will go West)
+	 */
 	public final void moveHelper(int amountN, int amountE) {
 		Nomads.awesomeWorld.moveObjectAt(getX(), getY(), amountN, amountE);
 	}
 
-	// Checks to see if it can move north
-	// Returns true if it can, false if it can not
+	/**
+	 * Checks to see if the drone can move North
+	 * 
+	 * @param Amount
+	 *            of Distance to travel
+	 * @return True if the move is possible, false if is invalid
+	 */
 	public final boolean canMoveNorth(int amount) {
 		return canMoveHelper(amount, 0);
 	}
 
-	// Checks to see if it can move south
-	// Returns true if it can, false if it can not
+	/**
+	 * Checks to see if the drone can move South
+	 * 
+	 * @param Amount
+	 *            of Distance to travel
+	 * @return True if the move is possible, false if is invalid
+	 */
 	public final boolean canMoveSouth(int amount) {
 		return canMoveHelper(amount * -1, 0);
 	}
 
-	// Checks to see if it can move east
-	// Returns true if it can, false if it can not
+	/**
+	 * Checks to see if the drone can move East
+	 * 
+	 * @param Amount
+	 *            of Distance to travel
+	 * @return True if the move is possible, false if is invalid
+	 */
 	public final boolean canMoveEast(int amount) {
 		return canMoveHelper(0, amount);
 	}
 
-	// Checks to see if it can move west
-	// Returns true if it can, false if it can not
+	/**
+	 * Checks to see if the drone can move West
+	 * 
+	 * @param Amount
+	 *            of Distance to travel
+	 * @return True if the move is possible, false if is invalid
+	 */
 	public final boolean canMoveWest(int amount) {
 		return canMoveHelper(0, amount * -1);
 	}
 
+	/**
+	 * @param amountN
+	 *            The amount of desired travel North (negative will go South)
+	 * @param amountE
+	 *            The amount of desired travel East (negative will go West)
+	 * @return True if the move is possible, false if is invalid
+	 */
 	private final boolean canMoveHelper(int amountN, int amountE) {
 		int size = Nomads.awesomeWorld.getWorldSize();
 		if (getY() + amountN >= size || getY() + amountN < 0 || getX() + amountE >= size || getX() + amountE < 0) {
@@ -115,18 +176,29 @@ public class Drone extends GameObject {
 
 	// Getters and Setters
 
-	// Returns how many turns this drone has been alive
+	/**
+	 * Returns how many turns this drone has been alive
+	 * 
+	 * @return How many turns this drone has been alive
+	 */
 	public final int getAge() {
 		return age;
 	}
 
-	// Probably will not be needed.
 	// TODO - find a way to prevent the drone from accessing this
+	/**
+	 * Do not use under normal circumstances
+	 * 
+	 * @param newAge
+	 *            Age to set as the Drone's current age
+	 */
 	public final void setAge(int newAge) {
 		age = newAge;
 	}
 
-	// Increases the age by 1 turn
+	/**
+	 * Increases the age of the drone by 1 turn
+	 */
 	public final void incrementAge() {
 		age++;
 	}

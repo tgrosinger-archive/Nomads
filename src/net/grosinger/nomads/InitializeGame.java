@@ -5,7 +5,7 @@ package net.grosinger.nomads;
  */
 public class InitializeGame {
 
-	/*
+	/**
 	 * Search through ___ directory for any drone classes Load them, find the
 	 * name, and return a linkedlist with all the drones
 	 * 

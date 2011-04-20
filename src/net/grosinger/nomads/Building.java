@@ -6,6 +6,8 @@ package net.grosinger.nomads;
 public class Building extends GameObject {
 	Structure structure;
 
+	// Can't decide if I want to add Drone Houses as another enum item or as a
+	// separate class that extends Building
 	public enum Structure {
 		TOWNHALL, REPAIRSHOP, UPGRADESHOP, POLICESTATION
 	}

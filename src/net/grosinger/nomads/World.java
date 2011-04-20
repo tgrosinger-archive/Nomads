@@ -9,7 +9,7 @@ package net.grosinger.nomads;
 public class World {
 
 	// The dimensions of x and y in the game world
-	final static int WORLDSIZE = 100;
+	private final static int WORLDSIZE = 100;
 
 	// The 2D array of the entire world
 	private static GameObject theWorld[][] = new GameObject[WORLDSIZE][WORLDSIZE];
@@ -30,6 +30,10 @@ public class World {
 
 	public GameObject getObjectAt(int x, int y) {
 		return theWorld[x][y];
+	}
+
+	public int getWorldSize() {
+		return WORLDSIZE;
 	}
 
 	// Why would we need a setter for theWorld?

@@ -1,3 +1,5 @@
+//TODO - I think most of the comments before methods will have to be reformatted to fit in with how the API tool works.  I will have to check
+
 package net.grosinger.nomads;
 
 import java.util.ArrayList;

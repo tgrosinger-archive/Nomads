@@ -17,10 +17,6 @@ public class GameObject {
 		return y;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public void setX(int newX) {
 		x = newX;
 	}

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class Nomads {
 
 	public static World awesomeWorld;
-	public static DroneListItem firstDrone;
-	public static ArrayList<DroneTeam> allTeams;
+	public static ArrayList<DroneTeam> allTeams = new ArrayList<DroneTeam>();
+	public static boolean running = true;
 
 	// Debugging Modes
 	public static final boolean DEBUGSTATUS = true;
@@ -31,7 +31,6 @@ public class Nomads {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -39,8 +38,8 @@ public class Nomads {
 		if (DEBUGSTATUS)
 			InitializeGame.initializeBuildngs(awesomeWorld);
 
-		// Check to make sure firstDrone and allTeams have been set up properly
-		if (firstDrone == null || allTeams == null) {
+		// Check to make sure allTeams has been set up properly
+		if (allTeams == null) {
 			// Do something awesome
 			// Or catch the error
 		}
@@ -67,6 +66,14 @@ public class Nomads {
 	public static DroneTeam running() {
 		if (DEBUGSTATUS)
 			System.out.println("Game loop starting...");
+
+		while (running) {
+			for (DroneTeam currentTeam : allTeams) {
+				currentTeam.getMoves();
+			}
+			//For testing purposes...
+			running = false;
+		}
 
 		if (DEBUGSTATUS)
 			System.out.println("Game loop finished");

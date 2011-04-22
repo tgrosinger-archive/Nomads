@@ -8,14 +8,14 @@ package net.grosinger.nomads;
  * Next     --> Towards the last item
  */
 public class DroneListItem {
-	private Drone next;
-	private Drone previous;
+	private DroneListItem next;
+	private DroneListItem previous;
 	private Drone current;
 
 	/*
 	 * Default constructor, includes all references
 	 */
-	public DroneListItem(Drone theNext, Drone thePrevious, Drone theCurrent) {
+	public DroneListItem(DroneListItem theNext, DroneListItem thePrevious, Drone theCurrent) {
 		next = theNext;
 		previous = thePrevious;
 		current = theCurrent;
@@ -24,8 +24,7 @@ public class DroneListItem {
 	/*
 	 * Constructor for the first or last Drone
 	 */
-	public DroneListItem(Drone otherDrone, Drone theCurrent, Boolean isFirst) {
-		// TODO - Did I do this right?
+	public DroneListItem(DroneListItem otherDrone, Drone theCurrent, Boolean isFirst) {
 		if (isFirst)
 			new DroneListItem(otherDrone, null, theCurrent);
 		else
@@ -35,11 +34,11 @@ public class DroneListItem {
 	/*
 	 * Getters and Setters
 	 */
-	public Drone getNext() {
+	public DroneListItem getNext() {
 		return next;
 	}
 
-	public Drone getPrevious() {
+	public DroneListItem getPrevious() {
 		return previous;
 	}
 
@@ -47,11 +46,11 @@ public class DroneListItem {
 		return current;
 	}
 
-	public void setNext(Drone theNext) {
+	public void setNext(DroneListItem theNext) {
 		next = theNext;
 	}
 
-	public void setPrevious(Drone thePrevious) {
+	public void setPrevious(DroneListItem thePrevious) {
 		previous = thePrevious;
 	}
 

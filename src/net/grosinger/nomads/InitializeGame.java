@@ -2,7 +2,6 @@ package net.grosinger.nomads;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
@@ -33,20 +32,17 @@ public class InitializeGame {
 		 * Steps
 		 */
 
-		// Obtain the class loader
-		ClassLoader classLoader = InitializeGame.class.getClassLoader();
-
 		// Obtain a list of the classes that exist in the directory
 		String[] classesToLoad = generateList();
 
 		// Loop through the list of filenames
 		for (int i = 0; i < classesToLoad.length; i++) {
 			String filename = classesToLoad[i];
+			String className = filename.substring(0, filename.length() - 4);
 
 			// Load the class
 			if (Nomads.DEBUGSTATUS)
 				System.out.println("Loading " + filename);
-			String className = filename.substring(0, filename.length() - 4);
 
 			File file = new File(System.getProperty("user.dir") + "/drones/" + filename);
 
@@ -60,26 +56,35 @@ public class InitializeGame {
 				JarEntry element = entries.nextElement();
 				if (element.getName().endsWith(".class")) {
 					try {
+						@SuppressWarnings("rawtypes")
 						Class c = clazzLoader.loadClass(element.getName().replaceAll(".class", "").replaceAll("/", "."));
+
+						// Create new GameObject
+						// TODO - This will break if it loads a class from a jar
+						// that does not extend Drone
+						GameObject newDrone = (GameObject) c.newInstance();
+						newDrone.setName(className);
+
+						createNewDrone(newDrone);
+
 						System.out.println("Class loaded sucessfully");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
-
-			// Create an object from it
-
-			// Create a DroneListItem with proper previous and next depending on
-			// its position
-
-			// Create a new DroneTeam which will automatically add it as the
-			// first and last drone.
-
 		}
 
 		if (Nomads.DEBUGSTATUS)
 			System.out.println("Drone loading complete");
+	}
+
+	private static void createNewDrone(GameObject newDrone) {
+		// Create a DroneListItem and DroneTeam
+		DroneTeam newTeam = new DroneTeam(newDrone);
+
+		// Place in the array
+		Nomads.allTeams.add(newTeam);
 	}
 
 	/**

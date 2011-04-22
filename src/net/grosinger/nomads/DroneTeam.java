@@ -28,9 +28,23 @@ public class DroneTeam {
 	 * @param firstDrone
 	 *            <code>DroneListItem</code> that will be the first Drone
 	 */
-	public DroneTeam(DroneListItem firstDrone) {
-		first = firstDrone;
-		last = firstDrone;
+	public DroneTeam(DroneListItem firstList) {
+		first = firstList;
+		last = firstList;
+		teamName = firstList.getCurrent().name;
+	}
+
+	/**
+	 * Class Constructor
+	 * 
+	 * @param firstDrone
+	 *            <code>GameObject</code> that will be the first Drone
+	 */
+	public DroneTeam(GameObject firstDrone) {
+		DroneListItem firstList = new DroneListItem(null, null, (Drone) firstDrone);
+		first = firstList;
+		last = firstList;
+		teamName = firstDrone.name;
 	}
 
 	// Getters and Setters
@@ -99,7 +113,10 @@ public class DroneTeam {
 	 *            <code>DroneListItem</code> to add to end
 	 */
 	public void addToEnd(DroneListItem newItem) {
-		// TODO - Implement addToEnd
+		last.setNext(newItem);
+		newItem.setPrevious(last);
+		newItem.setNext(null);
+		last = newItem;
 	}
 
 	/**
@@ -111,5 +128,13 @@ public class DroneTeam {
 	 */
 	public void removeDrone(DroneListItem toRemove) {
 		// TODO - Implement removeDrone
+	}
+	
+	public void getMoves(){
+		DroneListItem current = first;
+		while(current != null){
+			current.getCurrent().getMove();
+			current = current.getNext();
+		}
 	}
 }

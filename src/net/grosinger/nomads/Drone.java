@@ -12,15 +12,21 @@ public class Drone extends GameObject {
 	 * at the end of their own.
 	 */
 	public Drone() {
-		if (name == null) {
-			System.out.println("Drone initialization failure, unnammed drone");
-			// TODO - Implement method of ending the game prematurely
-		} else if (Nomads.DEBUGSTATUS)
+		if (Nomads.DEBUGSTATUS)
 			System.out.println("Drone initialized");
 	}
 
 	// Moving
 	// When moving, North is positive Y axis and East is positive X axis
+
+	/**
+	 * Starts the move, can be used to perform maintenance operations before the actual move 
+	 */
+	public final void getMove() {
+		if (Nomads.DEBUGMOVES)
+			System.out.println("Drone " + name + " moving");
+		move();
+	}
 
 	/**
 	 * The main move method for all Drones. Custom Drones should override this

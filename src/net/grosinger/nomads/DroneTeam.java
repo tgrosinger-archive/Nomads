@@ -23,6 +23,11 @@ public class DroneTeam {
 	private String teamName;
 
 	/**
+	 * Amount of Lumas this team has accrued
+	 */
+	private int currentBalance;
+
+	/**
 	 * Class Constructor
 	 * 
 	 * @param firstDrone
@@ -32,6 +37,7 @@ public class DroneTeam {
 		first = firstList;
 		last = firstList;
 		teamName = firstList.getCurrent().name;
+		currentBalance = 0;
 	}
 
 	/**
@@ -45,6 +51,7 @@ public class DroneTeam {
 		first = firstList;
 		last = firstList;
 		teamName = firstDrone.name;
+		currentBalance = 0;
 	}
 
 	// Getters and Setters
@@ -74,6 +81,15 @@ public class DroneTeam {
 	 */
 	public String getName() {
 		return teamName;
+	}
+
+	/**
+	 * Retrieves the balance for the team
+	 * 
+	 * @return Number of Lumas this team possesses
+	 */
+	public int getBalance() {
+		return currentBalance;
 	}
 
 	/**
@@ -107,6 +123,26 @@ public class DroneTeam {
 	}
 
 	/**
+	 * Replaces old balance with the new balance
+	 * 
+	 * @param newBalance
+	 *            Amount to set the balance to
+	 */
+	public void setBalance(int newBalance) {
+		currentBalance = newBalance;
+	}
+
+	/**
+	 * Increases the balance by specified amount
+	 * 
+	 * @param additionalBalance
+	 *            How much to add to the team's balance
+	 */
+	public void increaseBalance(int additionalBalance) {
+		currentBalance += additionalBalance;
+	}
+
+	/**
 	 * Adds a DroneListItem to the end of a DroneTeam
 	 * 
 	 * @param newItem
@@ -129,10 +165,13 @@ public class DroneTeam {
 	public void removeDrone(DroneListItem toRemove) {
 		// TODO - Implement removeDrone
 	}
-	
-	public void getMoves(){
+
+	/**
+	 * Asks each Drone in the team to take it's turn
+	 */
+	public void getMoves() {
 		DroneListItem current = first;
-		while(current != null){
+		while (current != null) {
 			current.getCurrent().getMove();
 			current = current.getNext();
 		}

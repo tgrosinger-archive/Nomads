@@ -1,5 +1,7 @@
 package net.grosinger.nomads;
 
+import net.grosinger.nomads.DroneListItem.EnumMove;
+
 /**
  * All drones will extend this class. Gives them access to basic set of tools
  * they need such as movement, discovery, and world interaction.
@@ -22,138 +24,64 @@ public class Drone extends GameObject {
 	/**
 	 * Starts the move, can be used to perform maintenance operations before the actual move 
 	 */
-	public final void getMove() {
+	public final EnumMove getMove() {
 		if (Nomads.DEBUGMOVES)
 			System.out.println("Drone " + name + " moving");
-		move();
+		return move();
 	}
 
 	/**
 	 * The main move method for all Drones. Custom Drones should override this
 	 * with their own.
 	 */
-	public void move() {
-
+	public EnumMove move() {
+		return EnumMove.NoMove;
 	}
 
-	/**
-	 * Tests if a move North is possible. Will make the requested move if
-	 * possible.
-	 * 
-	 * @param Amount
-	 *            of distance to move North
-	 * @return True if the move was made, false if is invalid
-	 */
-	public final boolean moveNorth(int amount) {
-		if (canMoveNorth(amount)) {
-			moveHelper(amount, 0);
-			return true;
-		} else
-			return false;
-	}
-
-	/**
-	 * Tests if a move South is possible. Will make the requested move if
-	 * possible.
-	 * 
-	 * @param Amount
-	 *            of distance to move South
-	 * @return True if the move was made, false if is invalid
-	 */
-	public final boolean moveSouth(int amount) {
-		if (canMoveSouth(amount)) {
-			moveHelper(amount * -1, 0);
-			return true;
-		} else
-			return false;
-	}
-
-	/**
-	 * Tests if a move East is possible. Will make the requested move if
-	 * possible.
-	 * 
-	 * @param Amount
-	 *            of distance to move East
-	 * @return True if the move was made, false if is invalid
-	 */
-	public final boolean moveEast(int amount) {
-		if (canMoveEast(amount)) {
-			moveHelper(0, amount);
-			return true;
-		} else
-			return false;
-	}
-
-	/**
-	 * Tests if a move West is possible. Will make the requested move if
-	 * possible.
-	 * 
-	 * @param Amount
-	 *            of distance to move West
-	 * @return True if the move was made, false if is invalid
-	 */
-	public final boolean moveWest(int amount) {
-		if (canMoveWest(amount)) {
-			moveHelper(0, amount * -1);
-			return true;
-		} else
-			return false;
-	}
-
-	/**
-	 * Performs a move in the specified amounts
-	 * 
-	 * @param amountN
-	 *            Amount of distance to move North (negative will go South)
-	 * @param amountE
-	 *            Amount of distance to move East (negative will go West)
-	 */
-	public final void moveHelper(int amountN, int amountE) {
-		Nomads.awesomeWorld.moveObjectAt(getX(), getY(), amountN, amountE);
-	}
+	
 
 	/**
 	 * Checks to see if the drone can move North
 	 * 
-	 * @param Amount
+	 * @param amount
 	 *            of Distance to travel
 	 * @return True if the move is possible, false if is invalid
 	 */
-	public final boolean canMoveNorth(int amount) {
-		return canMoveHelper(amount, 0);
+	public final boolean canMoveNorth() {
+		return canMoveHelper(1, 0);
 	}
 
 	/**
 	 * Checks to see if the drone can move South
 	 * 
-	 * @param Amount
+	 * @param amount
 	 *            of Distance to travel
 	 * @return True if the move is possible, false if is invalid
 	 */
-	public final boolean canMoveSouth(int amount) {
-		return canMoveHelper(amount * -1, 0);
+	public final boolean canMoveSouth() {
+		return canMoveHelper(-1, 0);
 	}
 
 	/**
 	 * Checks to see if the drone can move East
 	 * 
-	 * @param Amount
+	 * @param amount
 	 *            of Distance to travel
 	 * @return True if the move is possible, false if is invalid
 	 */
-	public final boolean canMoveEast(int amount) {
-		return canMoveHelper(0, amount);
+	public final boolean canMoveEast() {
+		return canMoveHelper(0, 1);
 	}
 
 	/**
 	 * Checks to see if the drone can move West
 	 * 
-	 * @param Amount
+	 * @param amount
 	 *            of Distance to travel
 	 * @return True if the move is possible, false if is invalid
 	 */
-	public final boolean canMoveWest(int amount) {
-		return canMoveHelper(0, amount * -1);
+	public final boolean canMoveWest() {
+		return canMoveHelper(0, -1);
 	}
 
 	/**

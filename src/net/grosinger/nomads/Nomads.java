@@ -71,13 +71,20 @@ public class Nomads {
 			for (DroneTeam currentTeam : allTeams) {
 				currentTeam.getMoves();
 			}
-			//For testing purposes...
-			running = false;
+
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			// For testing purposes...
+			//running = false;
 		}
 
 		if (DEBUGSTATUS)
 			System.out.println("Game loop finished");
-		return null;
+		return getWinner();
 	}
 
 	public static void finishGame(DroneTeam winner) {
@@ -85,5 +92,10 @@ public class Nomads {
 			System.out.println("There was no winner, please play again");
 		else
 			System.out.println("The winner was " + winner.getName());
+	}
+
+	public static DroneTeam getWinner() {
+		// TODO - Implement getWinner
+		return null;
 	}
 }

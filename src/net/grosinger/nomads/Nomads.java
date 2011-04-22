@@ -1,7 +1,6 @@
-//TODO - I think most of the comments before methods will have to be reformatted to fit in with how the API tool works.  I will have to check
-
 package net.grosinger.nomads;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Nomads {
@@ -12,6 +11,7 @@ public class Nomads {
 
 	// Debugging Modes
 	public static final boolean DEBUGSTATUS = true;
+	public static final boolean DEBUGINITIALIZE = true;
 	public static final boolean DEBUGMOVES = true;
 	public static final boolean DEBUGDEATHS = true;
 	public static final boolean DEBUGCREATIONS = true;
@@ -26,7 +26,14 @@ public class Nomads {
 
 		// Initialize and save all the drones
 		// This will update firstDrone and allTeams
-		InitializeGame.initializeDrones();
+		try {
+			InitializeGame.initializeDrones();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Generate and place all required buildings into world
 		if (DEBUGSTATUS)

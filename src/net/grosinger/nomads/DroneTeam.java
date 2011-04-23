@@ -36,7 +36,7 @@ public class DroneTeam {
 	public DroneTeam(DroneListItem firstList) {
 		first = firstList;
 		last = firstList;
-		teamName = firstList.getCurrent().name;
+		teamName = firstList.getCurrent().getName();
 		currentBalance = 0;
 	}
 
@@ -50,7 +50,7 @@ public class DroneTeam {
 		DroneListItem firstList = new DroneListItem(null, null, (Drone) firstDrone);
 		first = firstList;
 		last = firstList;
-		teamName = firstDrone.name;
+		teamName = firstDrone.getName();
 		currentBalance = 0;
 	}
 
@@ -172,7 +172,24 @@ public class DroneTeam {
 	public void getMoves() {
 		DroneListItem current = first;
 		while (current != null) {
-			current.getCurrent().getMove();
+			// Increment the drone's age
+			current.incrementAge();
+			// Have it perform it's moves
+			int turns = current.getSpeed();
+			int currentTurn = 1;
+			int currentTry = 1;
+			while (currentTurn <= turns) {
+				boolean moved = current.makeMove();
+				if (moved)
+					currentTurn++;
+				else
+					currentTry++;
+
+				// Give the drone 3 tries to make a valid move before skipping
+				// them
+				if (currentTry > 3)
+					break;
+			}
 			current = current.getNext();
 		}
 	}

@@ -85,8 +85,6 @@ public class World {
 		return WORLDSIZE;
 	}
 
-	// Why would we need a setter for theWorld?
-
 	/**
 	 * Used to set a new GameObject at a given location Not used for moving a
 	 * GameObject

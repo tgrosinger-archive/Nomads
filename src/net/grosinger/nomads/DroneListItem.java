@@ -17,8 +17,17 @@ public class DroneListItem {
 	private DroneListItem previous;
 	private Drone current;
 
+	/**
+	 * The DroneTools for this Drone
+	 */
+	private DroneTools yourTools;
+
 	public enum EnumMove {
-		NoMove, North, South, East, West, Upgrade, Attack
+		NoMove, North, South, East, West, Upgrade, Attack, Steal
+	}
+
+	public enum Direction {
+		N, S, E, W
 	}
 
 	// Stats about this robot
@@ -31,6 +40,13 @@ public class DroneListItem {
 	private int speed; // Reflected in movements per turn
 	private int turning;
 	private int cargoSpace;
+	private int theft;
+
+	// Info about this robot
+
+	private int age;
+	private int x;
+	private int y;
 
 	/*
 	 * Default constructor, includes all references
@@ -40,6 +56,10 @@ public class DroneListItem {
 		previous = thePrevious;
 		current = theCurrent;
 		visibleDistance = 15;
+
+		// Give the Drone it's tools
+		yourTools = new DroneTools(current, this);
+		current.setDroneTools(yourTools);
 	}
 
 	// Getters and Setters
@@ -136,12 +156,49 @@ public class DroneListItem {
 
 	/**
 	 * Retrieve the total space in the cargo hold of this drone. Does include
+	 * 
 	 * space that is currently occupied.
 	 * 
 	 * @return <code>int</code>
 	 */
 	public int getCargoSpace() {
 		return cargoSpace;
+	}
+
+	/**
+	 * Retrieve the level of this drone in theiving
+	 * 
+	 * @return <code>int</code>
+	 */
+	public int getTheft() {
+		return theft;
+	}
+
+	/**
+	 * Returns how many turns this drone has been alive
+	 * 
+	 * @return How many turns this drone has been alive
+	 */
+	public int getAge() {
+		return age;
+	}
+
+	/**
+	 * Returns the x index of this drone
+	 * 
+	 * @return <code>int</code>
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * Returns the y index of this drone
+	 * 
+	 * @return <code>int</code>
+	 */
+	public int getY() {
+		return y;
 	}
 
 	/**
@@ -170,7 +227,7 @@ public class DroneListItem {
 	 * @param newDistance
 	 *            <code>int</code> New Distance
 	 */
-	private void setVisibleDistance(int newDistance) {
+	public void setVisibleDistance(int newDistance) {
 		visibleDistance = newDistance;
 	}
 
@@ -180,8 +237,15 @@ public class DroneListItem {
 	 * @param amount
 	 *            <code>int</code> How much to increase the distance
 	 */
-	private void increaseVisibleDistance(int amount) {
+	public void increaseVisibleDistance(int amount) {
 		visibleDistance += amount;
+	}
+
+	/**
+	 * Increases the age of the drone by 1 turn
+	 */
+	public final void incrementAge() {
+		age++;
 	}
 
 	// Actions
@@ -189,11 +253,11 @@ public class DroneListItem {
 	/**
 	 * Will ask the Drone what direction it would like to move
 	 * 
-	 * @return
+	 * @return <code>boolean</code> if a move was made
 	 */
 	public boolean makeMove() {
 		// Call the Drone's Move method
-		EnumMove move = current.getMove();
+		EnumMove move = current.move();
 
 		switch (move) {
 		case NoMove: {
@@ -201,27 +265,31 @@ public class DroneListItem {
 			return true;
 		}
 		case North: {
-			moveNorth();
+			moveDrone(Direction.N);
 			return true;
 		}
 		case South: {
-			moveSouth();
+			moveDrone(Direction.S);
 			return true;
 		}
 		case East: {
-			moveEast();
+			moveDrone(Direction.E);
 			return true;
 		}
 		case West: {
-			moveWest();
+			moveDrone(Direction.W);
 			return true;
 		}
 		case Upgrade: {
-			//TODO - Implement upgrade
+			// TODO - Implement upgrade
 			return true;
 		}
 		case Attack: {
-			//TODO - Implement attack
+			// TODO - Implement attack
+			return true;
+		}
+		case Steal: {
+			// TODO - Implement steal
 			return true;
 		}
 		default: {
@@ -233,79 +301,27 @@ public class DroneListItem {
 
 	// Movement
 
-	/**
-	 * Tests if a move North is possible. Will make the requested move if
-	 * possible.
-	 * 
-	 * @param amount
-	 *            of distance to move North
-	 * @return True if the move was made, false if is invalid
-	 */
-	public final boolean moveNorth() {
-		if (current.canMoveNorth()) {
-			moveHelper(1, 0);
-			return true;
-		} else
-			return false;
-	}
-
-	/**
-	 * Tests if a move South is possible. Will make the requested move if
-	 * possible.
-	 * 
-	 * @param amount
-	 *            of distance to move South
-	 * @return True if the move was made, false if is invalid
-	 */
-	public final boolean moveSouth() {
-		if (current.canMoveSouth()) {
-			moveHelper(-1, 0);
-			return true;
-		} else
-			return false;
-	}
-
-	/**
-	 * Tests if a move East is possible. Will make the requested move if
-	 * possible.
-	 * 
-	 * @param amount
-	 *            of distance to move East
-	 * @return True if the move was made, false if is invalid
-	 */
-	public final boolean moveEast() {
-		if (current.canMoveEast()) {
-			moveHelper(0, 1);
-			return true;
-		} else
-			return false;
-	}
-
-	/**
-	 * Tests if a move West is possible. Will make the requested move if
-	 * possible.
-	 * 
-	 * @param amount
-	 *            of distance to move West
-	 * @return True if the move was made, false if is invalid
-	 */
-	public final boolean moveWest() {
-		if (current.canMoveWest()) {
-			moveHelper(0,-1);
-			return true;
-		} else
-			return false;
-	}
-
-	/**
-	 * Performs a move in the specified amounts
-	 * 
-	 * @param amountN
-	 *            Amount of distance to move North (negative will go South)
-	 * @param amountE
-	 *            Amount of distance to move East (negative will go West)
-	 */
-	public final void moveHelper(int amountN, int amountE) {
-		Nomads.awesomeWorld.moveObjectAt(current.getX(), current.getY(), amountN, amountE);
+	public void moveDrone(Direction direction) {
+		int amountN = 0;
+		int amountE = 0;
+		switch (direction) {
+		case N: {
+			amountN = 1;
+			break;
+		}
+		case S: {
+			amountN = -1;
+			break;
+		}
+		case E: {
+			amountE = 1;
+			break;
+		}
+		case W: {
+			amountE = -1;
+			break;
+		}
+		}
+		Nomads.awesomeWorld.moveObjectAt(getX(), getY(), amountN, amountE);
 	}
 }

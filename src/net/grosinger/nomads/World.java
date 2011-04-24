@@ -146,9 +146,9 @@ public class World {
 				//Prevent OutofBounds.  Indexes = - WORLDSIZE-1
 				if (x + i >= WORLDSIZE-1 || x + i < 0 || y + j >= WORLDSIZE-1 || y + j < 0) {
 
-				} else {
+				} else if (i != 0 && j != 0) {
 					GameObject objectHere = theWorld[x + i][y + j];
-					if (objectHere != null) { // TODO - ignore 0, 0
+					if (objectHere != null) {
 						String name = objectHere.getName();
 						if (name.equalsIgnoreCase("TownHall") || name.equalsIgnoreCase("PoliceStation")) {
 							return true;

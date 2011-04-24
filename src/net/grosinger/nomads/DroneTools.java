@@ -1,5 +1,7 @@
 package net.grosinger.nomads;
 
+import java.util.ArrayList;
+
 /**
  * Tools for the Drone to use. Only place methods in here that you want the
  * drone to have access to.
@@ -8,12 +10,14 @@ public class DroneTools {
 
 	private Drone referredDrone;
 	private DroneListItem listItem;
+	private World worldReference;
 	private int worldSize;
 
-	public DroneTools(Drone aDrone, DroneListItem droneParent) {
+	public DroneTools(Drone aDrone, DroneListItem droneParent, World theWorld) {
 		referredDrone = aDrone;
 		listItem = droneParent;
-		worldSize = Nomads.awesomeWorld.getWorldSize();
+		worldReference = theWorld;
+		worldSize = worldReference.getWorldSize();
 	}
 
 	/**
@@ -52,7 +56,7 @@ public class DroneTools {
 	 */
 	public boolean canMoveNorth() {
 		if (getY() < worldSize-1)
-			return Nomads.awesomeWorld.getWorldGrid()[getX()][getY() + 1] == null;
+			return worldReference.getWorldGrid()[getX()][getY() + 1] == null;
 		else
 			return false;
 	}
@@ -64,7 +68,7 @@ public class DroneTools {
 	 */
 	public boolean canMoveSouth() {
 		if (getY() > 0)
-			return Nomads.awesomeWorld.getWorldGrid()[getX()][getY() - 1] == null;
+			return worldReference.getWorldGrid()[getX()][getY() - 1] == null;
 		else
 			return false;
 	}
@@ -76,7 +80,7 @@ public class DroneTools {
 	 */
 	public boolean canMoveEast() {
 		if (getX() < worldSize-1)
-			return Nomads.awesomeWorld.getWorldGrid()[getX() + 1][getY()] == null;
+			return worldReference.getWorldGrid()[getX() + 1][getY()] == null;
 		else
 			return false;
 	}
@@ -88,7 +92,7 @@ public class DroneTools {
 	 */
 	public boolean canMoveWest() {
 		if (getX() > 0)
-			return Nomads.awesomeWorld.getWorldGrid()[getX() - 1][getY()] == null;
+			return worldReference.getWorldGrid()[getX() - 1][getY()] == null;
 		else
 			return false;
 	}
@@ -100,6 +104,27 @@ public class DroneTools {
 	 * @return <code>Boolean</code> - is Safe
 	 */
 	public boolean inSafeZone() {
-		return Nomads.awesomeWorld.inSafeZone(getX(), getY());
+		return worldReference.inSafeZone(getX(), getY());
+	}
+	
+	public ArrayList<Neighbor> checkRadar(){
+		ArrayList<Neighbor> neighbors = new ArrayList<Neighbor>();
+		int maxDistance = listItem.getVisibleDistance();
+		for(int i = maxDistance * -1; i <= maxDistance; i++){
+			for(int j = maxDistance * -1; j <= maxDistance; j++){
+				if (getX() + i >= worldSize-1 || getX() + i < 0 || getY() + j >= worldSize-1 || getY() + j < 0) {
+
+				} else if(i != 0 && j != 0) {
+					GameObject objectHere = worldReference.getObjectAt(getX()+i, getY()+j);
+					if(objectHere instanceof Drone){ //TODO - Not sure if this will work
+						Drone droneHere = (Drone) objectHere;
+						DroneListItem listItemHere = Nomads.droneToListItem(droneHere);
+						Neighbor aWildNeighbor = new Neighbor(listItemHere.getX(), listItemHere.getY(), droneHere.getName());
+						neighbors.add(aWildNeighbor);
+					}
+				}
+			}
+		}
+		return neighbors;
 	}
 }

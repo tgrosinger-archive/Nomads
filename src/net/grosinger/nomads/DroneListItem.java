@@ -62,7 +62,7 @@ public class DroneListItem {
 		Nomads.awesomeWorld.placeNewDrone(this);
 
 		// Give the Drone it's tools
-		yourTools = new DroneTools(current, this);
+		yourTools = new DroneTools(current, this, Nomads.awesomeWorld);
 		current.setDroneTools(yourTools);
 	}
 

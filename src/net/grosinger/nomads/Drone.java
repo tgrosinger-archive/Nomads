@@ -13,6 +13,20 @@ public interface Drone extends GameObject {
 	 * basic info your drone needs.
 	 */
 	public void setDroneTools(DroneTools yourTools);
+	
+	/**
+	 * A Unique Identifier
+	 * 
+	 * @param UID
+	 */
+	public void setUID(String UID);
+	
+	/**
+	 * Retrieve UID
+	 * 
+	 * @return <code>String</code> - UID
+	 */
+	public String getUID();
 
 	// Moving
 	// When moving, North is positive Y axis and East is positive X axis

@@ -64,9 +64,17 @@ public class Nomads {
 			System.out.println("Game loop starting...");
 
 		while (running) {
+
+			long startTime = System.currentTimeMillis();
+
 			for (DroneTeam currentTeam : allTeams) {
 				currentTeam.getMoves();
 			}
+
+			long endTime = System.currentTimeMillis();
+
+			if (DEBUGSTATUS)
+				System.out.println("Moves took " + (endTime - startTime) + "milliseconds");
 
 			try {
 				Thread.sleep(200);
@@ -92,6 +100,15 @@ public class Nomads {
 
 	public static DroneTeam getWinner() {
 		// TODO - Implement getWinner
+		return null;
+	}
+
+	public static DroneListItem droneToListItem(Drone theDrone) {
+		for (DroneTeam team : allTeams) {
+			DroneListItem current = team.getFirst();
+			if (current.getCurrent().getUID() == theDrone.getUID())
+				return current;
+		}
 		return null;
 	}
 }

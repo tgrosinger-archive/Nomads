@@ -34,6 +34,10 @@ public class InitializeGame {
 
 		// Obtain a list of the classes that exist in the directory
 		String[] classesToLoad = generateList();
+		if(classesToLoad.length == 0){
+			System.out.println("No Drones to load");
+			Nomads.running = false;
+		}
 
 		// Loop through the list of filenames
 		for (int i = 0; i < classesToLoad.length; i++) {

@@ -44,10 +44,6 @@ public class Nomads {
 			// Or catch the error
 		}
 
-		// Generate the locations of the main buildings in the world
-
-		// Load the drones in to the world
-
 		// Start the game loop
 		if (DEBUGSTATUS)
 			System.out.println("Game initialization finished, going to game loop");
@@ -79,7 +75,7 @@ public class Nomads {
 			}
 
 			// For testing purposes...
-			//running = false;
+			// running = false;
 		}
 
 		if (DEBUGSTATUS)

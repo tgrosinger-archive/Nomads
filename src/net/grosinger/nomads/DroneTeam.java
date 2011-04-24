@@ -163,7 +163,16 @@ public class DroneTeam {
 	 *            <code>DroneListItem</code> that needs to be removed
 	 */
 	public void removeDrone(DroneListItem toRemove) {
-		// TODO - Implement removeDrone
+		DroneListItem firstDrone = first;
+		while (firstDrone != null) {
+			if (firstDrone.getX() == toRemove.getX() && firstDrone.getY() == toRemove.getY()) {
+				// Make other two drones pass over it
+				firstDrone.getPrevious().setNext(firstDrone.getNext());
+				firstDrone.getNext().setPrevious(firstDrone.getPrevious());
+				break;
+			} else
+				firstDrone = firstDrone.getNext();
+		}
 	}
 
 	/**

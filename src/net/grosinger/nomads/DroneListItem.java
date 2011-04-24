@@ -56,6 +56,10 @@ public class DroneListItem {
 		previous = thePrevious;
 		current = theCurrent;
 		visibleDistance = 15;
+		speed = 1;
+
+		// Place itself in the world
+		Nomads.awesomeWorld.placeNewDrone(this);
 
 		// Give the Drone it's tools
 		yourTools = new DroneTools(current, this);
@@ -232,6 +236,26 @@ public class DroneListItem {
 	}
 
 	/**
+	 * Used when adding the drone to the map
+	 * 
+	 * @param newY
+	 *            <code>int</code> new X location
+	 */
+	public void setX(int newX) {
+		x = newX;
+	}
+
+	/**
+	 * Used when adding the drone to the map
+	 * 
+	 * @param newY
+	 *            <code>int</code> new Y location
+	 */
+	public void setY(int newY) {
+		y = newY;
+	}
+
+	/**
 	 * Increases the Visible Distance by specified amount
 	 * 
 	 * @param amount
@@ -265,20 +289,32 @@ public class DroneListItem {
 			return true;
 		}
 		case North: {
-			moveDrone(Direction.N);
-			return true;
+			if (yourTools.canMoveNorth()) {
+				moveDrone(Direction.N);
+				return true;
+			} else
+				return false;
 		}
 		case South: {
-			moveDrone(Direction.S);
-			return true;
+			if (yourTools.canMoveSouth()) {
+				moveDrone(Direction.S);
+				return true;
+			} else
+				return false;
 		}
 		case East: {
-			moveDrone(Direction.E);
-			return true;
+			if (yourTools.canMoveEast()) {
+				moveDrone(Direction.E);
+				return true;
+			} else
+				return false;
 		}
 		case West: {
-			moveDrone(Direction.W);
-			return true;
+			if (yourTools.canMoveWest()) {
+				moveDrone(Direction.W);
+				return true;
+			} else
+				return false;
 		}
 		case Upgrade: {
 			// TODO - Implement upgrade
@@ -322,6 +358,14 @@ public class DroneListItem {
 			break;
 		}
 		}
+
+		// Make the move
 		Nomads.awesomeWorld.moveObjectAt(getX(), getY(), amountN, amountE);
+		
+		// Update the saved coordinates
+		if (amountN != 0)
+			setY(getY() + amountN);
+		if (amountE != 0)
+			setX(getX() + amountE);
 	}
 }

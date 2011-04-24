@@ -8,10 +8,12 @@ public class DroneTools {
 
 	private Drone referredDrone;
 	private DroneListItem listItem;
+	private int worldSize;
 
 	public DroneTools(Drone aDrone, DroneListItem droneParent) {
 		referredDrone = aDrone;
 		listItem = droneParent;
+		worldSize = Nomads.awesomeWorld.getWorldSize();
 	}
 
 	/**
@@ -43,19 +45,61 @@ public class DroneTools {
 
 	// Movement
 
+	/**
+	 * Can drone move 1 space to the North
+	 * 
+	 * @return <code>Boolean</code> - can move
+	 */
 	public boolean canMoveNorth() {
-		return Nomads.awesomeWorld.getWorldGrid()[getY() + 1][getX()] == null;
+		if (getY() < worldSize-1)
+			return Nomads.awesomeWorld.getWorldGrid()[getX()][getY() + 1] == null;
+		else
+			return false;
 	}
 
+	/**
+	 * Can drone move 1 space to the South
+	 * 
+	 * @return <code>Boolean</code> - can move
+	 */
 	public boolean canMoveSouth() {
-		return Nomads.awesomeWorld.getWorldGrid()[getY() - 1][getX()] == null;
+		if (getY() > 0)
+			return Nomads.awesomeWorld.getWorldGrid()[getX()][getY() - 1] == null;
+		else
+			return false;
 	}
 
+	/**
+	 * Can drone move 1 space to the East
+	 * 
+	 * @return <code>Boolean</code> - can move
+	 */
 	public boolean canMoveEast() {
-		return Nomads.awesomeWorld.getWorldGrid()[getY()][getX() + 1] == null;
+		if (getX() < worldSize-1)
+			return Nomads.awesomeWorld.getWorldGrid()[getX() + 1][getY()] == null;
+		else
+			return false;
 	}
 
+	/**
+	 * Can drone move 1 space to the West
+	 * 
+	 * @return <code>Boolean</code> - can move
+	 */
 	public boolean canMoveWest() {
-		return Nomads.awesomeWorld.getWorldGrid()[getY()][getX() - 1] == null;
+		if (getX() > 0)
+			return Nomads.awesomeWorld.getWorldGrid()[getX() - 1][getY()] == null;
+		else
+			return false;
+	}
+
+	/**
+	 * Is the drone in an sort of safe zone where it can not be attacked. This
+	 * also means the drone can not attack other drones.
+	 * 
+	 * @return <code>Boolean</code> - is Safe
+	 */
+	public boolean inSafeZone() {
+		return Nomads.awesomeWorld.inSafeZone(getX(), getY());
 	}
 }

@@ -16,7 +16,12 @@ public class World {
 	/**
 	 * The 2D array of the entire world
 	 */
-	private static GameObject theWorld[][] = new GameObject[WORLDSIZE][WORLDSIZE];
+	private GameObject theWorld[][];
+
+	/**
+	 * All drones will start at Y=20. Will then move East from X=40
+	 */
+	private int lastUsedX = 40;
 
 	/**
 	 * Class constructor
@@ -24,7 +29,8 @@ public class World {
 	public World() {
 		if (Nomads.DEBUGSTATUS)
 			System.out.println("Intializing the world...");
-		// TODO - Implement World Constructor
+
+		theWorld = new GameObject[WORLDSIZE][WORLDSIZE];
 
 		if (Nomads.DEBUGSTATUS)
 			System.out.println("World initialization complete");
@@ -86,7 +92,7 @@ public class World {
 	}
 
 	/**
-	 * Used to set a new GameObject at a given location Not used for moving a
+	 * Used to set a new GameObject at a given location. Not used for moving a
 	 * GameObject
 	 * 
 	 * @param x
@@ -111,5 +117,49 @@ public class World {
 		int randX = 0 + (int) (Math.random() * ((getWorldSize() - 0) + 1));
 		int randY = 0 + (int) (Math.random() * ((getWorldSize() - 0) + 1));
 		setObjectAt(randX, randY, newItem);
+	}
+
+	/**
+	 * Places a drone in the world at it's starting point
+	 * 
+	 * @param newDrone
+	 *            <code>DroneListItem</code> to be placed.
+	 */
+	public void placeNewDrone(DroneListItem newDrone) {
+		lastUsedX++;
+		newDrone.setX(lastUsedX);
+		newDrone.setY(20);
+
+		// The actual placement
+		setObjectAt(lastUsedX, 20, newDrone.getCurrent());
+	}
+
+	public boolean inSafeZone(int x, int y) {
+		/*
+		 * Safe Zones - Measured in radius of a square TownHall - 3 : RepairShop
+		 * - 2 : UpgradeShop - 2 : PoliceStation - 3 : Home - 1
+		 */
+
+		// Maximum distance away a building that provides a safehouse is 3
+		for (int i = -3; i <= 3; i++) {
+			for (int j = -3; j <= 3; j++) {
+				//Prevent OutofBounds.  Indexes = - WORLDSIZE-1
+				if (x + i >= WORLDSIZE-1 || x + i < 0 || y + j >= WORLDSIZE-1 || y + j < 0) {
+
+				} else {
+					GameObject objectHere = theWorld[x + i][y + j];
+					if (objectHere != null) { // TODO - ignore 0, 0
+						String name = objectHere.getName();
+						if (name.equalsIgnoreCase("TownHall") || name.equalsIgnoreCase("PoliceStation")) {
+							return true;
+						} else if ((name.equalsIgnoreCase("RepairShop") || name.equalsIgnoreCase("UpgradeShop")) && i <= 2 && j <= 2) {
+							return true;
+						}
+						// TODO - Include Team Houses in the safe zone test
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

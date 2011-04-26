@@ -162,7 +162,7 @@ public class DroneListItem {
 	}
 
 	/**
-	 * Retrieve the level of this drone in theiving
+	 * Retrieve the level of this drone in thieving
 	 * 
 	 * @return <code>int</code>
 	 */

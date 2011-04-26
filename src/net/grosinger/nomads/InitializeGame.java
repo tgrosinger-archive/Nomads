@@ -130,7 +130,7 @@ public class InitializeGame {
 	 * 
 	 * @return <code>String</code>- UID
 	 */
-	private static String generateUID() {
+	public static String generateUID() {
 		SecureRandom random = new SecureRandom();
 		return new BigInteger(130, random).toString(32);
 	}

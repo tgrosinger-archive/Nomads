@@ -225,4 +225,38 @@ public class DroneTeam {
 			current = current.getNext();
 		}
 	}
+
+	/**
+	 * Removes money from the balance
+	 * 
+	 * @param price
+	 *            - Amount to remove
+	 */
+	public void deductFromBalance(int price) {
+		currentBalance -= price;
+	}
+
+	/**
+	 * Creates a new drone on the same team next to the creator
+	 * 
+	 * @param listItem
+	 *            - Drone that issued the request
+	 */
+	public void createNewDrone(DroneListItem listItem) {
+		Class<? extends Drone> c = listItem.getCurrent().getClass();
+		Drone newDrone = null;
+		try {
+			newDrone = (Drone) c.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		
+		newDrone.setName(getName());
+		newDrone.setUID(InitializeGame.generateUID());
+		
+		DroneListItem newListItem = new DroneListItem(null, last, newDrone, this);
+		addToEnd(newListItem);
+	}
 }

@@ -29,6 +29,11 @@ public class Nomads {
 	 */
 	public static final int HOUSEPRICE = 200;
 
+	/**
+	 * How much should a new drone cost?
+	 */
+	public static final int DRONEPRICE = 150;
+
 	public static void main(String[] args) {
 		if (DEBUGSTATUS)
 			System.out.println("Game initialization beginning...");

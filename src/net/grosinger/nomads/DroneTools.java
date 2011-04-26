@@ -12,6 +12,7 @@ public class DroneTools {
 
 	private Drone referredDrone;
 	private DroneListItem listItem;
+	private DroneTeam currentTeam;
 	private World worldReference;
 	private int worldSize;
 
@@ -20,6 +21,7 @@ public class DroneTools {
 		listItem = droneParent;
 		worldReference = theWorld;
 		worldSize = worldReference.getWorldSize();
+		currentTeam = listItem.getTeam();
 	}
 
 	/**
@@ -144,20 +146,46 @@ public class DroneTools {
 	 *         if it can not create the house.
 	 */
 	public House createHouse() {
-		// Check that there is enough money in the team bank
-		int currentBalance = listItem.getTeam().getBalance();
-		if (currentBalance < Nomads.HOUSEPRICE) {
-			if (Nomads.DEBUGBUILDINGS)
-				System.out.println("You do not have enough money to build a house");
-			return null;
-		} else {
+		if (hasEnoughCash(Nomads.HOUSEPRICE)) {
 			House newHouse = new House(Structure.HOUSE, getX() + 1, getY(), referredDrone.getName());
 			worldReference.placeNewBuilding(newHouse);
+			currentTeam.deductFromBalance(Nomads.HOUSEPRICE);
 			return newHouse;
-		}
+		} else
+			return null;
 
 		// TODO - Implement time to create house
 		// Building a house should take many turns. Their drone will remain
 		// immobile while house is constructed.
+	}
+
+	/**
+	 * If your team has enough money, will create an exact clone of your drone.
+	 */
+	public void createNewDrone() {
+		if (hasEnoughCash(Nomads.DRONEPRICE)) {
+			currentTeam.createNewDrone(listItem);
+			currentTeam.deductFromBalance(Nomads.DRONEPRICE);
+			// TODO - Implement time to create new drone
+			// Creating a drone should take many turns. Their drone will remain
+			// immobile while drone is constructed.
+		}
+	}
+
+	/**
+	 * Tests to see if the team has enough money for an action
+	 * 
+	 * @param price
+	 *            - Amount of money required
+	 * @return <code>boolean</code>
+	 */
+	private boolean hasEnoughCash(int price) {
+		int currentBalance = listItem.getTeam().getBalance();
+		if (currentBalance < price) {
+			if (Nomads.DEBUGMOVES)
+				System.out.println("You do not have enough money!");
+			return false;
+		} else
+			return true;
 	}
 }

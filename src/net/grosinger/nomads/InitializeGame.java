@@ -10,6 +10,8 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import net.grosinger.nomads.Building.Structure;
+
 /**
  * Various methods used when first setting up the game and loading everything
  * into the world.
@@ -145,8 +147,18 @@ public class InitializeGame {
 		if (Nomads.DEBUGSTATUS)
 			System.out.println("Generating and placing required buildings...");
 
+		Building townHall = new Building(Structure.TOWNHALL, 30, 40);
+		Building upgradeShop = new Building(Structure.UPGRADESHOP, 30, 60);
+		Building policeStation = new Building(Structure.POLICESTATION, 50, 40);
+		Building RepairShop = new Building(Structure.REPAIRSHOP, 50, 60);
+
 		if (Nomads.DEBUGSTATUS)
 			System.out.println("Building generation complete");
+
+		awesomeWorld.placeNewBuilding(townHall);
+		awesomeWorld.placeNewBuilding(upgradeShop);
+		awesomeWorld.placeNewBuilding(policeStation);
+		awesomeWorld.placeNewBuilding(RepairShop);
 
 		if (Nomads.DEBUGSTATUS)
 			System.out.println("Building placement complete");

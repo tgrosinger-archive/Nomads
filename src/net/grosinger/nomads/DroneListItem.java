@@ -38,7 +38,6 @@ public class DroneListItem {
 	private int reliability;
 	private int defenses;
 	private int speed; // Reflected in movements per turn
-	private int turning;
 	private int cargoSpace;
 	private int theft;
 
@@ -147,15 +146,6 @@ public class DroneListItem {
 	 */
 	public int getSpeed() {
 		return speed;
-	}
-
-	/**
-	 * Retrieve the turning factor of this drone
-	 * 
-	 * @return <code>int</code>
-	 */
-	public int getTurning() {
-		return turning;
 	}
 
 	/**

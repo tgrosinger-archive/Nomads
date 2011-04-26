@@ -144,6 +144,19 @@ public class World {
 	}
 
 	/**
+	 * Places a building in the world
+	 * 
+	 * @param newBuilding
+	 *            The building to be placed
+	 */
+	public void placeNewBuilding(Building newBuilding) {
+		int x = newBuilding.getX();
+		int y = newBuilding.getY();
+
+		theWorld[x][y] = newBuilding;
+	}
+
+	/**
 	 * Returns if the Drone at given coordinates is in a safe zone
 	 * 
 	 * @param x
@@ -182,6 +195,22 @@ public class World {
 	}
 
 	/**
+	 * Searches for any buildings within range spaces of x,y
+	 * 
+	 * @param x
+	 *            - X Index
+	 * @param y
+	 *            - Y Index
+	 * @param range
+	 *            - range to search
+	 * @return <code>Arraylist(building)</code>
+	 */
+	public ArrayList<Building> buildingsInRange(int x, int y, int range) {
+		// TODO - implement buildingsInRange
+		return null;
+	}
+
+	/**
 	 * Outputs an HTML file showing the world
 	 */
 	public void generateMap(int turn) {
@@ -209,7 +238,7 @@ public class World {
 
 		// draw grid lines
 		g2d.setColor(Color.black);
-		for (int i = 10; i <= 1000; i += 100) {
+		for (int i = 0; i <= 1000; i += 100) {
 			g2d.drawLine(i, 0, i, 1000);
 			g2d.drawLine(0, i, 1000, i);
 		}
@@ -224,7 +253,8 @@ public class World {
 					g2d.setColor(color);
 					g2d.fillOval(j * 10, i * 10, 10, 10);
 				} else if (objectHere instanceof Building) {
-					// TODO - output for buildings
+					g2d.setColor(Color.black);
+					g2d.fillRect(j * 10, i * 10, 10, 10);
 				}
 			}
 		}

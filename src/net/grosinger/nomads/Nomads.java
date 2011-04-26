@@ -17,6 +17,12 @@ public class Nomads {
 	public static final boolean DEBUGCREATIONS = true;
 	public static final boolean DEBUGBUILDINGS = true;
 
+	/**
+	 * How frequently should a new map be generated? (In turns, 1 means every
+	 * turn)
+	 */
+	public static final int MAPGENRATE = 2;
+
 	public static void main(String[] args) {
 		if (DEBUGSTATUS)
 			System.out.println("Game initialization beginning...");
@@ -64,9 +70,10 @@ public class Nomads {
 			System.out.println("Game loop starting...");
 
 		int turn = 0;
+		int counter = 0;
 
 		while (running) {
-
+			counter++;
 			turn++;
 
 			long startTime = System.currentTimeMillis();
@@ -80,7 +87,11 @@ public class Nomads {
 			if (DEBUGSTATUS)
 				System.out.println("Moves took " + (endTime - startTime) + "milliseconds");
 
-			awesomeWorld.generateMap(turn);
+			// Create a new map
+			if (counter == MAPGENRATE) {
+				awesomeWorld.generateMap(turn);
+				counter = 0;
+			}
 
 			try {
 				Thread.sleep(200);

@@ -17,13 +17,15 @@ public class Building implements GameObject {
 	Structure structure;
 	String name;
 
-	// Can't decide if I want to add Drone Houses as another enum item or as a
-	// separate class that extends Building
+	int x;
+	int y;
+
+	// Houses will extend Buildings
 	public enum Structure {
 		TOWNHALL, REPAIRSHOP, UPGRADESHOP, POLICESTATION
 	}
 
-	public Building(Structure thisBuilding) {
+	public Building(Structure thisBuilding, int newX, int newY) {
 		structure = thisBuilding;
 		switch (structure) {
 		case TOWNHALL: {
@@ -43,6 +45,9 @@ public class Building implements GameObject {
 			break;
 		}
 		}
+
+		x = newX;
+		y = newY;
 	}
 
 	@Override
@@ -50,9 +55,56 @@ public class Building implements GameObject {
 		return name;
 	}
 
+	/**
+	 * Retrieve what type of building it is (I.E. TownHall, RepairShop, etc.)
+	 * 
+	 * @return <code>Structure</code>
+	 */
+	public Structure getType() {
+		return structure;
+	}
+
+	/**
+	 * Retrieve x index
+	 * 
+	 * return <code>int</code>
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * Retrieve y index
+	 * 
+	 * @return <code>int</code>
+	 */
+	public int getY() {
+		return y;
+	}
+
 	@Override
 	public void setName(String newName) {
 		name = newName;
+	}
+
+	/**
+	 * Sets a new x value for the building (As if buildings could move)
+	 * 
+	 * @param newX
+	 *            - int, new x location
+	 */
+	public void setX(int newX) {
+		x = newX;
+	}
+
+	/**
+	 * Sets a new y value for the building (As if buildings could move)
+	 * 
+	 * @param newY
+	 *            - int, new y location
+	 */
+	public void setY(int newY) {
+		y = newY;
 	}
 
 	/*

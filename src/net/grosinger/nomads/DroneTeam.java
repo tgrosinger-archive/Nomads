@@ -1,5 +1,7 @@
 package net.grosinger.nomads;
 
+import java.util.ArrayList;
+
 /**
  * Contains a pointer to the first and the last DroneListItem in a particular
  * team. When adding drones to Team A they should be added to the end of the
@@ -28,6 +30,11 @@ public class DroneTeam {
 	private int currentBalance;
 
 	/**
+	 * ArrayList of all the houses owned by this team;
+	 */
+	private ArrayList<House> teamHouses;
+
+	/**
 	 * Class Constructor
 	 * 
 	 * @param firstList
@@ -36,8 +43,7 @@ public class DroneTeam {
 	public DroneTeam(DroneListItem firstList) {
 		first = firstList;
 		last = firstList;
-		teamName = firstList.getCurrent().getName();
-		currentBalance = 0;
+		finishConstructing();
 	}
 
 	/**
@@ -47,11 +53,19 @@ public class DroneTeam {
 	 *            <code>GameObject</code> that will be the first Drone
 	 */
 	public DroneTeam(GameObject firstDrone) {
-		DroneListItem firstList = new DroneListItem(null, null, (Drone) firstDrone);
+		DroneListItem firstList = new DroneListItem(null, null, (Drone) firstDrone, this);
 		first = firstList;
 		last = firstList;
-		teamName = firstDrone.getName();
+		finishConstructing();
+	}
+
+	/**
+	 * A few things that both constructors need, put into a different method.
+	 */
+	private void finishConstructing() {
+		teamName = first.getCurrent().getName();
 		currentBalance = 0;
+		teamHouses = new ArrayList<House>();
 	}
 
 	// Getters and Setters
@@ -90,6 +104,15 @@ public class DroneTeam {
 	 */
 	public int getBalance() {
 		return currentBalance;
+	}
+
+	/**
+	 * Retrieve the ArrayList of all the houses this team owns
+	 * 
+	 * @return <code>ArrayList (House)</code>
+	 */
+	public ArrayList<House> getTeamHouses() {
+		return teamHouses;
 	}
 
 	/**

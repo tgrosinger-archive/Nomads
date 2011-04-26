@@ -165,7 +165,7 @@ public class World {
 	 *            - Specified Y value
 	 * @return <code>boolean</code>
 	 */
-	public boolean inSafeZone(int x, int y) {
+	public boolean inSafeZone(int x, int y, DroneListItem listItem) {
 		/*
 		 * Safe Zones - Measured in radius of a square TownHall - 3 : RepairShop
 		 * - 2 : UpgradeShop - 2 : PoliceStation - 3 : Home - 1
@@ -186,9 +186,18 @@ public class World {
 						} else if ((name.equalsIgnoreCase("RepairShop") || name.equalsIgnoreCase("UpgradeShop")) && i <= 2 && j <= 2) {
 							return true;
 						}
-						// TODO - Include Team Houses in the safe zone test
 					}
 				}
+			}
+		}
+		// Check to see if they are within the safe-zone of any of the team
+		// houses. Houses provide 1 radius around the building (total 3x3)
+		ArrayList<House> teamHouses = listItem.getTeam().getTeamHouses();
+		for (House currentHouse : teamHouses) {
+			int houseX = currentHouse.getX();
+			int houseY = currentHouse.getY();
+			if (houseX + 1 > x && houseX - 1 < x && houseY + 1 > y && houseY - 1 < y) {
+				return true;
 			}
 		}
 		return false;
@@ -203,10 +212,10 @@ public class World {
 	 *            - Y Index
 	 * @param range
 	 *            - range to search
-	 * @return <code>Arraylist(building)</code>
+	 * @return <code>ArrayList(building)</code>
 	 */
 	public ArrayList<Building> buildingsInRange(int x, int y, int range) {
-		// TODO - implement buildingsInRange
+		// TODO - Implement buildingsInRange
 		return null;
 	}
 
@@ -253,6 +262,8 @@ public class World {
 					g2d.setColor(color);
 					g2d.fillOval(j * 10, i * 10, 10, 10);
 				} else if (objectHere instanceof Building) {
+					// TODO - Add color-coding to buildings on map
+					// World owned buildings should be black
 					g2d.setColor(Color.black);
 					g2d.fillRect(j * 10, i * 10, 10, 10);
 				}

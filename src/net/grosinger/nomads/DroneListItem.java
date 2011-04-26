@@ -16,6 +16,7 @@ public class DroneListItem {
 	private DroneListItem next;
 	private DroneListItem previous;
 	private Drone current;
+	private DroneTeam team;
 
 	/**
 	 * The DroneTools for this Drone
@@ -50,12 +51,13 @@ public class DroneListItem {
 	/*
 	 * Default constructor, includes all references
 	 */
-	public DroneListItem(DroneListItem theNext, DroneListItem thePrevious, Drone theCurrent) {
+	public DroneListItem(DroneListItem theNext, DroneListItem thePrevious, Drone theCurrent, DroneTeam theTeam) {
 		next = theNext;
 		previous = thePrevious;
 		current = theCurrent;
 		visibleDistance = 15;
 		speed = 1;
+		team = theTeam;
 
 		// Place itself in the world
 		Nomads.awesomeWorld.placeNewDrone(this);
@@ -193,6 +195,15 @@ public class DroneListItem {
 	 */
 	public int getY() {
 		return y;
+	}
+
+	/**
+	 * Retrieve reference to the team this drone belongs to
+	 * 
+	 * @return <code>DroneTeam</code>
+	 */
+	public DroneTeam getTeam() {
+		return team;
 	}
 
 	/**
@@ -351,7 +362,7 @@ public class DroneListItem {
 
 		// Make the move
 		Nomads.awesomeWorld.moveObjectAt(getX(), getY(), amountN, amountE);
-		
+
 		// Update the saved coordinates
 		if (amountN != 0)
 			setY(getY() + amountN);

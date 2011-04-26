@@ -22,7 +22,7 @@ public class Building implements GameObject {
 
 	// Houses will extend Buildings
 	public enum Structure {
-		TOWNHALL, REPAIRSHOP, UPGRADESHOP, POLICESTATION
+		TOWNHALL, REPAIRSHOP, UPGRADESHOP, POLICESTATION, HOUSE
 	}
 
 	public Building(Structure thisBuilding, int newX, int newY) {
@@ -42,6 +42,10 @@ public class Building implements GameObject {
 		}
 		case POLICESTATION: {
 			name = "PoliceStation";
+			break;
+		}
+		case HOUSE: {
+			name = "House";
 			break;
 		}
 		}

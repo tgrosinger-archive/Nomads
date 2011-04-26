@@ -8,6 +8,7 @@ public class Nomads {
 	public static World awesomeWorld;
 	public static ArrayList<DroneTeam> allTeams = new ArrayList<DroneTeam>();
 	public static boolean running = true;
+	public static int turn;
 
 	// Debugging Modes
 	public static final boolean DEBUGSTATUS = true;
@@ -22,6 +23,11 @@ public class Nomads {
 	 * turn)
 	 */
 	public static final int MAPGENRATE = 2;
+
+	/**
+	 * How much should a house cost?
+	 */
+	public static final int HOUSEPRICE = 200;
 
 	public static void main(String[] args) {
 		if (DEBUGSTATUS)
@@ -69,7 +75,7 @@ public class Nomads {
 		if (DEBUGSTATUS)
 			System.out.println("Game loop starting...");
 
-		int turn = 0;
+		turn = 0;
 		int counter = 0;
 
 		while (running) {

@@ -238,7 +238,7 @@ public class DroneListItem {
 	/**
 	 * Used when adding the drone to the map
 	 * 
-	 * @param newY
+	 * @param newX
 	 *            <code>int</code> new X location
 	 */
 	public void setX(int newX) {

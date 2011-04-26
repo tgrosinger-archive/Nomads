@@ -1,5 +1,14 @@
 package net.grosinger.nomads;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Main class where information about the world is stored
  * 
@@ -134,6 +143,15 @@ public class World {
 		setObjectAt(lastUsedX, 20, newDrone.getCurrent());
 	}
 
+	/**
+	 * Returns if the Drone at given coordinates is in a safe zone
+	 * 
+	 * @param x
+	 *            - Specified X value
+	 * @param y
+	 *            - Specified Y value
+	 * @return <code>boolean</code>
+	 */
 	public boolean inSafeZone(int x, int y) {
 		/*
 		 * Safe Zones - Measured in radius of a square TownHall - 3 : RepairShop
@@ -143,8 +161,8 @@ public class World {
 		// Maximum distance away a building that provides a safehouse is 3
 		for (int i = -3; i <= 3; i++) {
 			for (int j = -3; j <= 3; j++) {
-				//Prevent OutofBounds.  Indexes = - WORLDSIZE-1
-				if (x + i >= WORLDSIZE-1 || x + i < 0 || y + j >= WORLDSIZE-1 || y + j < 0) {
+				// Prevent OutofBounds. Indexes = - WORLDSIZE-1
+				if (x + i >= WORLDSIZE - 1 || x + i < 0 || y + j >= WORLDSIZE - 1 || y + j < 0) {
 
 				} else if (i != 0 && j != 0) {
 					GameObject objectHere = theWorld[x + i][y + j];
@@ -161,5 +179,77 @@ public class World {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Outputs an HTML file showing the world
+	 */
+	public void generateMap(int turn) {
+		ArrayList<Color> allColors = new ArrayList<Color>();
+		addColors(allColors);
+		Map<String, Color> colorMap = new HashMap<String, Color>();
+		int counter = 0;
+
+		// Create the color map
+		for (DroneTeam team : Nomads.allTeams) {
+			String name = team.getName();
+			Color color = null;
+			if (counter <= 8)
+				color = allColors.get(counter);
+			colorMap.put(name, color);
+			counter++;
+		}
+
+		new File("maps").mkdir();
+		BufferedImage image = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = image.createGraphics();
+
+		g2d.setColor(Color.white);
+		g2d.fillRect(0, 0, 1000, 1000);
+
+		// draw grid lines
+		g2d.setColor(Color.black);
+		for (int i = 10; i <= 1000; i += 100) {
+			g2d.drawLine(i, 0, i, 1000);
+			g2d.drawLine(0, i, 1000, i);
+		}
+		for (int i = 0; i < WORLDSIZE; i++) {
+			for (int j = 0; j < WORLDSIZE; j++) {
+				GameObject objectHere = theWorld[j][i];
+				if (objectHere == null) {
+					// Do nothing
+				} else if (objectHere instanceof Drone) {
+					String name = objectHere.getName();
+					Color color = colorMap.get(name);
+					g2d.setColor(color);
+					g2d.fillOval(j * 10, i * 10, 10, 10);
+				} else if (objectHere instanceof Building) {
+					// TODO - output for buildings
+				}
+			}
+		}
+		writeImage(image, "maps/Map-Turn" + turn);
+		// g2d.dispose();
+	}
+
+	private void addColors(ArrayList<Color> allColors) {
+		allColors.add(Color.blue);
+		allColors.add(Color.orange);
+		allColors.add(Color.red);
+		allColors.add(Color.green);
+		allColors.add(Color.darkGray);
+		allColors.add(Color.yellow);
+		allColors.add(Color.cyan);
+		allColors.add(Color.magenta);
+	}
+
+	private void writeImage(BufferedImage image, String fileName) {
+		try {
+			String ext = "png"; // bmp, gif, png, jpg okay
+			File file = new File(fileName + "." + ext);
+			javax.imageio.ImageIO.write(image, ext, file);
+		} catch (IOException e) {
+			System.out.println("write error: " + e.getMessage());
+		}
 	}
 }

@@ -2,8 +2,10 @@ package net.grosinger.nomads;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.security.SecureRandom;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -34,7 +36,7 @@ public class InitializeGame {
 
 		// Obtain a list of the classes that exist in the directory
 		String[] classesToLoad = generateList();
-		if(classesToLoad.length == 0){
+		if (classesToLoad.length == 0) {
 			System.out.println("No Drones to load");
 			Nomads.running = false;
 		}
@@ -66,10 +68,12 @@ public class InitializeGame {
 						// Create new GameObject
 						// TODO - This will break if it loads a class from a jar
 						// that does not extend Drone
-						GameObject newDrone = (GameObject) c.newInstance();
-						newDrone.setName(className);
+						GameObject newGameObject = (GameObject) c.newInstance();
+						newGameObject.setName(className);
+						Drone newDrone = (Drone) newGameObject;
+						newDrone.setUID(generateUID());
 
-						createNewDrone(newDrone);
+						createNewDrone(newGameObject);
 
 						System.out.println("Class loaded sucessfully");
 					} catch (Exception e) {
@@ -117,6 +121,16 @@ public class InitializeGame {
 		} else {
 			return children;
 		}
+	}
+
+	/**
+	 * Creates a unique identifier for each drone that is loaded
+	 * 
+	 * @return <code>String</code>- UID
+	 */
+	private static String generateUID() {
+		SecureRandom random = new SecureRandom();
+		return new BigInteger(130, random).toString(32);
 	}
 
 	/**

@@ -30,7 +30,7 @@ public class DroneTeam {
 	/**
 	 * Class Constructor
 	 * 
-	 * @param firstDrone
+	 * @param firstList
 	 *            <code>DroneListItem</code> that will be the first Drone
 	 */
 	public DroneTeam(DroneListItem firstList) {
@@ -105,7 +105,7 @@ public class DroneTeam {
 	/**
 	 * Sets the last DroneListItem to that provided
 	 * 
-	 * @param theFirst
+	 * @param theLast
 	 *            <code>DroneListItem</code> to be made last
 	 */
 	public void setLast(DroneListItem theLast) {

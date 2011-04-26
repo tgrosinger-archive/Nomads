@@ -107,6 +107,11 @@ public class DroneTools {
 		return worldReference.inSafeZone(getX(), getY());
 	}
 	
+	/**
+	 * Retrieve a list of all Drones that are visible within your sight range.  (Sight range can be upgraded)
+	 * 
+	 * @return ArrayList of Neighbors
+	 */
 	public ArrayList<Neighbor> checkRadar(){
 		ArrayList<Neighbor> neighbors = new ArrayList<Neighbor>();
 		int maxDistance = listItem.getVisibleDistance();

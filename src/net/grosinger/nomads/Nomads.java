@@ -63,7 +63,11 @@ public class Nomads {
 		if (DEBUGSTATUS)
 			System.out.println("Game loop starting...");
 
+		int turn = 0;
+
 		while (running) {
+
+			turn++;
 
 			long startTime = System.currentTimeMillis();
 
@@ -75,6 +79,8 @@ public class Nomads {
 
 			if (DEBUGSTATUS)
 				System.out.println("Moves took " + (endTime - startTime) + "milliseconds");
+
+			awesomeWorld.generateMap(turn);
 
 			try {
 				Thread.sleep(200);

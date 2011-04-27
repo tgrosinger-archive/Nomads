@@ -59,10 +59,7 @@ public class DroneTools {
 	 * @return <code>Boolean</code> - can move
 	 */
 	public boolean canMoveNorth() {
-		if (getY() < worldSize - 1)
-			return worldReference.getWorldGrid()[getX()][getY() + 1] == null;
-		else
-			return false;
+		return canMoveHelper(getX(), getY() + 1);
 	}
 
 	/**
@@ -71,10 +68,7 @@ public class DroneTools {
 	 * @return <code>Boolean</code> - can move
 	 */
 	public boolean canMoveSouth() {
-		if (getY() > 0)
-			return worldReference.getWorldGrid()[getX()][getY() - 1] == null;
-		else
-			return false;
+		return canMoveHelper(getX(), getY() - 1);
 	}
 
 	/**
@@ -83,10 +77,7 @@ public class DroneTools {
 	 * @return <code>Boolean</code> - can move
 	 */
 	public boolean canMoveEast() {
-		if (getX() < worldSize - 1)
-			return worldReference.getWorldGrid()[getX() + 1][getY()] == null;
-		else
-			return false;
+		return canMoveHelper(getX() + 1, getY());
 	}
 
 	/**
@@ -95,9 +86,29 @@ public class DroneTools {
 	 * @return <code>Boolean</code> - can move
 	 */
 	public boolean canMoveWest() {
-		if (getX() > 0)
-			return worldReference.getWorldGrid()[getX() - 1][getY()] == null;
-		else
+		return canMoveHelper(getX() - 1, getY());
+	}
+
+	/**
+	 * Does actual checking to see if a space is able to be occupied
+	 * 
+	 * @param x
+	 *            - X index
+	 * @param y
+	 *            - Y index
+	 * @return <code>boolean</code>
+	 */
+	private boolean canMoveHelper(int x, int y) {
+		// Account for being able to move onto MoneyPiles and Objectives
+
+		if (getY() < worldSize - 1) {
+			GameObject objectHere = worldReference.getWorld()[getX()][getY() + 1];
+			if (objectHere == null || objectHere instanceof MoneyPile || objectHere instanceof Objective)
+				return true;
+			else
+				return false;
+
+		} else
 			return false;
 	}
 
@@ -147,7 +158,11 @@ public class DroneTools {
 	 */
 	public House createHouse() {
 		if (hasEnoughCash(Nomads.HOUSEPRICE)) {
-			House newHouse = new House(Structure.HOUSE, getX() + 1, getY(), referredDrone.getName());
+			// Find the closest spot to you that is open
+			Point intendedPoint = new Point(getX(), getY());
+			findEmptyPoint(intendedPoint);
+
+			House newHouse = new House(Structure.HOUSE, intendedPoint.getX(), intendedPoint.getY(), referredDrone.getName());
 			worldReference.placeNewBuilding(newHouse);
 			currentTeam.deductFromBalance(Nomads.HOUSEPRICE);
 			return newHouse;
@@ -164,12 +179,58 @@ public class DroneTools {
 	 */
 	public void createNewDrone() {
 		if (hasEnoughCash(Nomads.DRONEPRICE)) {
-			currentTeam.createNewDrone(listItem);
+			Point location = new Point(getX(), getY());
+			currentTeam.createNewDrone(listItem, location);
 			currentTeam.deductFromBalance(Nomads.DRONEPRICE);
 			// TODO - Implement time to create new drone
 			// Creating a drone should take many turns. Their drone will remain
 			// immobile while drone is constructed.
 		}
+	}
+
+	/**
+	 * Find "closest" point that is available to the point provided
+	 * 
+	 * @param currentPoint
+	 *            - Location of drone
+	 * @return <code>Point</code>
+	 */
+	private Point findEmptyPoint(Point currentPoint) {
+		// Current point is where the drone is
+		boolean validSpace = worldReference.getObjectAt(currentPoint.getX(), currentPoint.getY()) == null;
+		Point tryThis = new Point(currentPoint.getX(), currentPoint.getY());
+		int outX = 1;
+		int outY = 0;
+		int multiplier = 1;
+
+		while (!validSpace) {
+			tryThis.setX(currentPoint.getX() + (outX * multiplier));
+			tryThis.setY(currentPoint.getY() + (outY * multiplier));
+			if (worldReference.getObjectAt(tryThis.getX(), tryThis.getY()) == null)
+				validSpace = true;
+			else {
+				if (outX == 1 && outY == 0) {
+					outY = 1;
+				} else if (outX == 1 && outY == 1)
+					outX = 0;
+				else if (outX == 0 && outY == 1)
+					outX = -1;
+				else if (outX == -1 && outY == 1)
+					outY = 0;
+				else if (outX == -1 && outY == 0)
+					outY = -1;
+				else if (outX == -1 && outY == -1)
+					outX = 0;
+				else if (outX == 0 && outY == -1)
+					outX = 1;
+				else if (outX == 1 && outY == -1) {
+					outY = 0;
+					outX = 1;
+					multiplier++;
+				}
+			}
+		}
+		return tryThis;
 	}
 
 	/**
@@ -187,5 +248,14 @@ public class DroneTools {
 			return false;
 		} else
 			return true;
+	}
+
+	/**
+	 * Find out how much money your team has
+	 * 
+	 * @return <code>int</code> - Team Balance
+	 */
+	public int getTeamBalance() {
+		return currentTeam.getBalance();
 	}
 }

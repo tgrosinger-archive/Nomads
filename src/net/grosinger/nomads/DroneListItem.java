@@ -359,6 +359,15 @@ public class DroneListItem {
 			break;
 		}
 		}
+		// Check to see if there is a MoneyPile or Objective there
+		GameObject objectHere = Nomads.awesomeWorld.getObjectAt(getX() + amountE, getY() + amountN);
+		if (objectHere instanceof MoneyPile) {
+			int value = ((MoneyPile) objectHere).getValue();
+			team.increaseBalance(value);
+			Nomads.awesomeWorld.generateMoneyPile();
+		} else if (objectHere instanceof Objective) {
+			// TODO - Implement moving onto Objective
+		}
 
 		// Make the move
 		Nomads.awesomeWorld.moveObjectAt(getX(), getY(), amountN, amountE);

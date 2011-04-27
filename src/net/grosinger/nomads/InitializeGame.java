@@ -163,4 +163,14 @@ public class InitializeGame {
 		if (Nomads.DEBUGSTATUS)
 			System.out.println("Building placement complete");
 	}
+
+	/**
+	 * Generate the money piles and place them on the map
+	 */
+	public static void initializeMoneyPiles() {
+		for(int i = 0; i < Nomads.MONEYPILES; i++){
+			MoneyPile newPile = new MoneyPile();
+			Nomads.awesomeWorld.setObjectRandom(newPile);
+		}
+	}
 }

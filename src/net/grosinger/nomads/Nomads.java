@@ -34,6 +34,16 @@ public class Nomads {
 	 */
 	public static final int DRONEPRICE = 150;
 
+	/**
+	 * How many turns does it take to create a drone or house?
+	 */
+	public static final int CREATIONTIME = 200;
+
+	/**
+	 * How many randomly generated money piles should there be?
+	 */
+	public static final int MONEYPILES = 30;
+
 	public static void main(String[] args) {
 		if (DEBUGSTATUS)
 			System.out.println("Game initialization beginning...");

@@ -25,7 +25,7 @@ public class World {
 	/**
 	 * The 2D array of the entire world
 	 */
-	private GameObject theWorld[][];
+	private GameObject[][] theWorld;
 
 	/**
 	 * All drones will start at Y=20. Will then move East from X=40
@@ -74,7 +74,7 @@ public class World {
 	 * 
 	 * @return theWorld
 	 */
-	public GameObject[][] getWorldGrid() {
+	public GameObject[][] getWorld() {
 		return theWorld;
 	}
 
@@ -218,6 +218,14 @@ public class World {
 		// TODO - Implement buildingsInRange
 		return null;
 	}
+	
+	/**
+	 * Generates a new MoneyPile at random location
+	 */
+	public void generateMoneyPile(){
+		MoneyPile newPile = new MoneyPile();
+		setObjectRandom(newPile);
+	}
 
 	/**
 	 * Outputs an HTML file showing the world
@@ -251,6 +259,9 @@ public class World {
 			g2d.drawLine(i, 0, i, 1000);
 			g2d.drawLine(0, i, 1000, i);
 		}
+		g2d.drawLine(999, 0, 999, 1000);
+		g2d.drawLine(0, 999, 1000, 999);
+
 		for (int i = 0; i < WORLDSIZE; i++) {
 			for (int j = 0; j < WORLDSIZE; j++) {
 				GameObject objectHere = theWorld[j][i];
@@ -266,6 +277,8 @@ public class World {
 					// World owned buildings should be black
 					g2d.setColor(Color.black);
 					g2d.fillRect(j * 10, i * 10, 10, 10);
+				} else if (objectHere instanceof MoneyPile) {
+					// TODO - Implement mapping of MoneyPiles
 				}
 			}
 		}

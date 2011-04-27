@@ -241,8 +241,9 @@ public class DroneTeam {
 	 * 
 	 * @param listItem
 	 *            - Drone that issued the request
+	 * @param location
 	 */
-	public void createNewDrone(DroneListItem listItem) {
+	public void createNewDrone(DroneListItem listItem, Point location) {
 		Class<? extends Drone> c = listItem.getCurrent().getClass();
 		Drone newDrone = null;
 		try {
@@ -252,11 +253,16 @@ public class DroneTeam {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		
+
 		newDrone.setName(getName());
 		newDrone.setUID(InitializeGame.generateUID());
-		
+
 		DroneListItem newListItem = new DroneListItem(null, last, newDrone, this);
 		addToEnd(newListItem);
+
+		newListItem.setX(location.getX());
+		newListItem.setY(location.getY());
+
+		Nomads.awesomeWorld.setObjectAt(location.getX(), location.getY(), newDrone);
 	}
 }

@@ -380,15 +380,23 @@ public class DroneListItem {
 		// Check to see if there is a MoneyPile or Objective there
 		GameObject objectHere = Nomads.awesomeWorld.getObjectAt(getX() + amountE, getY() + amountN);
 
-		if (inventory.size() < cargoSpace) {
-			if (objectHere instanceof MoneyPile) {
-				inventory.add(objectHere);
-			} else if (objectHere instanceof Objective) {
-				// TODO - Check to see that this drone is the owner of that
-				// Objective
+		if (objectHere != null) {
+			if (inventory.size() < cargoSpace) {
+				if (objectHere instanceof MoneyPile) {
+					inventory.add(objectHere);
+				} else if (objectHere instanceof Objective) {
+					String objUID = ((Objective) objectHere).getUID();
+					String droneUID = current.getUID();
+
+					if (objUID.equals(droneUID)) {
+						inventory.add(objectHere);
+					} else {
+						return;
+					}
+				}
+			} else {
+				return;
 			}
-		} else {
-			// TODO - Inventory is full, do not allow move
 		}
 
 		// Make the move

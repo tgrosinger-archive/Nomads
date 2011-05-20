@@ -114,6 +114,8 @@ public class World {
 	 */
 	public void setObjectAt(int x, int y, GameObject newItem) {
 		theWorld[x][y] = newItem;
+		// TODO - Make sure this spot is free.
+		// If it is not, then move somewhere close by
 	}
 
 	/**
@@ -226,6 +228,33 @@ public class World {
 	public void generateMoneyPile() {
 		MoneyPile newPile = new MoneyPile();
 		setObjectRandom(newPile);
+	}
+
+	/**
+	 * Create a newObjective for the given UID. Returns a point that is randomly
+	 * close to the actual location of the Objective
+	 * 
+	 * @param UID
+	 *            - The UID of the Drone that is allowed to pick it up.
+	 * @return - <code>Point</code> - Within 20x20 of the Objective.
+	 */
+	public Point generateObjective(String UID) {
+		// Min + (int)(Math.random() * ((Max - Min) + 1))
+		int randX = 0 + (int) (Math.random() * ((getWorldSize() - 0) + 1));
+		int randY = 0 + (int) (Math.random() * ((getWorldSize() - 0) + 1));
+
+		int varY = -10 + (int) (Math.random() * ((10 - -10) + 1));
+		int varX = -10 + (int) (Math.random() * ((10 - -10) + 1));
+
+		int bounty = Nomads.MINOBJECTIVEBOUNTY + (int) (Math.random() * ((Nomads.MAXOBJECTIVEBOUNTY - Nomads.MINOBJECTIVEBOUNTY) + 1));
+
+		Objective newObjective = new Objective(bounty, UID);
+		setObjectAt(randX, randY, newObjective);
+		
+		//Create a point to return that is somewhere nearby the actual location
+		Point pointCloseBy = new Point(randX+varX, randY+varY);
+		
+		return pointCloseBy;
 	}
 
 	/**

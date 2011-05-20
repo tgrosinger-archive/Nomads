@@ -44,6 +44,9 @@ public class Nomads {
 	 */
 	public static final int MONEYPILES = 30;
 
+	public static final int MAXOBJECTIVEBOUNTY = 30;
+	public static final int MINOBJECTIVEBOUNTY = 10;
+
 	public static void main(String[] args) {
 		if (DEBUGSTATUS)
 			System.out.println("Game initialization beginning...");

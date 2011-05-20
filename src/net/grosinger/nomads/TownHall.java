@@ -16,8 +16,13 @@ public class TownHall extends Building {
 				team.increaseBalance(value);
 				Nomads.awesomeWorld.generateMoneyPile();
 			} else if (currentObject instanceof Objective) {
-				// TODO - Implement turning in objective
+				team.increaseBalance(((Objective) currentObject).getBounty());
 			}
+			inventory.remove(currentObject);
 		}
+	}
+	
+	public Point requestNewObjective(String UID){
+		return Nomads.awesomeWorld.generateObjective(UID);
 	}
 }

@@ -381,8 +381,11 @@ public class DroneListItem {
 		GameObject objectHere = Nomads.awesomeWorld.getObjectAt(getX() + amountE, getY() + amountN);
 
 		if (inventory.size() < cargoSpace) {
-			if (objectHere instanceof MoneyPile || objectHere instanceof Objective) {
+			if (objectHere instanceof MoneyPile) {
 				inventory.add(objectHere);
+			} else if (objectHere instanceof Objective) {
+				// TODO - Check to see that this drone is the owner of that
+				// Objective
 			}
 		} else {
 			// TODO - Inventory is full, do not allow move

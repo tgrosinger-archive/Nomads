@@ -62,14 +62,12 @@ public class InitializeGame {
 
 			while (entries.hasMoreElements()) {
 				JarEntry element = entries.nextElement();
-				if (element.getName().endsWith(".class")) {
+				if (element.getName().endsWith(className + ".class")) {
 					try {
 						@SuppressWarnings("rawtypes")
 						Class c = clazzLoader.loadClass(element.getName().replaceAll(".class", "").replaceAll("/", "."));
 
 						// Create new GameObject
-						// TODO - This will break if it loads a class from a jar
-						// that does not extend Drone
 						GameObject newGameObject = (GameObject) c.newInstance();
 						newGameObject.setName(className);
 						Drone newDrone = (Drone) newGameObject;
@@ -168,7 +166,7 @@ public class InitializeGame {
 	 * Generate the money piles and place them on the map
 	 */
 	public static void initializeMoneyPiles() {
-		for(int i = 0; i < Nomads.MONEYPILES; i++){
+		for (int i = 0; i < Nomads.MONEYPILES; i++) {
 			MoneyPile newPile = new MoneyPile();
 			Nomads.awesomeWorld.setObjectRandom(newPile);
 		}

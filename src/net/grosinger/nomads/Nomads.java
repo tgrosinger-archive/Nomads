@@ -129,6 +129,12 @@ public class Nomads {
 		return getWinner();
 	}
 
+	/**
+	 * Output the winning messages
+	 * 
+	 * @param winner
+	 *            - The team that won
+	 */
 	public static void finishGame(DroneTeam winner) {
 		if (winner == null)
 			System.out.println("There was no winner, please play again");
@@ -136,9 +142,31 @@ public class Nomads {
 			System.out.println("The winner was " + winner.getName());
 	}
 
+	/**
+	 * Find the last team alive, or the one with the most money
+	 * 
+	 * @return <code>DroneTeam</code>
+	 */
 	public static DroneTeam getWinner() {
-		// TODO - Implement getWinner
-		return null;
+		// When the last drone in the team is killed it will be removed from the
+		// list
+
+		// If there is only 1 drone left, it is the winner
+		if (allTeams.size() == 1)
+			return allTeams.get(0);
+		else if (allTeams.isEmpty()) {
+			// No winner, this probably won't happen
+			return null;
+		} else {
+			// There were multiple teams left, check their balances
+			DroneTeam winner = null;
+			int highestBalance = 0;
+			for (DroneTeam team : allTeams) {
+				if (team.getBalance() > highestBalance)
+					winner = team;
+			}
+			return winner;
+		}
 	}
 
 	public static DroneListItem droneToListItem(Drone theDrone) {

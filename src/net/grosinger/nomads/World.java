@@ -46,7 +46,8 @@ public class World {
 	}
 
 	/**
-	 * Moves the object at x, y by the specified amount
+	 * Moves the object at x, y by the specified amount. If there is already an
+	 * object there it will overwrite that object.
 	 * 
 	 * @param startingX
 	 *            X index of starting location
@@ -218,11 +219,11 @@ public class World {
 		// TODO - Implement buildingsInRange
 		return null;
 	}
-	
+
 	/**
 	 * Generates a new MoneyPile at random location
 	 */
-	public void generateMoneyPile(){
+	public void generateMoneyPile() {
 		MoneyPile newPile = new MoneyPile();
 		setObjectRandom(newPile);
 	}
@@ -274,11 +275,18 @@ public class World {
 					g2d.fillOval(j * 10, i * 10, 10, 10);
 				} else if (objectHere instanceof Building) {
 					// TODO - Add color-coding to buildings on map
-					// World owned buildings should be black
+					// World owned buildings should be black - use colorMap to
+					// get color for each team
 					g2d.setColor(Color.black);
 					g2d.fillRect(j * 10, i * 10, 10, 10);
 				} else if (objectHere instanceof MoneyPile) {
 					// TODO - Implement mapping of MoneyPiles
+					// Should be black since they are world owned but a
+					// different shape than anything else
+				} else if (objectHere instanceof Objective) {
+					// TODO - Implement mapping of Objective
+					// Should be black since they are world owned but a
+					// different shape than anything else
 				}
 			}
 		}

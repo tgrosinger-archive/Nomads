@@ -165,13 +165,10 @@ public class DroneTools {
 			House newHouse = new House(Structure.HOUSE, intendedPoint.getX(), intendedPoint.getY(), referredDrone.getName());
 			worldReference.placeNewBuilding(newHouse);
 			currentTeam.deductFromBalance(Nomads.HOUSEPRICE);
+			listItem.setWaiting(Nomads.CREATIONTIME);
 			return newHouse;
 		} else
 			return null;
-
-		// TODO - Implement time to create house
-		// Building a house should take many turns. Their drone will remain
-		// immobile while house is constructed.
 	}
 
 	/**
@@ -182,9 +179,7 @@ public class DroneTools {
 			Point location = new Point(getX(), getY());
 			currentTeam.createNewDrone(listItem, location);
 			currentTeam.deductFromBalance(Nomads.DRONEPRICE);
-			// TODO - Implement time to create new drone
-			// Creating a drone should take many turns. Their drone will remain
-			// immobile while drone is constructed.
+			listItem.setWaiting(Nomads.CREATIONTIME);
 		}
 	}
 

@@ -1,16 +1,15 @@
 package net.grosinger.nomads;
 
-/*
- * A class that allows a drone to be part of a linked list
- * Provides reference to the next drone, the previous drone, and the drone object
+import java.util.ArrayList;
+
+/**
+ * A class that allows a drone to be part of a linked list Provides reference to
+ * the next drone, the previous drone, and the drone object
  * 
- * +----------------------------------------------------------+
- * | Most of the inner workings of the program that we do not |
- * | want a drone to have access to will take place here      |
- * +----------------------------------------------------------+
+ * Most of the inner workings of the program that we do not want a drone to have
+ * access to will take place here
  * 
- * Previous --> Towards the first item
- * Next     --> Towards the last item
+ * Previous --> Towards the first item Next --> Towards the last item
  */
 public class DroneListItem {
 	private DroneListItem next;
@@ -31,7 +30,7 @@ public class DroneListItem {
 		N, S, E, W
 	}
 
-	// Stats about this robot
+	// Statistics about this robot
 
 	private int visibleDistance;
 	private int lumaLocatorDistance;
@@ -47,6 +46,8 @@ public class DroneListItem {
 	private int age;
 	private int x;
 	private int y;
+	private int waiting; // Is the drone building another drone or house?
+	private ArrayList<GameObject> inventory;
 
 	/*
 	 * Default constructor, includes all references
@@ -58,6 +59,8 @@ public class DroneListItem {
 		visibleDistance = 15;
 		speed = 1;
 		team = theTeam;
+		waiting = 0;
+		inventory = new ArrayList<GameObject>();
 
 		// Place itself in the world
 		Nomads.awesomeWorld.placeNewDrone(this);
@@ -257,6 +260,16 @@ public class DroneListItem {
 	}
 
 	/**
+	 * Adds the existing waiting time (which should be 0) to the provided time
+	 * 
+	 * @param newWaiting
+	 *            - Amount of time to add to waiting timer
+	 */
+	public void setWaiting(int newWaiting) {
+		waiting += newWaiting;
+	}
+
+	/**
 	 * Increases the Visible Distance by specified amount
 	 * 
 	 * @param amount
@@ -338,7 +351,12 @@ public class DroneListItem {
 
 	// Movement
 
-	public void moveDrone(Direction direction) {
+	private void moveDrone(Direction direction) {
+		if (waiting != 0) {
+			waiting--;
+			return;
+		}
+
 		int amountN = 0;
 		int amountE = 0;
 		switch (direction) {
@@ -361,12 +379,13 @@ public class DroneListItem {
 		}
 		// Check to see if there is a MoneyPile or Objective there
 		GameObject objectHere = Nomads.awesomeWorld.getObjectAt(getX() + amountE, getY() + amountN);
-		if (objectHere instanceof MoneyPile) {
-			int value = ((MoneyPile) objectHere).getValue();
-			team.increaseBalance(value);
-			Nomads.awesomeWorld.generateMoneyPile();
-		} else if (objectHere instanceof Objective) {
-			// TODO - Implement moving onto Objective
+
+		if (inventory.size() < cargoSpace) {
+			if (objectHere instanceof MoneyPile || objectHere instanceof Objective) {
+				inventory.add(objectHere);
+			}
+		} else {
+			// TODO - Inventory is full, do not allow move
 		}
 
 		// Make the move

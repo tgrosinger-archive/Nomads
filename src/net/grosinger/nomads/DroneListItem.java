@@ -36,10 +36,12 @@ public class DroneListItem {
 	private int lumaLocatorDistance;
 	private int objectLocatorDistance;
 	private int reliability;
-	private int defenses;
+	private int attack; // Between 1 and 2 - reflects how well can attack
+	private int defenses; // Between 1 and 2 - reflects ability to block
+							// steal
 	private int speed; // Reflected in movements per turn
 	private int cargoSpace;
-	private int theft;
+	private int theft; // Between 1 and 2 - reflects how well can steal
 
 	// Info about this robot
 
@@ -209,6 +211,10 @@ public class DroneListItem {
 		return team;
 	}
 
+	public boolean getInventoryIsFull() {
+		return inventory.size() >= cargoSpace;
+	}
+
 	/**
 	 * Sets the next DroneListItem in the Linked List
 	 * 
@@ -335,11 +341,11 @@ public class DroneListItem {
 			return true;
 		}
 		case Attack: {
-			// TODO - Implement attack
+			doAttack();
 			return true;
 		}
 		case Steal: {
-			// TODO - Implement steal
+			doSteal();
 			return true;
 		}
 		default: {
@@ -350,6 +356,93 @@ public class DroneListItem {
 	}
 
 	// Movement
+
+	/**
+	 * Finds who the drone wants to attack and attempts to perform attack.
+	 */
+	private void doAttack() {
+		Neighbor victimNeighbor = current.attack();
+
+		if (victimNeighbor == null) {
+			// Seems they did something wrong. Turn wasted.
+			return;
+		}
+
+		DroneListItem victimList = Nomads.UIDToListItem(victimNeighbor.getUID());
+
+		int victimDefence = victimList.getDefenses();
+
+		// Find a random number between 0-100 to determine success.
+		// Min + (int)(Math.random() * ((Max - Min) + 1))
+		int rand = 0 + (int) (Math.random() * ((100 - 0) + 1));
+
+		// Find modified random number based on stats
+		int newRand = rand * (victimDefence - attack) * -1;
+		newRand += rand;
+
+		// If number is <= 35, drone becomes wanted
+		// If number is <= 70, steal fails
+		// If number is > 70, steal
+		// Depending on how much higher than 70, more items will be stolen
+
+		// TODO - Continue implementing attack
+	}
+
+	/**
+	 * Finds who the drone wants to steal from and attempts to perform steal.
+	 */
+	private void doSteal() {
+		Neighbor victimNeighbor = current.steal();
+
+		if (victimNeighbor == null) {
+			// Seems they did something wrong. Turn wasted.
+			return;
+		}
+
+		DroneListItem victimList = Nomads.UIDToListItem(victimNeighbor.getUID());
+
+		int victimDefence = victimList.getDefenses();
+
+		// Find a random number between 0-100 to determine success.
+		// Min + (int)(Math.random() * ((Max - Min) + 1))
+		int rand = 0 + (int) (Math.random() * ((100 - 0) + 1));
+
+		// Find modified random number based on stats
+		int newRand = rand * (victimDefence - theft) * -1;
+		newRand += rand;
+
+		// If number is <= 35, drone becomes wanted
+		// If number is <= 70, steal fails
+		// If number is > 70, steal
+		// Depending on how much higher than 70, more items will be stolen
+
+		int itemsInVictimInventory = victimList.inventory.size();
+		Double percentToTake = .00;
+
+		if (newRand <= 35) {
+			// TODO - Implement wanted
+		} else if (newRand <= 70) {
+			percentToTake = .00;
+		} else if (newRand > 70 && newRand <= 80) {
+			percentToTake = .2;
+		} else if (newRand > 80 && newRand >= 90) {
+			percentToTake = .4;
+		} else if (newRand >= 100 && newRand <= 98) {
+			percentToTake = .7;
+		} else if (newRand > 98) {
+			percentToTake = 1.0;
+		} else {
+			// Not sure what happened here
+		}
+
+		int itemsToTake = (int) Math.ceil(itemsInVictimInventory * percentToTake);
+		while (itemsToTake < 0 && !getInventoryIsFull() && victimList.inventory.size() > 0) {
+			// Min + (int)(Math.random() * ((Max - Min) + 1))
+			int randIndex = 0 + (int) (Math.random() * (((victimList.inventory.size() - 1) - 0) + 1));
+			inventory.add(victimList.inventory.get(randIndex));
+			victimList.inventory.remove(randIndex);
+		}
+	}
 
 	private void moveDrone(Direction direction) {
 		if (waiting != 0) {

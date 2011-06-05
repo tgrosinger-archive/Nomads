@@ -13,14 +13,14 @@ public interface Drone extends GameObject {
 	 * basic info your drone needs.
 	 */
 	public void setDroneTools(DroneTools yourTools);
-	
+
 	/**
 	 * A Unique Identifier
 	 * 
 	 * @param UID
 	 */
 	public void setUID(String UID);
-	
+
 	/**
 	 * Retrieve UID
 	 * 
@@ -36,5 +36,21 @@ public interface Drone extends GameObject {
 	 * with their own.
 	 */
 	public EnumMove move();
+
+	/**
+	 * Asks for which drone should be stolen from. Will be called whenever the
+	 * Move method returns Steal.
+	 * 
+	 * @return <code>Neighbor</code>;
+	 */
+	public Neighbor steal();
+
+	/**
+	 * Asks for which drone should be attacked. Will be called whenever the Move
+	 * method returns Attack.
+	 * 
+	 * @return <code>Neighbor</code>
+	 */
+	public Neighbor attack();
 
 }

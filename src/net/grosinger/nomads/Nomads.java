@@ -172,10 +172,33 @@ public class Nomads {
 		}
 	}
 
+	/**
+	 * Matches a Drone to a DroneListItem
+	 * 
+	 * @param theDrone
+	 *            <code>Drone</code> to be found
+	 * @return <code>DroneListItem</code>
+	 */
 	public static DroneListItem droneToListItem(Drone theDrone) {
 		for (DroneTeam team : allTeams) {
 			DroneListItem current = team.getFirst();
-			if (current.getCurrent().getUID() == theDrone.getUID())
+			if (current.getCurrent().getUID().equals(theDrone.getUID()))
+				return current;
+		}
+		return null;
+	}
+
+	/**
+	 * Matches a UID to a Drone
+	 * 
+	 * @param UID
+	 *            <code>String</code> UID that needs to be found
+	 * @return <code>DroneListItem</code>
+	 */
+	public static DroneListItem UIDToListItem(String UID) {
+		for (DroneTeam team : allTeams) {
+			DroneListItem current = team.getFirst();
+			if (current.getCurrent().getUID().equals(UID))
 				return current;
 		}
 		return null;

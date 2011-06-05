@@ -140,7 +140,7 @@ public class DroneTools {
 					if (objectHere instanceof Drone) {
 						Drone droneHere = (Drone) objectHere;
 						DroneListItem listItemHere = Nomads.droneToListItem(droneHere);
-						Neighbor aWildNeighbor = new Neighbor(listItemHere.getX(), listItemHere.getY(), droneHere.getName());
+						Neighbor aWildNeighbor = new Neighbor(listItemHere.getX(), listItemHere.getY(), droneHere.getName(), droneHere.getUID());
 						neighbors.add(aWildNeighbor);
 					}
 				}

@@ -8,6 +8,7 @@ public class Neighbor implements GameObject {
 	private String name;
 	private int x;
 	private int y;
+	private String UID;
 
 	/**
 	 * Class Constructor
@@ -19,10 +20,11 @@ public class Neighbor implements GameObject {
 	 * @param name
 	 *            - Name of the Drone
 	 */
-	public Neighbor(int x, int y, String name) {
+	public Neighbor(int x, int y, String name, String UID) {
 		this.x = x;
 		this.y = y;
 		this.name = name;
+		this.UID = UID;
 	}
 
 	@Override
@@ -46,6 +48,15 @@ public class Neighbor implements GameObject {
 	 */
 	public int getY() {
 		return y;
+	}
+
+	/**
+	 * Retrieve UID of this Neighbor
+	 * 
+	 * @return <code>String</code> - UID
+	 */
+	public String getUID() {
+		return UID;
 	}
 
 	@Override

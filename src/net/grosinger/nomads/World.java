@@ -113,9 +113,57 @@ public class World {
 	 *            GameObject to be placed
 	 */
 	public void setObjectAt(int x, int y, GameObject newItem) {
-		theWorld[x][y] = newItem;
-		// TODO - Make sure this spot is free.
-		// If it is not, then move somewhere close by
+		if (theWorld[x][y] == null) {
+			theWorld[x][y] = newItem;
+		} else {
+			Point here = findEmptyPoint(new Point(x, y));
+			theWorld[here.getX()][here.getY()] = newItem;
+		}
+	}
+
+	/**
+	 * Find "closest" point that is available to the point provided
+	 * 
+	 * @param currentPoint
+	 *            - Location of drone
+	 * @return <code>Point</code>
+	 */
+	private Point findEmptyPoint(Point currentPoint) {
+		// Current point is where the drone is
+		boolean validSpace = theWorld[currentPoint.getX()][currentPoint.getY()] == null;
+		Point tryThis = new Point(currentPoint.getX(), currentPoint.getY());
+		int outX = 1;
+		int outY = 0;
+		int multiplier = 1;
+
+		while (!validSpace) {
+			tryThis.setX(currentPoint.getX() + (outX * multiplier));
+			tryThis.setY(currentPoint.getY() + (outY * multiplier));
+			if (theWorld[tryThis.getX()][tryThis.getY()] == null)
+				validSpace = true;
+			else {
+				if (outX == 1 && outY == 0) {
+					outY = 1;
+				} else if (outX == 1 && outY == 1)
+					outX = 0;
+				else if (outX == 0 && outY == 1)
+					outX = -1;
+				else if (outX == -1 && outY == 1)
+					outY = 0;
+				else if (outX == -1 && outY == 0)
+					outY = -1;
+				else if (outX == -1 && outY == -1)
+					outX = 0;
+				else if (outX == 0 && outY == -1)
+					outX = 1;
+				else if (outX == 1 && outY == -1) {
+					outY = 0;
+					outX = 1;
+					multiplier++;
+				}
+			}
+		}
+		return tryThis;
 	}
 
 	/**
@@ -207,7 +255,8 @@ public class World {
 	}
 
 	/**
-	 * Searches for any buildings within range spaces of x,y
+	 * Searches for any buildings within range spaces of x,y. This returns a
+	 * building and should not be given to a Drone
 	 * 
 	 * @param x
 	 *            - X Index
@@ -218,8 +267,17 @@ public class World {
 	 * @return <code>ArrayList(building)</code>
 	 */
 	public ArrayList<Building> buildingsInRange(int x, int y, int range) {
-		// TODO - Implement buildingsInRange
-		return null;
+		ArrayList<Building> allBuildings = new ArrayList<Building>();
+
+		for (int i = -range; i <= range; i++) {
+			for (int j = -range; j <= range; j++) {
+				GameObject objectHere = theWorld[x + i][y + j];
+				if (objectHere != null && objectHere instanceof Building) {
+					allBuildings.add((Building) objectHere);
+				}
+			}
+		}
+		return allBuildings;
 	}
 
 	/**
@@ -250,10 +308,10 @@ public class World {
 
 		Objective newObjective = new Objective(bounty, UID);
 		setObjectAt(randX, randY, newObjective);
-		
-		//Create a point to return that is somewhere nearby the actual location
-		Point pointCloseBy = new Point(randX+varX, randY+varY);
-		
+
+		// Create a point to return that is somewhere nearby the actual location
+		Point pointCloseBy = new Point(randX + varX, randY + varY);
+
 		return pointCloseBy;
 	}
 

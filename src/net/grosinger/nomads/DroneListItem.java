@@ -11,6 +11,10 @@ import java.util.ArrayList;
  * 
  * Previous --> Towards the first item Next --> Towards the last item
  */
+/**
+ * @author tgrosinger
+ * 
+ */
 public class DroneListItem {
 	private DroneListItem next;
 	private DroneListItem previous;
@@ -49,6 +53,7 @@ public class DroneListItem {
 	private int x;
 	private int y;
 	private int waiting; // Is the drone building another drone or house?
+	private boolean wanted; // Is the drone wanted by the police?
 	private ArrayList<GameObject> inventory;
 
 	/*
@@ -203,6 +208,15 @@ public class DroneListItem {
 	}
 
 	/**
+	 * Returns if the drone is wanted
+	 * 
+	 * @return <code>boolean</code>
+	 */
+	public boolean getWanted() {
+		return wanted;
+	}
+
+	/**
 	 * Retrieve reference to the team this drone belongs to
 	 * 
 	 * @return <code>DroneTeam</code>
@@ -211,9 +225,15 @@ public class DroneListItem {
 		return team;
 	}
 
+	/**
+	 * Find if the inventory is full
+	 * 
+	 * @return <code>Boolean</code>
+	 */
 	public boolean getInventoryIsFull() {
 		return inventory.size() >= cargoSpace;
 	}
+	
 
 	/**
 	 * Sets the next DroneListItem in the Linked List
@@ -224,6 +244,7 @@ public class DroneListItem {
 	public void setNext(DroneListItem theNext) {
 		next = theNext;
 	}
+	
 
 	/**
 	 * Sets the previous DroneListItem in the Linked List
@@ -293,6 +314,13 @@ public class DroneListItem {
 	}
 
 	// Actions
+
+	/**
+	 * Removes this drone from the team
+	 */
+	public void die() {
+		team.removeDrone(this);
+	}
 
 	/**
 	 * Will ask the Drone what direction it would like to move
@@ -381,11 +409,19 @@ public class DroneListItem {
 		newRand += rand;
 
 		// If number is <= 35, drone becomes wanted
-		// If number is <= 70, steal fails
-		// If number is > 70, steal
-		// Depending on how much higher than 70, more items will be stolen
+		// If number is <= 70, attack fails
+		// If number is > 70, kill
 
-		// TODO - Continue implementing attack
+		if (newRand <= 35) {
+			// TODO - Implement wanted
+		} else if (newRand <= 70) {
+			// Attack Failed
+		} else if (newRand > 70) {
+			// Drone Killed
+			killOtherDrone(victimList);
+		} else {
+			// Not sure what happened here
+		}
 	}
 
 	/**
@@ -444,6 +480,12 @@ public class DroneListItem {
 		}
 	}
 
+	/**
+	 * Move the drone in a specified direction
+	 * 
+	 * @param direction
+	 *            <code>Direction</code> to move
+	 */
 	private void moveDrone(Direction direction) {
 		if (waiting != 0) {
 			waiting--;
@@ -500,5 +542,23 @@ public class DroneListItem {
 			setY(getY() + amountN);
 		if (amountE != 0)
 			setX(getX() + amountE);
+	}
+
+	/**
+	 * Kills another drone. Will take a random assortment of the items in their
+	 * inventory.
+	 * 
+	 * @param victim
+	 *            - <code>DroneListItem</code> to be killed
+	 */
+	private void killOtherDrone(DroneListItem victim) {
+		while (inventory.size() < cargoSpace && !victim.inventory.isEmpty()) {
+			// Take items from their inventory
+			int randIndex = 0 + (int) (Math.random() * (((victim.inventory.size() - 1) - 0) + 1));
+			inventory.add(victim.inventory.get(randIndex));
+			victim.inventory.remove(randIndex);
+		}
+
+		victim.die();
 	}
 }

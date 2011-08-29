@@ -60,8 +60,15 @@ public class DroneListItem {
 		next = theNext;
 		previous = thePrevious;
 		current = theCurrent;
-		visibleDistance = 15;
-		speed = 1;
+		visibleDistance = Nomads.BASE_VISIBLEDISTANCE;
+		lumaLocatorDistance = Nomads.BASE_LUMALOCATORDISTANCE;
+		objectLocatorDistance = Nomads.BASE_OBJECTLOCATORDISTANCE;
+		reliability = Nomads.BASE_RELIABILITY;
+		attack = Nomads.BASE_ATTACK;
+		defenses = Nomads.BASE_DEFENSES;
+		speed = Nomads.BASE_SPEED;
+		cargoSpace = Nomads.BASE_CARGOSPACE;
+		theft = Nomads.BASE_THEFT;
 		team = theTeam;
 		waiting = 0;
 		inventory = new ArrayList<GameObject>();
@@ -486,6 +493,7 @@ public class DroneListItem {
 	private void doUpgrade() {
 		Upgrade newUpgrade = current.upgrade();
 		int price = newUpgrade.getPrice();
+		//TODO - Hand price of upgrade being null
 
 		if (team.getBalance() >= price) {
 			// TODO - Implement purchasing upgrades

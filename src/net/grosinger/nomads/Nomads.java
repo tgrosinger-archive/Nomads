@@ -46,6 +46,16 @@ public class Nomads {
 
 	public static final int MAXOBJECTIVEBOUNTY = 30;
 	public static final int MINOBJECTIVEBOUNTY = 10;
+	
+	public static final int BASE_VISIBLEDISTANCE = 15;
+	public static final int BASE_LUMALOCATORDISTANCE = 10;
+	public static final int BASE_OBJECTLOCATORDISTANCE = 10;
+	public static final int BASE_RELIABILITY = 1;
+	public static final int BASE_ATTACK = 1;
+	public static final int BASE_DEFENSES = 1;
+	public static final int BASE_SPEED = 1;
+	public static final int BASE_CARGOSPACE = 3;
+	public static final int BASE_THEFT = 1;
 
 	public static void main(String[] args) {
 		if (DEBUGSTATUS)

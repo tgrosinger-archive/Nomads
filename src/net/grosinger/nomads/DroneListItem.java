@@ -11,10 +11,6 @@ import java.util.ArrayList;
  * 
  * Previous --> Towards the first item Next --> Towards the last item
  */
-/**
- * @author tgrosinger
- * 
- */
 public class DroneListItem {
 	private DroneListItem next;
 	private DroneListItem previous;
@@ -59,7 +55,8 @@ public class DroneListItem {
 	/*
 	 * Default constructor, includes all references
 	 */
-	public DroneListItem(DroneListItem theNext, DroneListItem thePrevious, Drone theCurrent, DroneTeam theTeam) {
+	public DroneListItem(DroneListItem theNext, DroneListItem thePrevious,
+			Drone theCurrent, DroneTeam theTeam) {
 		next = theNext;
 		previous = thePrevious;
 		current = theCurrent;
@@ -233,7 +230,6 @@ public class DroneListItem {
 	public boolean getInventoryIsFull() {
 		return inventory.size() >= cargoSpace;
 	}
-	
 
 	/**
 	 * Sets the next DroneListItem in the Linked List
@@ -244,7 +240,6 @@ public class DroneListItem {
 	public void setNext(DroneListItem theNext) {
 		next = theNext;
 	}
-	
 
 	/**
 	 * Sets the previous DroneListItem in the Linked List
@@ -365,7 +360,7 @@ public class DroneListItem {
 				return false;
 		}
 		case Upgrade: {
-			// TODO - Implement upgrade
+			doUpgrade();
 			return true;
 		}
 		case Attack: {
@@ -396,7 +391,8 @@ public class DroneListItem {
 			return;
 		}
 
-		DroneListItem victimList = Nomads.UIDToListItem(victimNeighbor.getUID());
+		DroneListItem victimList = Nomads
+				.UIDToListItem(victimNeighbor.getUID());
 
 		int victimDefence = victimList.getDefenses();
 
@@ -413,7 +409,7 @@ public class DroneListItem {
 		// If number is > 70, kill
 
 		if (newRand <= 35) {
-			// TODO - Implement wanted
+			wanted = true;
 		} else if (newRand <= 70) {
 			// Attack Failed
 		} else if (newRand > 70) {
@@ -435,7 +431,8 @@ public class DroneListItem {
 			return;
 		}
 
-		DroneListItem victimList = Nomads.UIDToListItem(victimNeighbor.getUID());
+		DroneListItem victimList = Nomads
+				.UIDToListItem(victimNeighbor.getUID());
 
 		int victimDefence = victimList.getDefenses();
 
@@ -456,7 +453,7 @@ public class DroneListItem {
 		Double percentToTake = .00;
 
 		if (newRand <= 35) {
-			// TODO - Implement wanted
+			wanted = true;
 		} else if (newRand <= 70) {
 			percentToTake = .00;
 		} else if (newRand > 70 && newRand <= 80) {
@@ -471,12 +468,31 @@ public class DroneListItem {
 			// Not sure what happened here
 		}
 
-		int itemsToTake = (int) Math.ceil(itemsInVictimInventory * percentToTake);
-		while (itemsToTake < 0 && !getInventoryIsFull() && victimList.inventory.size() > 0) {
+		int itemsToTake = (int) Math.ceil(itemsInVictimInventory
+				* percentToTake);
+		while (itemsToTake < 0 && !getInventoryIsFull()
+				&& victimList.inventory.size() > 0) {
 			// Min + (int)(Math.random() * ((Max - Min) + 1))
-			int randIndex = 0 + (int) (Math.random() * (((victimList.inventory.size() - 1) - 0) + 1));
+			int randIndex = 0 + (int) (Math.random() * (((victimList.inventory
+					.size() - 1) - 0) + 1));
 			inventory.add(victimList.inventory.get(randIndex));
 			victimList.inventory.remove(randIndex);
+		}
+	}
+
+	/**
+	 * Finds the upgrade that the drone would like to purchase.
+	 */
+	private void doUpgrade() {
+		Upgrade newUpgrade = current.upgrade();
+		int price = newUpgrade.getPrice();
+
+		if (team.getBalance() >= price) {
+			// TODO - Implement purchasing upgrades
+			team.deductFromBalance(price);
+		} else {
+			// Not enough money, do nothing.
+			return;
 		}
 	}
 
@@ -513,7 +529,8 @@ public class DroneListItem {
 		}
 		}
 		// Check to see if there is a MoneyPile or Objective there
-		GameObject objectHere = Nomads.awesomeWorld.getObjectAt(getX() + amountE, getY() + amountN);
+		GameObject objectHere = Nomads.awesomeWorld.getObjectAt(getX()
+				+ amountE, getY() + amountN);
 
 		if (objectHere != null) {
 			if (inventory.size() < cargoSpace) {
@@ -554,7 +571,8 @@ public class DroneListItem {
 	private void killOtherDrone(DroneListItem victim) {
 		while (inventory.size() < cargoSpace && !victim.inventory.isEmpty()) {
 			// Take items from their inventory
-			int randIndex = 0 + (int) (Math.random() * (((victim.inventory.size() - 1) - 0) + 1));
+			int randIndex = 0 + (int) (Math.random() * (((victim.inventory
+					.size() - 1) - 0) + 1));
 			inventory.add(victim.inventory.get(randIndex));
 			victim.inventory.remove(randIndex);
 		}

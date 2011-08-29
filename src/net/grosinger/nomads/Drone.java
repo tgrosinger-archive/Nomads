@@ -52,5 +52,13 @@ public interface Drone extends GameObject {
 	 * @return <code>Neighbor</code>
 	 */
 	public Neighbor attack();
+	
+	/**
+	 * Asks what the drone would like to upgrade.  Will be called whenever the Move
+	 * method returns Upgrade.
+	 * 
+	 * @return <code>Upgrade</code>
+	 */
+	public Upgrade upgrade();
 
 }

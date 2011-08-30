@@ -147,6 +147,15 @@ public class DroneListItem {
 	}
 
 	/**
+	 * Retrieve the attack factor of this drone
+	 * 
+	 * @return <code>int</code>
+	 */
+	public int getAttack() {
+		return attack;
+	}
+
+	/**
 	 * Retrieve the defenses factor of this drone
 	 * 
 	 * @return <code>int</code>
@@ -216,7 +225,7 @@ public class DroneListItem {
 	 * 
 	 * @return <code>boolean</code>
 	 */
-	public boolean getWanted() {
+	public boolean isWanted() {
 		return wanted;
 	}
 
@@ -489,15 +498,61 @@ public class DroneListItem {
 
 	/**
 	 * Finds the upgrade that the drone would like to purchase.
+	 * Determines if upgrade is possible and performs action accordingly
 	 */
 	private void doUpgrade() {
 		Upgrade newUpgrade = current.upgrade();
-		int price = newUpgrade.getPrice();
-		//TODO - Hand price of upgrade being null
+		Integer price = newUpgrade.getPrice();
+		if (price == null) {
+			// Invalid upgrade selection, turn lost.
+			return;
+		}
 
 		if (team.getBalance() >= price) {
-			// TODO - Implement purchasing upgrades
+			switch (newUpgrade.getUpgradeType()) {
+			case visibleDistance: {
+				visibleDistance++;
+				break;
+			}
+			case lumaLocatorDistance: {
+				lumaLocatorDistance++;
+				break;
+			}
+			case objectLocatorDistance: {
+				objectLocatorDistance++;
+				break;
+			}
+			case reliability: {
+				reliability++;
+				break;
+			}
+			case attack: {
+				attack++;
+				break;
+			}
+			case defenses: {
+				defenses++;
+				break;
+			}
+			case speed: {
+				speed++;
+				break;
+			}
+			case cargoSpace: {
+				cargoSpace++;
+				break;
+			}
+			case theft: {
+				theft++;
+				break;
+			}
+			default: {
+				// Must specify an Upgrade Type
+			}
+			}
+
 			team.deductFromBalance(price);
+			return;
 		} else {
 			// Not enough money, do nothing.
 			return;

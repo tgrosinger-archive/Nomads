@@ -497,8 +497,8 @@ public class DroneListItem {
 	}
 
 	/**
-	 * Finds the upgrade that the drone would like to purchase.
-	 * Determines if upgrade is possible and performs action accordingly
+	 * Finds the upgrade that the drone would like to purchase. Determines if
+	 * upgrade is possible and performs action accordingly
 	 */
 	private void doUpgrade() {
 		Upgrade newUpgrade = current.upgrade();
@@ -575,11 +575,11 @@ public class DroneListItem {
 		int amountE = 0;
 		switch (direction) {
 		case N: {
-			amountN = 1;
+			amountN = -1;
 			break;
 		}
 		case S: {
-			amountN = -1;
+			amountN = 1;
 			break;
 		}
 		case E: {
@@ -591,6 +591,8 @@ public class DroneListItem {
 			break;
 		}
 		}
+		// TODO - validate that the move is a valid location
+
 		// Check to see if there is a MoneyPile or Objective there
 		GameObject objectHere = Nomads.awesomeWorld.getObjectAt(getX()
 				+ amountE, getY() + amountN);

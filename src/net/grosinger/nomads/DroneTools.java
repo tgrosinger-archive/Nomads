@@ -59,7 +59,7 @@ public class DroneTools {
 	 * @return <code>Boolean</code> - can move
 	 */
 	public boolean canMoveNorth() {
-		return canMoveHelper(getX(), getY() + 1);
+		return canMoveHelper(getX(), getY() - 1);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class DroneTools {
 	 * @return <code>Boolean</code> - can move
 	 */
 	public boolean canMoveSouth() {
-		return canMoveHelper(getX(), getY() - 1);
+		return canMoveHelper(getX(), getY() + 1);
 	}
 
 	/**
@@ -100,14 +100,14 @@ public class DroneTools {
 	 */
 	private boolean canMoveHelper(int x, int y) {
 		// Account for being able to move onto MoneyPiles and Objectives
-
-		if (getY() < worldSize - 1) {
-			GameObject objectHere = worldReference.getWorld()[getX()][getY() + 1];
-			if (objectHere == null || objectHere instanceof MoneyPile || objectHere instanceof Objective)
+		// Check to make sure spot is on the map
+		if (x >= 0 && y >= 0 && x <= worldSize - 1 && y <= worldSize - 1) {
+			GameObject objectHere = worldReference.getWorld()[x][y];
+			if (objectHere == null || objectHere instanceof MoneyPile
+					|| objectHere instanceof Objective)
 				return true;
 			else
 				return false;
-
 		} else
 			return false;
 	}
@@ -133,14 +133,19 @@ public class DroneTools {
 		int maxDistance = listItem.getVisibleDistance();
 		for (int i = maxDistance * -1; i <= maxDistance; i++) {
 			for (int j = maxDistance * -1; j <= maxDistance; j++) {
-				if (getX() + i >= worldSize - 1 || getX() + i < 0 || getY() + j >= worldSize - 1 || getY() + j < 0) {
+				if (getX() + i >= worldSize - 1 || getX() + i < 0
+						|| getY() + j >= worldSize - 1 || getY() + j < 0) {
 
 				} else if (i != 0 && j != 0) {
-					GameObject objectHere = worldReference.getObjectAt(getX() + i, getY() + j);
+					GameObject objectHere = worldReference.getObjectAt(getX()
+							+ i, getY() + j);
 					if (objectHere instanceof Drone) {
 						Drone droneHere = (Drone) objectHere;
-						DroneListItem listItemHere = Nomads.droneToListItem(droneHere);
-						Neighbor aWildNeighbor = new Neighbor(listItemHere.getX(), listItemHere.getY(), droneHere.getName(), droneHere.getUID());
+						DroneListItem listItemHere = Nomads
+								.droneToListItem(droneHere);
+						Neighbor aWildNeighbor = new Neighbor(
+								listItemHere.getX(), listItemHere.getY(),
+								droneHere.getName(), droneHere.getUID());
 						neighbors.add(aWildNeighbor);
 					}
 				}
@@ -162,7 +167,8 @@ public class DroneTools {
 			Point intendedPoint = new Point(getX(), getY());
 			findEmptyPoint(intendedPoint);
 
-			House newHouse = new House(Structure.HOUSE, intendedPoint.getX(), intendedPoint.getY(), referredDrone.getName());
+			House newHouse = new House(Structure.HOUSE, intendedPoint.getX(),
+					intendedPoint.getY(), referredDrone.getName());
 			worldReference.placeNewBuilding(newHouse);
 			currentTeam.deductFromBalance(Nomads.HOUSEPRICE);
 			listItem.setWaiting(Nomads.CREATIONTIME);
@@ -192,7 +198,8 @@ public class DroneTools {
 	 */
 	private Point findEmptyPoint(Point currentPoint) {
 		// Current point is where the drone is
-		boolean validSpace = worldReference.getObjectAt(currentPoint.getX(), currentPoint.getY()) == null;
+		boolean validSpace = worldReference.getObjectAt(currentPoint.getX(),
+				currentPoint.getY()) == null;
 		Point tryThis = new Point(currentPoint.getX(), currentPoint.getY());
 		int outX = 1;
 		int outY = 0;

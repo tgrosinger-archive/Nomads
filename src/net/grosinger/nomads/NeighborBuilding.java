@@ -1,30 +1,36 @@
 package net.grosinger.nomads;
 
+import net.grosinger.nomads.Building.Structure;
+
 /**
- * An array of Neighbors will be given to a drone that is using it's radar
+ * An array of NeigborBuildings will be given to a drone that is searching for
+ * the buildings it is near. This is typically done from the town center.
  */
-public class Neighbor implements GameObject {
+public class NeighborBuilding implements GameObject {
 
 	private String name;
 	private int x;
 	private int y;
 	private String UID;
+	private Building building;
 
 	/**
 	 * Class Constructor
 	 * 
 	 * @param x
-	 *            - X location of the Drone
+	 *            - X location of the Building
 	 * @param y
-	 *            - Y location of the Drone
+	 *            - Y location of the Building
 	 * @param name
-	 *            - Name of the Drone
+	 *            - Name of the Building
 	 */
-	public Neighbor(int x, int y, String name, String UID) {
+	public NeighborBuilding(int x, int y, String name, String UID,
+			Building building) {
 		this.x = x;
 		this.y = y;
 		this.name = name;
 		this.UID = UID;
+		this.building = building;
 	}
 
 	@Override
@@ -51,6 +57,15 @@ public class Neighbor implements GameObject {
 	}
 
 	/**
+	 * Retrieve type of building that this is
+	 * 
+	 * @return <code>Structure</code>
+	 */
+	public Structure getType() {
+		return building.getType();
+	}
+
+	/**
 	 * Retrieve UID of this Neighbor
 	 * 
 	 * @return <code>String</code> - UID
@@ -63,4 +78,5 @@ public class Neighbor implements GameObject {
 	public void setName(String newName) {
 		name = newName;
 	}
+
 }

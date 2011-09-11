@@ -32,7 +32,8 @@ public class DroneListItem {
 
 	// Statistics about this robot
 
-	private int visibleDistance;
+	private int visibleDistance; // Distance that this drone can see buildings
+									// and other drones
 	private int lumaLocatorDistance;
 	private int objectLocatorDistance;
 	private int reliability;
@@ -400,7 +401,7 @@ public class DroneListItem {
 	 * Finds who the drone wants to attack and attempts to perform attack.
 	 */
 	private void doAttack() {
-		Neighbor victimNeighbor = current.attack();
+		NeighborDrone victimNeighbor = current.attack();
 
 		if (victimNeighbor == null) {
 			// Seems they did something wrong. Turn wasted.
@@ -440,7 +441,7 @@ public class DroneListItem {
 	 * Finds who the drone wants to steal from and attempts to perform steal.
 	 */
 	private void doSteal() {
-		Neighbor victimNeighbor = current.steal();
+		NeighborDrone victimNeighbor = current.steal();
 
 		if (victimNeighbor == null) {
 			// Seems they did something wrong. Turn wasted.

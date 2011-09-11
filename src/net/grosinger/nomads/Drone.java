@@ -43,7 +43,7 @@ public interface Drone extends GameObject {
 	 * 
 	 * @return <code>Neighbor</code>;
 	 */
-	public Neighbor steal();
+	public NeighborDrone steal();
 
 	/**
 	 * Asks for which drone should be attacked. Will be called whenever the Move
@@ -51,7 +51,7 @@ public interface Drone extends GameObject {
 	 * 
 	 * @return <code>Neighbor</code>
 	 */
-	public Neighbor attack();
+	public NeighborDrone attack();
 	
 	/**
 	 * Asks what the drone would like to upgrade.  Will be called whenever the Move

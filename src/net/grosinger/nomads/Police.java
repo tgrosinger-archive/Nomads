@@ -66,13 +66,13 @@ public class Police implements Drone {
 	}
 
 	@Override
-	public Neighbor steal() {
+	public NeighborDrone steal() {
 		// This method is not used by the police drones
 		return null;
 	}
 
 	@Override
-	public Neighbor attack() {
+	public NeighborDrone attack() {
 		// When attacked, a police drone will automatically retaliate, dealing
 		// 2x the damage that was done to itself.
 		// TODO - Implement Police Attack

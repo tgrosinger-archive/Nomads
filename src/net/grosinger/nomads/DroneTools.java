@@ -14,6 +14,7 @@ public class DroneTools {
 	private DroneListItem listItem;
 	private DroneTeam currentTeam;
 	private World worldReference;
+	private Point townCenter;
 	private int worldSize;
 
 	public DroneTools(Drone aDrone, DroneListItem droneParent, World theWorld) {
@@ -123,13 +124,30 @@ public class DroneTools {
 	}
 
 	/**
+	 * Return the location of the center of the main town. Buildings are located
+	 * on the corners of this point.
+	 * 
+	 * @return <code>Point</code>
+	 */
+	public Point getTownCenter() {
+		if (townCenter == null) {
+			townCenter = new Point(30, 50);
+		}
+		return townCenter;
+	}
+	
+	public ArrayList<Building> checkBuildings() {
+		return worldReference.buildingsInRange(getX(), getY(), listItem.getVisibleDistance());
+	}
+
+	/**
 	 * Retrieve a list of all Drones that are visible within your sight range.
 	 * (Sight range can be upgraded)
 	 * 
 	 * @return ArrayList of Neighbors
 	 */
-	public ArrayList<Neighbor> checkRadar() {
-		ArrayList<Neighbor> neighbors = new ArrayList<Neighbor>();
+	public ArrayList<NeighborDrone> checkRadar() {
+		ArrayList<NeighborDrone> neighbors = new ArrayList<NeighborDrone>();
 		int maxDistance = listItem.getVisibleDistance();
 		for (int i = maxDistance * -1; i <= maxDistance; i++) {
 			for (int j = maxDistance * -1; j <= maxDistance; j++) {
@@ -143,7 +161,7 @@ public class DroneTools {
 						Drone droneHere = (Drone) objectHere;
 						DroneListItem listItemHere = Nomads
 								.droneToListItem(droneHere);
-						Neighbor aWildNeighbor = new Neighbor(
+						NeighborDrone aWildNeighbor = new NeighborDrone(
 								listItemHere.getX(), listItemHere.getY(),
 								droneHere.getName(), droneHere.getUID());
 						neighbors.add(aWildNeighbor);

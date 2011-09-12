@@ -131,20 +131,46 @@ public class DroneTools {
 	 */
 	public Point getTownCenter() {
 		if (townCenter == null) {
-			townCenter = new Point(30, 50);
+			townCenter = new Point(40, 50);
 		}
 		return townCenter;
 	}
-	
-	public ArrayList<Building> checkBuildings() {
-		return worldReference.buildingsInRange(getX(), getY(), listItem.getVisibleDistance());
+
+	/**
+	 * Retrieve a list of all Buildings that are visible within your sight
+	 * range. (Sight range can be upgraded)
+	 * 
+	 * @return <code>ArrayList</code> of NeigborBuildings
+	 */
+	public ArrayList<NeighborBuilding> checkBuildings() {
+		ArrayList<NeighborBuilding> neighbors = new ArrayList<NeighborBuilding>();
+		int maxDistance = listItem.getVisibleDistance();
+		for (int i = maxDistance * -1; i <= maxDistance; i++) {
+			for (int j = maxDistance * -1; j <= maxDistance; j++) {
+				if (getX() + i >= worldSize - 1 || getX() + i < 0
+						|| getY() + j >= worldSize - 1 || getY() + j < 0) {
+
+				} else if (i != 0 && j != 0) {
+					GameObject objectHere = worldReference.getObjectAt(getX()
+							+ i, getY() + j);
+					if (objectHere instanceof Building) {
+						Building buildingHere = (Building) objectHere;
+						NeighborBuilding aWildNeighbor = new NeighborBuilding(
+								buildingHere.getX(), buildingHere.getY(),
+								buildingHere.getName(), buildingHere);
+						neighbors.add(aWildNeighbor);
+					}
+				}
+			}
+		}
+		return neighbors;
 	}
 
 	/**
 	 * Retrieve a list of all Drones that are visible within your sight range.
 	 * (Sight range can be upgraded)
 	 * 
-	 * @return ArrayList of Neighbors
+	 * @return ArrayList of Neighbor Drones
 	 */
 	public ArrayList<NeighborDrone> checkRadar() {
 		ArrayList<NeighborDrone> neighbors = new ArrayList<NeighborDrone>();

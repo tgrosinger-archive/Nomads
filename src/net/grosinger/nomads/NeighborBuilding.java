@@ -11,7 +11,6 @@ public class NeighborBuilding implements GameObject {
 	private String name;
 	private int x;
 	private int y;
-	private String UID;
 	private Building building;
 
 	/**
@@ -24,12 +23,10 @@ public class NeighborBuilding implements GameObject {
 	 * @param name
 	 *            - Name of the Building
 	 */
-	public NeighborBuilding(int x, int y, String name, String UID,
-			Building building) {
+	public NeighborBuilding(int x, int y, String name, Building building) {
 		this.x = x;
 		this.y = y;
 		this.name = name;
-		this.UID = UID;
 		this.building = building;
 	}
 
@@ -63,15 +60,6 @@ public class NeighborBuilding implements GameObject {
 	 */
 	public Structure getType() {
 		return building.getType();
-	}
-
-	/**
-	 * Retrieve UID of this Neighbor
-	 * 
-	 * @return <code>String</code> - UID
-	 */
-	public String getUID() {
-		return UID;
 	}
 
 	@Override

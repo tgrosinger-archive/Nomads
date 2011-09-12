@@ -6,7 +6,7 @@ A small Java based game where creating the A.I. is the fun part.
 About
 -----
 Using the API (coming soon) and the [SampleDrone](https://github.com/tgrosinger/Nomads-Sample-Drone) create a drone of your own that can destroy all the other drones.
-A sucessfully drone will be able to gather resources, avoid the law and other malicious drones, and even reproduce to increase it's forces.
+A sucessful drone will be able to gather resources, avoid the law and other malicious drones, and even reproduce to increase it's forces.
 
 Wiki
 ----

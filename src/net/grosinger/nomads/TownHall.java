@@ -2,10 +2,13 @@ package net.grosinger.nomads;
 
 import java.util.ArrayList;
 
-public class TownHall extends Building {
+/**
+ * A representation of a TownHall. Allows Drones to interact with this building.
+ */
+public class TownHall extends NeighborBuilding {
 
-	public TownHall(int newX, int newY) {
-		super(Structure.TOWNHALL, newX, newY);
+	public TownHall(int x, int y, String name, Building building) {
+		super(x, y, name, building);
 	}
 
 	public void cashInventory(ArrayList<GameObject> inventory, DroneTeam team) {
@@ -21,8 +24,8 @@ public class TownHall extends Building {
 			inventory.remove(currentObject);
 		}
 	}
-	
-	public Point requestNewObjective(String UID){
+
+	public Point requestNewObjective(String UID) {
 		return Nomads.awesomeWorld.generateObjective(UID);
 	}
 }

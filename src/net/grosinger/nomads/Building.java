@@ -9,9 +9,6 @@ package net.grosinger.nomads;
  * UpgradeShop - 2
  * PoliceStation - 3
  * Home - 1
- * 
- * 
- * 
  */
 public class Building implements GameObject {
 	Structure structure;

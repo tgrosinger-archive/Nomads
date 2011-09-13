@@ -1,7 +1,5 @@
 package net.grosinger.nomads;
 
-import net.grosinger.nomads.Building.Structure;
-
 /**
  * An array of NeigborBuildings will be given to a drone that is searching for
  * the buildings it is near. This is typically done from the town center.
@@ -51,15 +49,6 @@ public class NeighborBuilding implements GameObject {
 	 */
 	public int getY() {
 		return y;
-	}
-
-	/**
-	 * Retrieve type of building that this is
-	 * 
-	 * @return <code>Structure</code>
-	 */
-	public Structure getType() {
-		return building.getType();
 	}
 
 	/**

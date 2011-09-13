@@ -155,9 +155,30 @@ public class DroneTools {
 							+ i, getY() + j);
 					if (objectHere instanceof Building) {
 						Building buildingHere = (Building) objectHere;
-						NeighborBuilding aWildNeighbor = new NeighborBuilding(
-								buildingHere.getX(), buildingHere.getY(),
-								buildingHere.getName(), buildingHere);
+						NeighborBuilding aWildNeighbor;
+
+						if (buildingHere.getType() == Structure.TOWNHALL) {
+							aWildNeighbor = new TownHall(buildingHere.getX(),
+									buildingHere.getY(),
+									buildingHere.getName(), buildingHere);
+						} else if (buildingHere.getType() == Structure.REPAIRSHOP) {
+							aWildNeighbor = new RepairShop(buildingHere.getX(),
+									buildingHere.getY(),
+									buildingHere.getName(), buildingHere);
+						} else if (buildingHere.getType() == Structure.UPGRADESHOP) {
+							aWildNeighbor = new UpgradeShop(
+									buildingHere.getX(), buildingHere.getY(),
+									buildingHere.getName(), buildingHere);
+						} else if (buildingHere.getType() == Structure.POLICESTATION) {
+							aWildNeighbor = new PoliceStation(
+									buildingHere.getX(), buildingHere.getY(),
+									buildingHere.getName(), buildingHere);
+						} else {
+							aWildNeighbor = new NeighborBuilding(
+									buildingHere.getX(), buildingHere.getY(),
+									buildingHere.getName(), buildingHere);
+						}
+
 						neighbors.add(aWildNeighbor);
 					}
 				}
@@ -212,7 +233,7 @@ public class DroneTools {
 			findEmptyPoint(intendedPoint);
 
 			House newHouse = new House(Structure.HOUSE, intendedPoint.getX(),
-					intendedPoint.getY(), referredDrone.getName());
+					intendedPoint.getY(), currentTeam);
 			worldReference.placeNewBuilding(newHouse);
 			currentTeam.deductFromBalance(Nomads.HOUSEPRICE);
 			listItem.setWaiting(Nomads.CREATIONTIME);

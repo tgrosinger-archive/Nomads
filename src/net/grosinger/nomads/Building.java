@@ -16,6 +16,7 @@ package net.grosinger.nomads;
 public class Building implements GameObject {
 	Structure structure;
 	String name;
+	DroneTeam team;
 
 	int x;
 	int y;
@@ -25,7 +26,7 @@ public class Building implements GameObject {
 		TOWNHALL, REPAIRSHOP, UPGRADESHOP, POLICESTATION, HOUSE
 	}
 
-	public Building(Structure thisBuilding, int newX, int newY) {
+	public Building(Structure thisBuilding, int newX, int newY, DroneTeam team) {
 		structure = thisBuilding;
 		switch (structure) {
 		case TOWNHALL: {
@@ -50,6 +51,7 @@ public class Building implements GameObject {
 		}
 		}
 
+		this.team = team;
 		x = newX;
 		y = newY;
 	}
@@ -66,6 +68,20 @@ public class Building implements GameObject {
 	 */
 	public Structure getType() {
 		return structure;
+	}
+
+	/**
+	 * Retrieve the name of the team that owns the current building. If the
+	 * building is a public building, the string will be "Public".
+	 * 
+	 * @return <code>String</code>
+	 */
+	public String getTeam() {
+		if (structure == Structure.HOUSE) {
+			return team.getName();
+		} else {
+			return "Public";
+		}
 	}
 
 	/**

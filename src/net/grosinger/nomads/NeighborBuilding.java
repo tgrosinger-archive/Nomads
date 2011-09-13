@@ -62,6 +62,16 @@ public class NeighborBuilding implements GameObject {
 		return building.getType();
 	}
 
+	/**
+	 * Retrieve the name of the team that owns the current building. If the
+	 * building is a public building, the string will be "Public".
+	 * 
+	 * @return <code>String</code>
+	 */
+	public String getTeam() {
+		return building.getTeam();
+	}
+
 	@Override
 	public void setName(String newName) {
 		name = newName;

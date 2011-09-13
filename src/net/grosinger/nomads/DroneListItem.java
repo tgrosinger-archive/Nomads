@@ -592,7 +592,13 @@ public class DroneListItem {
 			break;
 		}
 		}
-		// TODO - validate that the move is a valid location
+
+		if (getX() + amountE > Nomads.awesomeWorld.getWorldSize() - 1
+				|| getX() + amountE < 0
+				|| getY() + amountN > Nomads.awesomeWorld.getWorldSize() - 1
+				|| getY() + amountN < 0) {
+			return;
+		}
 
 		// Check to see if there is a MoneyPile or Objective there
 		GameObject objectHere = Nomads.awesomeWorld.getObjectAt(getX()

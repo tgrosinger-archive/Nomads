@@ -1,5 +1,6 @@
 package net.grosinger.nomads;
 
+
 /**
  * It is a house, just like it says. Basically a building that can be owned by a
  * team

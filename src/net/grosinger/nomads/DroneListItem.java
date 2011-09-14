@@ -376,10 +376,6 @@ public class DroneListItem {
 			} else
 				return false;
 		}
-		case Upgrade: {
-			doUpgrade();
-			return true;
-		}
 		case Attack: {
 			doAttack();
 			return true;
@@ -494,69 +490,6 @@ public class DroneListItem {
 					.size() - 1) - 0) + 1));
 			inventory.add(victimList.inventory.get(randIndex));
 			victimList.inventory.remove(randIndex);
-		}
-	}
-
-	/**
-	 * Finds the upgrade that the drone would like to purchase. Determines if
-	 * upgrade is possible and performs action accordingly
-	 */
-	private void doUpgrade() {
-		Upgrade newUpgrade = current.upgrade();
-		Integer price = newUpgrade.getPrice();
-		if (price == null) {
-			// Invalid upgrade selection, turn lost.
-			return;
-		}
-
-		if (team.getBalance() >= price) {
-			switch (newUpgrade.getUpgradeType()) {
-			case visibleDistance: {
-				visibleDistance++;
-				break;
-			}
-			case lumaLocatorDistance: {
-				lumaLocatorDistance++;
-				break;
-			}
-			case objectLocatorDistance: {
-				objectLocatorDistance++;
-				break;
-			}
-			case reliability: {
-				reliability++;
-				break;
-			}
-			case attack: {
-				attack++;
-				break;
-			}
-			case defenses: {
-				defenses++;
-				break;
-			}
-			case speed: {
-				speed++;
-				break;
-			}
-			case cargoSpace: {
-				cargoSpace++;
-				break;
-			}
-			case theft: {
-				theft++;
-				break;
-			}
-			default: {
-				// Must specify an Upgrade Type
-			}
-			}
-
-			team.deductFromBalance(price);
-			return;
-		} else {
-			// Not enough money, do nothing.
-			return;
 		}
 	}
 

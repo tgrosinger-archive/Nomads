@@ -1,5 +1,6 @@
 package net.grosinger.nomads;
 
+
 /**
  * An array of NeigborBuildings will be given to a drone that is searching for
  * the buildings it is near. This is typically done from the town center.

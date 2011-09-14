@@ -1,5 +1,6 @@
 package net.grosinger.nomads;
 
+
 /*
  * Anything that is on the theWorld that is not a drone of some sort is a building
  * 

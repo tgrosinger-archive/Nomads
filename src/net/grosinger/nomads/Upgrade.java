@@ -1,5 +1,6 @@
 package net.grosinger.nomads;
 
+
 public class Upgrade {
 
 	public enum UpgradeType {

@@ -1,5 +1,6 @@
 package net.grosinger.nomads;
 
+
 /**
  * An array of NeighborDrones will be given to a drone that is using it's radar
  */

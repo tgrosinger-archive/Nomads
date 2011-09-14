@@ -78,13 +78,4 @@ public class Police implements Drone {
 		// TODO - Implement Police Attack
 		return null;
 	}
-
-	@Override
-	public Upgrade upgrade() {
-		// Police drones do not have upgrades. They will automatically upgrade
-		// throughout the game based on time played.
-		// TODO - Implement Police Upgrade
-		return null;
-	}
-
 }

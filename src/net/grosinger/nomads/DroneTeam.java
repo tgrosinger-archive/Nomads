@@ -2,6 +2,7 @@ package net.grosinger.nomads;
 
 import java.util.ArrayList;
 
+
 /**
  * Contains a pointer to the first and the last DroneListItem in a particular
  * team. When adding drones to Team A they should be added to the end of the

@@ -3,6 +3,7 @@ package net.grosinger.nomads;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class Nomads {
 
 	public static World awesomeWorld;

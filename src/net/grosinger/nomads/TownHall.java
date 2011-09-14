@@ -2,6 +2,7 @@ package net.grosinger.nomads;
 
 import java.util.ArrayList;
 
+
 /**
  * A representation of a TownHall. Allows Drones to interact with this building.
  */

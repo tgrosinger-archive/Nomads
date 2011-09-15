@@ -1,6 +1,5 @@
 package net.grosinger.nomads;
 
-
 /**
  * An array of NeigborBuildings will be given to a drone that is searching for
  * the buildings it is near. This is typically done from the town center.
@@ -8,6 +7,7 @@ package net.grosinger.nomads;
 public class NeighborBuilding implements GameObject {
 
 	private String name;
+	private int turnCreated;
 	private int x;
 	private int y;
 	private Building building;
@@ -27,6 +27,7 @@ public class NeighborBuilding implements GameObject {
 		this.y = y;
 		this.name = name;
 		this.building = building;
+		turnCreated = Nomads.turn;
 	}
 
 	@Override
@@ -65,6 +66,17 @@ public class NeighborBuilding implements GameObject {
 	@Override
 	public void setName(String newName) {
 		name = newName;
+	}
+
+	/**
+	 * Checks to make sure the object was created this turn. Otherwise drones
+	 * could save a reference to the object and use it from anywhere on the map.
+	 * 
+	 * @return <code>boolean</code>
+	 */
+	protected boolean verifyObjectValidity() {
+		int currentTurn = Nomads.turn;
+		return currentTurn == turnCreated;
 	}
 
 }

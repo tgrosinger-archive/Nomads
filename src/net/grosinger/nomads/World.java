@@ -5,10 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * Main class where information about the world is stored
@@ -233,9 +234,11 @@ public class World {
 					GameObject objectHere = theWorld[x + i][y + j];
 					if (objectHere != null) {
 						String name = objectHere.getName();
-						if (name.equalsIgnoreCase("TownHall") || name.equalsIgnoreCase("PoliceStation")) {
+						if (name.equalsIgnoreCase("TownHall")
+								|| name.equalsIgnoreCase("PoliceStation")) {
 							return true;
-						} else if ((name.equalsIgnoreCase("RepairShop") || name.equalsIgnoreCase("UpgradeShop")) && i <= 2 && j <= 2) {
+						} else if ((name.equalsIgnoreCase("RepairShop") || name
+								.equalsIgnoreCase("UpgradeShop")) && i <= 2 && j <= 2) {
 							return true;
 						}
 					}
@@ -297,7 +300,7 @@ public class World {
 	 *            - The UID of the Drone that is allowed to pick it up.
 	 * @return - <code>Point</code> - Within 20x20 of the Objective.
 	 */
-	public Point generateObjective(String UID) {
+	public Point generateObjective(DroneListItem drone) {
 		// Min + (int)(Math.random() * ((Max - Min) + 1))
 		int randX = 0 + (int) (Math.random() * ((getWorldSize() - 0) + 1));
 		int randY = 0 + (int) (Math.random() * ((getWorldSize() - 0) + 1));
@@ -305,9 +308,10 @@ public class World {
 		int varY = -10 + (int) (Math.random() * ((10 - -10) + 1));
 		int varX = -10 + (int) (Math.random() * ((10 - -10) + 1));
 
-		int bounty = Nomads.MINOBJECTIVEBOUNTY + (int) (Math.random() * ((Nomads.MAXOBJECTIVEBOUNTY - Nomads.MINOBJECTIVEBOUNTY) + 1));
+		int bounty = Nomads.MINOBJECTIVEBOUNTY
+				+ (int) (Math.random() * ((Nomads.MAXOBJECTIVEBOUNTY - Nomads.MINOBJECTIVEBOUNTY) + 1));
 
-		Objective newObjective = new Objective(bounty, UID);
+		Objective newObjective = new Objective(bounty, drone.getCurrent().getUID());
 		setObjectAt(randX, randY, newObjective);
 
 		// Create a point to return that is somewhere nearby the actual location

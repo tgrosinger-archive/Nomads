@@ -11,7 +11,7 @@ public class NeighborBuilding implements GameObject {
 	private int x;
 	private int y;
 	private Building building;
-	private DroneListItem drone;
+	protected DroneListItem drone;
 
 	/**
 	 * Class Constructor

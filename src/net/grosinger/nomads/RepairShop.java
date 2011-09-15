@@ -6,9 +6,10 @@ package net.grosinger.nomads;
  */
 public class RepairShop extends NeighborBuilding {
 
-	public RepairShop(int x, int y, String name, Building building,
-			DroneListItem drone) {
+	public RepairShop(int x, int y, String name, Building building, DroneListItem drone) {
 		super(x, y, name, building, drone);
 	}
+
+	// Implement Police Station
 
 }

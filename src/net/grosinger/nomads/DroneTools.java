@@ -160,23 +160,28 @@ public class DroneTools {
 						if (buildingHere.getType() == Structure.TOWNHALL) {
 							aWildNeighbor = new TownHall(buildingHere.getX(),
 									buildingHere.getY(),
-									buildingHere.getName(), buildingHere);
+									buildingHere.getName(), buildingHere,
+									listItem);
 						} else if (buildingHere.getType() == Structure.REPAIRSHOP) {
 							aWildNeighbor = new RepairShop(buildingHere.getX(),
 									buildingHere.getY(),
-									buildingHere.getName(), buildingHere);
+									buildingHere.getName(), buildingHere,
+									listItem);
 						} else if (buildingHere.getType() == Structure.UPGRADESHOP) {
 							aWildNeighbor = new UpgradeShop(
 									buildingHere.getX(), buildingHere.getY(),
-									buildingHere.getName(), buildingHere);
+									buildingHere.getName(), buildingHere,
+									listItem);
 						} else if (buildingHere.getType() == Structure.POLICESTATION) {
 							aWildNeighbor = new PoliceStation(
 									buildingHere.getX(), buildingHere.getY(),
-									buildingHere.getName(), buildingHere);
+									buildingHere.getName(), buildingHere,
+									listItem);
 						} else {
 							aWildNeighbor = new NeighborBuilding(
 									buildingHere.getX(), buildingHere.getY(),
-									buildingHere.getName(), buildingHere);
+									buildingHere.getName(), buildingHere,
+									listItem);
 						}
 
 						neighbors.add(aWildNeighbor);

@@ -9,8 +9,9 @@ public class TownHall extends NeighborBuilding {
 
 	// TODO - Rewrite class to make more accessible to Drones
 
-	public TownHall(int x, int y, String name, Building building) {
-		super(x, y, name, building);
+	public TownHall(int x, int y, String name, Building building,
+			DroneListItem drone) {
+		super(x, y, name, building, drone);
 	}
 
 	/**
@@ -21,16 +22,21 @@ public class TownHall extends NeighborBuilding {
 	 * @param team
 	 */
 	public void cashInventory(ArrayList<GameObject> inventory, DroneTeam team) {
-		while (!inventory.isEmpty()) {
-			GameObject currentObject = inventory.get(0);
-			if (currentObject instanceof MoneyPile) {
-				int value = ((MoneyPile) currentObject).getValue();
-				team.increaseBalance(value);
-				Nomads.awesomeWorld.generateMoneyPile();
-			} else if (currentObject instanceof Objective) {
-				team.increaseBalance(((Objective) currentObject).getBounty());
+		if (verifyObjectValidity()) {
+			while (!inventory.isEmpty()) {
+				GameObject currentObject = inventory.get(0);
+				if (currentObject instanceof MoneyPile) {
+					int value = ((MoneyPile) currentObject).getValue();
+					team.increaseBalance(value);
+					Nomads.awesomeWorld.generateMoneyPile();
+				} else if (currentObject instanceof Objective) {
+					team.increaseBalance(((Objective) currentObject)
+							.getBounty());
+				}
+				inventory.remove(currentObject);
 			}
-			inventory.remove(currentObject);
+		} else {
+			// Object not valid, do Nothing
 		}
 	}
 
@@ -46,6 +52,7 @@ public class TownHall extends NeighborBuilding {
 		if (verifyObjectValidity()) {
 			return Nomads.awesomeWorld.generateObjective(UID);
 		} else {
+			// Object not valid, do nothing
 			return null;
 		}
 	}

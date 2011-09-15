@@ -6,8 +6,9 @@ package net.grosinger.nomads;
  */
 public class UpgradeShop extends NeighborBuilding {
 
-	public UpgradeShop(int x, int y, String name, Building building) {
-		super(x, y, name, building);
+	public UpgradeShop(int x, int y, String name, Building building,
+			DroneListItem drone) {
+		super(x, y, name, building, drone);
 	}
 
 }

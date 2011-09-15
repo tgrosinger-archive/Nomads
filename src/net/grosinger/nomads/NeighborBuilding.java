@@ -11,6 +11,7 @@ public class NeighborBuilding implements GameObject {
 	private int x;
 	private int y;
 	private Building building;
+	private DroneListItem drone;
 
 	/**
 	 * Class Constructor
@@ -22,11 +23,12 @@ public class NeighborBuilding implements GameObject {
 	 * @param name
 	 *            - Name of the Building
 	 */
-	public NeighborBuilding(int x, int y, String name, Building building) {
+	public NeighborBuilding(int x, int y, String name, Building building, DroneListItem drone) {
 		this.x = x;
 		this.y = y;
 		this.name = name;
 		this.building = building;
+		this.drone = drone;
 		turnCreated = Nomads.turn;
 	}
 

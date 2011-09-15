@@ -2,6 +2,8 @@ package net.grosinger.nomads;
 
 import java.util.ArrayList;
 
+import net.grosinger.nomads.exceptions.FullInventoryException;
+
 /**
  * A class that allows a drone to be part of a linked list Provides reference to
  * the next drone, the previous drone, and the drone object
@@ -51,7 +53,7 @@ public class DroneListItem {
 	private int y;
 	private int waiting; // Is the drone building another drone or house?
 	private boolean wanted; // Is the drone wanted by the police?
-	private ArrayList<GameObject> inventory;
+	private Inventory inventory;
 	private ArrayList<Objective> currentObjectives;
 
 	// TODO - Implement max number of objectives
@@ -75,7 +77,7 @@ public class DroneListItem {
 		theft = Nomads.BASE_THEFT;
 		team = theTeam;
 		waiting = 0;
-		inventory = new ArrayList<GameObject>();
+		inventory = new Inventory(this);
 
 		// Place itself in the world
 		Nomads.awesomeWorld.placeNewDrone(this);
@@ -112,6 +114,15 @@ public class DroneListItem {
 	 */
 	public Drone getCurrent() {
 		return current;
+	}
+
+	/**
+	 * Retrieve the Inventory associated with this DroneListItem
+	 * 
+	 * @return <code>Inventory</code>
+	 */
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 	/**
@@ -248,7 +259,7 @@ public class DroneListItem {
 	 * @return <code>Boolean</code>
 	 */
 	public boolean getInventoryIsFull() {
-		return inventory.size() >= cargoSpace;
+		return inventory.isFull();
 	}
 
 	/**
@@ -486,7 +497,13 @@ public class DroneListItem {
 		while (itemsToTake < 0 && !getInventoryIsFull() && victimList.inventory.size() > 0) {
 			// Min + (int)(Math.random() * ((Max - Min) + 1))
 			int randIndex = 0 + (int) (Math.random() * (((victimList.inventory.size() - 1) - 0) + 1));
-			inventory.add(victimList.inventory.get(randIndex));
+
+			try {
+				inventory.addItem(victimList.inventory.getItem(randIndex));
+			} catch (FullInventoryException e) {
+				e.printStackTrace();
+			}
+
 			victimList.inventory.remove(randIndex);
 		}
 	}
@@ -534,15 +551,23 @@ public class DroneListItem {
 		GameObject objectHere = Nomads.awesomeWorld.getObjectAt(getX() + amountE, getY() + amountN);
 
 		if (objectHere != null) {
-			if (inventory.size() < cargoSpace) {
+			if (!inventory.isFull()) {
 				if (objectHere instanceof MoneyPile) {
-					inventory.add(objectHere);
+					try {
+						inventory.addItem(objectHere);
+					} catch (FullInventoryException e) {
+						e.printStackTrace();
+					}
 				} else if (objectHere instanceof Objective) {
 					String objUID = ((Objective) objectHere).getUID();
 					String droneUID = current.getUID();
 
 					if (objUID.equals(droneUID)) {
-						inventory.add(objectHere);
+						try {
+							inventory.addItem(objectHere);
+						} catch (FullInventoryException e) {
+							e.printStackTrace();
+						}
 					} else {
 						return;
 					}
@@ -570,10 +595,14 @@ public class DroneListItem {
 	 *            - <code>DroneListItem</code> to be killed
 	 */
 	private void killOtherDrone(DroneListItem victim) {
-		while (inventory.size() < cargoSpace && !victim.inventory.isEmpty()) {
+		while (!inventory.isFull() && !victim.inventory.isEmpty()) {
 			// Take items from their inventory
 			int randIndex = 0 + (int) (Math.random() * (((victim.inventory.size() - 1) - 0) + 1));
-			inventory.add(victim.inventory.get(randIndex));
+			try {
+				inventory.addItem(victim.inventory.getItem(randIndex));
+			} catch (FullInventoryException e) {
+				e.printStackTrace();
+			}
 			victim.inventory.remove(randIndex);
 		}
 

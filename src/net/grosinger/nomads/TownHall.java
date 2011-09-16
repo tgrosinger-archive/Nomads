@@ -1,5 +1,6 @@
 package net.grosinger.nomads;
 
+import net.grosinger.nomads.exceptions.BadRequestException;
 import net.grosinger.nomads.exceptions.ObjectReferenceOutdatedException;
 
 /**
@@ -44,9 +45,14 @@ public class TownHall extends NeighborBuilding {
 	 *         created in a previous turn.
 	 * 
 	 * @throws ObjectReferenceOutdatedException
+	 * @throws BadRequestException
 	 */
-	public Point requestNewObjective() throws ObjectReferenceOutdatedException {
+	public Point requestNewObjective() throws ObjectReferenceOutdatedException, BadRequestException {
 		if (verifyObjectValidity()) {
+			if (drone.getCurrentObjectivesFull()) {
+				throw new BadRequestException(
+						"Maximum number of requested objectives already achieved");
+			}
 			return Nomads.awesomeWorld.generateObjective(drone);
 		} else {
 			throw new ObjectReferenceOutdatedException();

@@ -244,6 +244,10 @@ public class DroneListItem {
 	public ArrayList<Objective> getCurrentObjectives() {
 		return currentObjectives;
 	}
+	
+	public boolean getCurrentObjectivesFull(){
+		return currentObjectives.size() >= Nomads.MAXREQUESTEDOBJECTIVES;
+	}
 
 	/**
 	 * Returns if the drone is wanted

@@ -173,6 +173,7 @@ public class World {
 	 *            GameObject to be placed
 	 */
 	public void setObjectRandom(GameObject newItem) {
+		// TODO - Able to go out of bounds
 		// Min + (int)(Math.random() * ((Max - Min) + 1))
 		int randX = 0 + (int) (Math.random() * ((getWorldSize() - 0) + 1));
 		int randY = 0 + (int) (Math.random() * ((getWorldSize() - 0) + 1));
@@ -370,13 +371,15 @@ public class World {
 					g2d.setColor(Color.black);
 					g2d.fillRect(j * 10, i * 10, 10, 10);
 				} else if (objectHere instanceof MoneyPile) {
-					// TODO - Implement mapping of MoneyPiles
-					// Should be black since they are world owned but a
-					// different shape than anything else
+					// Green Rectangles represent a MoneyPile
+					Color color = Color.green;
+					g2d.setColor(color);
+					g2d.fillRect(j * 10, i * 10, 10, 10);
 				} else if (objectHere instanceof Objective) {
-					// TODO - Implement mapping of Objective
-					// Should be black since they are world owned but a
-					// different shape than anything else
+					// Black Oval represents an Objective
+					Color color = Color.black;
+					g2d.setColor(color);
+					g2d.fillRect(j * 10, i * 10, 10, 10);
 				}
 			}
 		}

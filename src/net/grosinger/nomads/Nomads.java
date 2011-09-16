@@ -80,7 +80,13 @@ public class Nomads {
 
 		// Generate and place all required buildings into world
 		if (DEBUGSTATUS)
-			InitializeGame.initializeBuildngs(awesomeWorld);
+			System.out.println("Initializing and placing buildings");
+		InitializeGame.initializeBuildngs(awesomeWorld);
+
+		// Generate and place MoneyPiles
+		if (DEBUGSTATUS)
+			System.out.println("Initializing and placing MoneyPiles");
+		InitializeGame.initializeMoneyPiles(awesomeWorld);
 
 		// Check to make sure allTeams has been set up properly
 		if (allTeams == null) {

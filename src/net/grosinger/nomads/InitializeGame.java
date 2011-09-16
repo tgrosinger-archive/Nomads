@@ -29,8 +29,7 @@ public class InitializeGame {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static void initializeDrones() throws ClassNotFoundException,
-			IOException {
+	public static void initializeDrones() throws ClassNotFoundException, IOException {
 		if (Nomads.DEBUGSTATUS)
 			System.out.println("Loading the drones into world...");
 		/*
@@ -53,11 +52,10 @@ public class InitializeGame {
 			if (Nomads.DEBUGSTATUS)
 				System.out.println("Loading " + filename);
 
-			File file = new File(System.getProperty("user.dir") + "/drones/"
-					+ filename);
+			File file = new File(System.getProperty("user.dir") + "/drones/" + filename);
 
-			URLClassLoader clazzLoader = URLClassLoader
-					.newInstance(new URL[] { file.toURI().toURL() });
+			URLClassLoader clazzLoader = URLClassLoader.newInstance(new URL[] { file.toURI()
+					.toURL() });
 			// System.class.getClassLoader()
 
 			JarFile jarFile = new JarFile(file);
@@ -68,8 +66,8 @@ public class InitializeGame {
 				if (element.getName().endsWith(className + ".class")) {
 					try {
 						@SuppressWarnings("rawtypes")
-						Class c = clazzLoader.loadClass(element.getName()
-								.replaceAll(".class", "").replaceAll("/", "."));
+						Class c = clazzLoader.loadClass(element.getName().replaceAll(".class", "")
+								.replaceAll("/", "."));
 
 						// Create new GameObject
 						GameObject newGameObject = (GameObject) c.newInstance();
@@ -151,8 +149,7 @@ public class InitializeGame {
 
 		Building townHall = new Building(Structure.TOWNHALL, 30, 40, null);
 		Building upgradeShop = new Building(Structure.UPGRADESHOP, 30, 60, null);
-		Building policeStation = new Building(Structure.POLICESTATION, 50, 40,
-				null);
+		Building policeStation = new Building(Structure.POLICESTATION, 50, 40, null);
 		Building RepairShop = new Building(Structure.REPAIRSHOP, 50, 60, null);
 
 		if (Nomads.DEBUGSTATUS)
@@ -170,10 +167,10 @@ public class InitializeGame {
 	/**
 	 * Generate the money piles and place them on the map
 	 */
-	public static void initializeMoneyPiles() {
+	public static void initializeMoneyPiles(World awesomeWorld) {
 		for (int i = 0; i < Nomads.MONEYPILES; i++) {
 			MoneyPile newPile = new MoneyPile();
-			Nomads.awesomeWorld.setObjectRandom(newPile);
+			awesomeWorld.setObjectRandom(newPile);
 		}
 	}
 }

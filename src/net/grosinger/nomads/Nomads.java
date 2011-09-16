@@ -57,6 +57,9 @@ public class Nomads {
 	public static final int BASE_SPEED = 1;
 	public static final int BASE_CARGOSPACE = 3;
 	public static final int BASE_THEFT = 1;
+	
+	public static final int MAXLEVEL_RADARS = 30;
+	public static final int MAXLEVEL_STATS = 10;
 
 	public static void main(String[] args) {
 		if (DEBUGSTATUS)

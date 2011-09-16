@@ -10,6 +10,6 @@ public class RepairShop extends NeighborBuilding {
 		super(x, y, name, building, drone);
 	}
 
-	// Implement Police Station
+	// TODO - Implement Repair Shop
 
 }

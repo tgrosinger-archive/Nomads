@@ -1,5 +1,6 @@
 package net.grosinger.nomads;
 
+import java.util.Hashtable;
 
 public class Upgrade {
 
@@ -22,79 +23,28 @@ public class Upgrade {
 	}
 
 	/**
+	 * Retrieve the type of the upgrade that should be performed.
+	 * 
+	 * @return <code>UpgradeType</code>
+	 */
+	public UpgradeType getUpgradeType() {
+		return typeToUpgrade;
+	}
+
+	/**
 	 * Provides the prices for a given update type Algorithm: (((Current Level -
 	 * Original Level) + 5) * Multiplier)^2
 	 * 
 	 * @return <code>int</code>
 	 */
 	public int getPrice() {
-		double multiplier;
-		double currentLevel;
-		double originalLevel;
+		Hashtable<String, Double> allInfo = statInfo(typeToUpgrade);
 
-		switch (typeToUpgrade) {
-		case visibleDistance: {
-			multiplier = 2;
-			currentLevel = oldBrokenDrone.getVisibleDistance();
-			originalLevel = Nomads.BASE_VISIBLEDISTANCE;
-			break;
-		}
-		case lumaLocatorDistance: {
-			multiplier = 2.5;
-			currentLevel = oldBrokenDrone.getLumaLocatorDistance();
-			originalLevel = Nomads.BASE_LUMALOCATORDISTANCE;
-			break;
-		}
-		case objectLocatorDistance: {
-			multiplier = 2.5;
-			currentLevel = oldBrokenDrone.getObjectLocatorDistance();
-			originalLevel = Nomads.BASE_OBJECTLOCATORDISTANCE;
-			break;
-		}
-		case reliability: {
-			multiplier = 2.4;
-			currentLevel = oldBrokenDrone.getReliability();
-			originalLevel = Nomads.BASE_RELIABILITY;
-			break;
-		}
-		case attack: {
-			multiplier = 2.7;
-			currentLevel = oldBrokenDrone.getAttack();
-			originalLevel = Nomads.BASE_ATTACK;
-			break;
-		}
-		case defenses: {
-			multiplier = 2.8;
-			currentLevel = oldBrokenDrone.getDefenses();
-			originalLevel = Nomads.BASE_DEFENSES;
-			break;
-		}
-		case speed: {
-			multiplier = 3.5;
-			currentLevel = oldBrokenDrone.getSpeed();
-			originalLevel = Nomads.BASE_SPEED;
-			break;
-		}
-		case cargoSpace: {
-			multiplier = 3.5;
-			currentLevel = oldBrokenDrone.getCargoSpace();
-			originalLevel = Nomads.BASE_CARGOSPACE;
-			break;
-		}
-		case theft: {
-			multiplier = 4;
-			currentLevel = oldBrokenDrone.getTheft();
-			originalLevel = Nomads.BASE_THEFT;
-			break;
-		}
-		default: {
-			// Must specify an Upgrade Type
-			return (Integer) null;
-		}
-		}
+		double multiplier = allInfo.get("multiplier");
+		double currentLevel = allInfo.get("currentLevel");
+		double originalLevel = allInfo.get("originalLevel");
 
-		double price = Math.pow(
-				(currentLevel - originalLevel + 5) * multiplier, 2.0);
+		double price = Math.pow((currentLevel - originalLevel + 5) * multiplier, 2.0);
 		return (int) Math.ceil(price);
 	}
 
@@ -105,11 +55,95 @@ public class Upgrade {
 	 * @return <code>boolean</code>
 	 */
 	public boolean isMaxLevel() {
-		// TODO - Implement max levels
-		return false;
+		Hashtable<String, Double> allInfo = statInfo(typeToUpgrade);
+
+		double maxLevel = allInfo.get("maxLevel");
+		double currentLevel = allInfo.get("currentLevel");
+
+		return maxLevel == currentLevel;
 	}
 
-	public UpgradeType getUpgradeType() {
-		return typeToUpgrade;
+	/**
+	 * Retrieve general information about a particular stat
+	 * 
+	 * @param type
+	 *            The stat to generate information about
+	 * @return <code>HashTable(string, double)</code>
+	 */
+	private Hashtable<String, Double> statInfo(UpgradeType type) {
+		Hashtable<String, Double> allInfo = new Hashtable<String, Double>();
+
+		switch (typeToUpgrade) {
+		case visibleDistance: {
+			allInfo.put("multiplier", (double) 2);
+			allInfo.put("currentLevel", (double) oldBrokenDrone.getVisibleDistance());
+			allInfo.put("originalLevel", (double) Nomads.BASE_VISIBLEDISTANCE);
+			allInfo.put("maxLevel", (double) Nomads.MAXLEVEL_RADARS);
+			break;
+		}
+		case lumaLocatorDistance: {
+
+			allInfo.put("multiplier", (double) 2.5);
+			allInfo.put("currentLevel", (double) oldBrokenDrone.getLumaLocatorDistance());
+			allInfo.put("originalLevel", (double) Nomads.BASE_LUMALOCATORDISTANCE);
+			allInfo.put("maxLevel", (double) Nomads.MAXLEVEL_RADARS);
+			break;
+		}
+		case objectLocatorDistance: {
+			allInfo.put("multiplier", (double) 2.5);
+			allInfo.put("currentLevel", (double) oldBrokenDrone.getObjectLocatorDistance());
+			allInfo.put("originalLevel", (double) Nomads.BASE_OBJECTLOCATORDISTANCE);
+			allInfo.put("maxLevel", (double) Nomads.MAXLEVEL_RADARS);
+			break;
+		}
+		case reliability: {
+			allInfo.put("multiplier", (double) 2.4);
+			allInfo.put("currentLevel", (double) oldBrokenDrone.getReliability());
+			allInfo.put("originalLevel", (double) Nomads.BASE_RELIABILITY);
+			allInfo.put("maxLevel", (double) Nomads.MAXLEVEL_STATS);
+			break;
+		}
+		case attack: {
+			allInfo.put("multiplier", (double) 2.7);
+			allInfo.put("currentLevel", (double) oldBrokenDrone.getAttack());
+			allInfo.put("originalLevel", (double) Nomads.BASE_ATTACK);
+			allInfo.put("maxLevel", (double) Nomads.MAXLEVEL_STATS);
+			break;
+		}
+		case defenses: {
+			allInfo.put("multiplier", (double) 2.8);
+			allInfo.put("currentLevel", (double) oldBrokenDrone.getDefenses());
+			allInfo.put("originalLevel", (double) Nomads.BASE_DEFENSES);
+			allInfo.put("maxLevel", (double) Nomads.MAXLEVEL_STATS);
+			break;
+		}
+		case speed: {
+			allInfo.put("multiplier", (double) 3.5);
+			allInfo.put("currentLevel", (double) oldBrokenDrone.getSpeed());
+			allInfo.put("originalLevel", (double) Nomads.BASE_SPEED);
+			allInfo.put("maxLevel", (double) Nomads.MAXLEVEL_STATS);
+			break;
+		}
+		case cargoSpace: {
+			allInfo.put("multiplier", (double) 3.5);
+			allInfo.put("currentLevel", (double) oldBrokenDrone.getCargoSpace());
+			allInfo.put("originalLevel", (double) Nomads.BASE_CARGOSPACE);
+			allInfo.put("maxLevel", (double) Nomads.MAXLEVEL_STATS);
+			break;
+		}
+		case theft: {
+			allInfo.put("multiplier", (double) 4);
+			allInfo.put("currentLevel", (double) oldBrokenDrone.getTheft());
+			allInfo.put("originalLevel", (double) Nomads.BASE_THEFT);
+			allInfo.put("maxLevel", (double) Nomads.MAXLEVEL_STATS);
+			break;
+		}
+		default: {
+			// Must specify an Upgrade Type
+			return null;
+		}
+		}
+
+		return allInfo;
 	}
 }

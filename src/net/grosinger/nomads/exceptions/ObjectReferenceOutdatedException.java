@@ -1,8 +1,8 @@
 package net.grosinger.nomads.exceptions;
 
-public class ObjectReferenceOutdated extends Exception {
+public class ObjectReferenceOutdatedException extends Exception {
 
-	public ObjectReferenceOutdated() {
+	public ObjectReferenceOutdatedException() {
 		super("This object was created in a previous turn and is no longer valid");
 	}
 }

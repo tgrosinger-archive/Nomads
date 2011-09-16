@@ -1,6 +1,6 @@
 package net.grosinger.nomads;
 
-import net.grosinger.nomads.exceptions.ObjectReferenceOutdated;
+import net.grosinger.nomads.exceptions.ObjectReferenceOutdatedException;
 
 /**
  * A representation of a TownHall. Allows Drones to interact with this building.
@@ -14,9 +14,9 @@ public class TownHall extends NeighborBuilding {
 	/**
 	 * Will deposit all money piles and turn in all Objectives to Town Hall.
 	 * 
-	 * @throws ObjectReferenceOutdated
+	 * @throws ObjectReferenceOutdatedException
 	 */
-	public void cashInventory() throws ObjectReferenceOutdated {
+	public void cashInventory() throws ObjectReferenceOutdatedException {
 		if (verifyObjectValidity()) {
 			Inventory inventory = drone.getInventory();
 			DroneTeam team = drone.getTeam();
@@ -33,7 +33,7 @@ public class TownHall extends NeighborBuilding {
 				inventory.remove(currentObject);
 			}
 		} else {
-			throw new ObjectReferenceOutdated();
+			throw new ObjectReferenceOutdatedException();
 		}
 	}
 
@@ -43,13 +43,13 @@ public class TownHall extends NeighborBuilding {
 	 * @return <code>Point</code> Will return null if the NeighborBuilding was
 	 *         created in a previous turn.
 	 * 
-	 * @throws ObjectReferenceOutdated
+	 * @throws ObjectReferenceOutdatedException
 	 */
-	public Point requestNewObjective() throws ObjectReferenceOutdated {
+	public Point requestNewObjective() throws ObjectReferenceOutdatedException {
 		if (verifyObjectValidity()) {
 			return Nomads.awesomeWorld.generateObjective(drone);
 		} else {
-			throw new ObjectReferenceOutdated();
+			throw new ObjectReferenceOutdatedException();
 		}
 	}
 }

@@ -236,6 +236,16 @@ public class DroneListItem {
 	}
 
 	/**
+	 * Returnes the list of all objectives this drone should be currently
+	 * looking for
+	 * 
+	 * @return <code>ArrayList</code>
+	 */
+	public ArrayList<Objective> getCurrentObjectives() {
+		return currentObjectives;
+	}
+
+	/**
 	 * Returns if the drone is wanted
 	 * 
 	 * @return <code>boolean</code>
@@ -320,6 +330,26 @@ public class DroneListItem {
 	 */
 	public void setWaiting(int newWaiting) {
 		waiting += newWaiting;
+	}
+
+	/**
+	 * Adds a new objective to the list of current objectives
+	 * 
+	 * @param newObj
+	 *            Objective to add to list
+	 */
+	public void addObjective(Objective newObj) {
+		currentObjectives.add(newObj);
+	}
+
+	/**
+	 * Removes an objective from the list of current objectives
+	 * 
+	 * @param oldObj
+	 *            Objective to remove from list
+	 */
+	public void removeObjective(Objective oldObj) {
+		currentObjectives.remove(oldObj);
 	}
 
 	/**

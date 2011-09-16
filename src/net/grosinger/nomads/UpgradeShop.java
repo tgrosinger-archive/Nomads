@@ -33,7 +33,8 @@ public class UpgradeShop extends NeighborBuilding {
 		} else if (toPerform.isMaxLevel()) {
 			throw new InvalidUpgradeException("Maximum level already achieved");
 		} else {
-			// TODO - Implement Perform Upgrade
+			drone.incrementLevel(toPerform.getUpgradeType());
+			drone.getTeam().deductFromBalance(upgradeCost);
 		}
 	}
 

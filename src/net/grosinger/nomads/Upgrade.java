@@ -82,7 +82,6 @@ public class Upgrade {
 			break;
 		}
 		case lumaLocatorDistance: {
-
 			allInfo.put("multiplier", (double) 2.5);
 			allInfo.put("currentLevel", (double) oldBrokenDrone.getLumaLocatorDistance());
 			allInfo.put("originalLevel", (double) Nomads.BASE_LUMALOCATORDISTANCE);

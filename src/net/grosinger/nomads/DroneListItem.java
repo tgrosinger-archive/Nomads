@@ -2,6 +2,7 @@ package net.grosinger.nomads;
 
 import java.util.ArrayList;
 
+import net.grosinger.nomads.Upgrade.UpgradeType;
 import net.grosinger.nomads.exceptions.FullInventoryException;
 
 /**
@@ -55,8 +56,6 @@ public class DroneListItem {
 	private boolean wanted; // Is the drone wanted by the police?
 	private Inventory inventory;
 	private ArrayList<Objective> currentObjectives;
-
-	// TODO - Implement max number of objectives
 
 	/*
 	 * Default constructor, includes all references
@@ -244,8 +243,8 @@ public class DroneListItem {
 	public ArrayList<Objective> getCurrentObjectives() {
 		return currentObjectives;
 	}
-	
-	public boolean getCurrentObjectivesFull(){
+
+	public boolean getCurrentObjectivesFull() {
 		return currentObjectives.size() >= Nomads.MAXREQUESTEDOBJECTIVES;
 	}
 
@@ -364,6 +363,56 @@ public class DroneListItem {
 	 */
 	public void increaseVisibleDistance(int amount) {
 		visibleDistance += amount;
+	}
+
+	/**
+	 * Increments the level specified by the type.
+	 * 
+	 * @param type
+	 *            Level to be increased
+	 */
+	public void incrementLevel(UpgradeType type) {
+		switch (type) {
+		case visibleDistance: {
+			visibleDistance++;
+			break;
+		}
+		case lumaLocatorDistance: {
+			lumaLocatorDistance++;
+			break;
+		}
+		case objectLocatorDistance: {
+			objectLocatorDistance++;
+			break;
+		}
+		case reliability: {
+			reliability++;
+			break;
+		}
+		case attack: {
+			attack++;
+			break;
+		}
+		case defenses: {
+			defenses++;
+			break;
+		}
+		case speed: {
+			speed++;
+			break;
+		}
+		case cargoSpace: {
+			cargoSpace++;
+			break;
+		}
+		case theft: {
+			theft++;
+			break;
+		}
+		default: {
+			// Must specify an Upgrade Type
+		}
+		}
 	}
 
 	/**

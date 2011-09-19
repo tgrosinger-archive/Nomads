@@ -77,6 +77,7 @@ public class DroneListItem {
 		team = theTeam;
 		waiting = 0;
 		inventory = new Inventory(this);
+		currentObjectives = new ArrayList<Objective>();
 
 		// Place itself in the world
 		Nomads.awesomeWorld.placeNewDrone(this);

@@ -2,6 +2,7 @@ package net.grosinger.nomads;
 
 import java.util.ArrayList;
 
+import net.grosinger.nomads.drones.DroneListItem;
 import net.grosinger.nomads.exceptions.FullInventoryException;
 
 public class Inventory {

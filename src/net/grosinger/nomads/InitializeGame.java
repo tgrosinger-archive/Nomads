@@ -10,7 +10,10 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import net.grosinger.nomads.Building.Structure;
+import net.grosinger.nomads.buildings.Building;
+import net.grosinger.nomads.buildings.Building.Structure;
+import net.grosinger.nomads.drones.Drone;
+import net.grosinger.nomads.drones.DroneTeam;
 
 /**
  * Various methods used when first setting up the game and loading everything

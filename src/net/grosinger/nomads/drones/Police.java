@@ -1,6 +1,7 @@
-package net.grosinger.nomads;
+package net.grosinger.nomads.drones;
 
-import net.grosinger.nomads.DroneListItem.EnumMove;
+import net.grosinger.nomads.DroneTools;
+import net.grosinger.nomads.drones.DroneListItem.EnumMove;
 
 /**
  * Enforcer of the law. Has the ability to arrest drones that are wanted. Police

@@ -1,5 +1,13 @@
-package net.grosinger.nomads;
+package net.grosinger.nomads.buildings;
 
+import net.grosinger.nomads.GameObject;
+import net.grosinger.nomads.Inventory;
+import net.grosinger.nomads.MoneyPile;
+import net.grosinger.nomads.Nomads;
+import net.grosinger.nomads.Objective;
+import net.grosinger.nomads.Point;
+import net.grosinger.nomads.drones.DroneListItem;
+import net.grosinger.nomads.drones.DroneTeam;
 import net.grosinger.nomads.exceptions.BadRequestException;
 import net.grosinger.nomads.exceptions.ObjectReferenceOutdatedException;
 

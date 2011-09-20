@@ -2,6 +2,8 @@ package net.grosinger.nomads;
 
 import java.util.Hashtable;
 
+import net.grosinger.nomads.drones.DroneListItem;
+
 public class Upgrade {
 
 	public enum UpgradeType {

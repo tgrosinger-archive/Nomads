@@ -3,6 +3,10 @@ package net.grosinger.nomads;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.grosinger.nomads.drones.Drone;
+import net.grosinger.nomads.drones.DroneListItem;
+import net.grosinger.nomads.drones.DroneTeam;
+
 public class Nomads {
 
 	public static World awesomeWorld;

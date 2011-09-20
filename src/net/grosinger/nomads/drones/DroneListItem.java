@@ -1,7 +1,14 @@
-package net.grosinger.nomads;
+package net.grosinger.nomads.drones;
 
 import java.util.ArrayList;
 
+import net.grosinger.nomads.DroneTools;
+import net.grosinger.nomads.GameObject;
+import net.grosinger.nomads.Inventory;
+import net.grosinger.nomads.MoneyPile;
+import net.grosinger.nomads.Nomads;
+import net.grosinger.nomads.Objective;
+import net.grosinger.nomads.Upgrade;
 import net.grosinger.nomads.Upgrade.UpgradeType;
 import net.grosinger.nomads.exceptions.FullInventoryException;
 

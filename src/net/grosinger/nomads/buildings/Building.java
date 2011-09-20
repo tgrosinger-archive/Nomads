@@ -1,4 +1,7 @@
-package net.grosinger.nomads;
+package net.grosinger.nomads.buildings;
+
+import net.grosinger.nomads.GameObject;
+import net.grosinger.nomads.drones.DroneTeam;
 
 
 /*

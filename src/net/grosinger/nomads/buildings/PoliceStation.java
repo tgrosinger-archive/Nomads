@@ -1,4 +1,6 @@
-package net.grosinger.nomads;
+package net.grosinger.nomads.buildings;
+
+import net.grosinger.nomads.drones.DroneListItem;
 
 /**
  * A representation of a PoliceStation. Allows Drones to interact with this

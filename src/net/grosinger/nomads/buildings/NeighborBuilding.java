@@ -1,4 +1,8 @@
-package net.grosinger.nomads;
+package net.grosinger.nomads.buildings;
+
+import net.grosinger.nomads.GameObject;
+import net.grosinger.nomads.Nomads;
+import net.grosinger.nomads.drones.DroneListItem;
 
 /**
  * An array of NeigborBuildings will be given to a drone that is searching for

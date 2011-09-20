@@ -1,6 +1,8 @@
-package net.grosinger.nomads;
+package net.grosinger.nomads.drones;
 
-import net.grosinger.nomads.DroneListItem.EnumMove;
+import net.grosinger.nomads.DroneTools;
+import net.grosinger.nomads.GameObject;
+import net.grosinger.nomads.drones.DroneListItem.EnumMove;
 
 /**
  * All drones will extend this class. Gives them access to basic set of tools

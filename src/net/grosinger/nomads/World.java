@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.grosinger.nomads.buildings.Building;
+import net.grosinger.nomads.buildings.House;
+import net.grosinger.nomads.drones.Drone;
+import net.grosinger.nomads.drones.DroneListItem;
+import net.grosinger.nomads.drones.DroneTeam;
+
 /**
  * Main class where information about the world is stored
  * 
@@ -173,10 +179,9 @@ public class World {
 	 *            GameObject to be placed
 	 */
 	public void setObjectRandom(GameObject newItem) {
-		// TODO - Able to go out of bounds
 		// Min + (int)(Math.random() * ((Max - Min) + 1))
-		int randX = 0 + (int) (Math.random() * ((getWorldSize() - 0) + 1));
-		int randY = 0 + (int) (Math.random() * ((getWorldSize() - 0) + 1));
+		int randX = 0 + (int) (Math.random() * ((getWorldSize() - 1 - 0) + 1));
+		int randY = 0 + (int) (Math.random() * ((getWorldSize() - 1 - 0) + 1));
 		setObjectAt(randX, randY, newItem);
 	}
 

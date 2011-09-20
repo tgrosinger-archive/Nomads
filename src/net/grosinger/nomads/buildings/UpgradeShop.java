@@ -1,5 +1,7 @@
-package net.grosinger.nomads;
+package net.grosinger.nomads.buildings;
 
+import net.grosinger.nomads.Upgrade;
+import net.grosinger.nomads.drones.DroneListItem;
 import net.grosinger.nomads.exceptions.InsufficientFundsException;
 import net.grosinger.nomads.exceptions.InvalidUpgradeException;
 

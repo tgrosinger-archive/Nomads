@@ -1,6 +1,12 @@
-package net.grosinger.nomads;
+package net.grosinger.nomads.drones;
 
 import java.util.ArrayList;
+
+import net.grosinger.nomads.GameObject;
+import net.grosinger.nomads.InitializeGame;
+import net.grosinger.nomads.Nomads;
+import net.grosinger.nomads.Point;
+import net.grosinger.nomads.buildings.House;
 
 
 /**

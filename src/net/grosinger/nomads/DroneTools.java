@@ -2,7 +2,18 @@ package net.grosinger.nomads;
 
 import java.util.ArrayList;
 
-import net.grosinger.nomads.Building.Structure;
+import net.grosinger.nomads.buildings.Building;
+import net.grosinger.nomads.buildings.House;
+import net.grosinger.nomads.buildings.NeighborBuilding;
+import net.grosinger.nomads.buildings.PoliceStation;
+import net.grosinger.nomads.buildings.RepairShop;
+import net.grosinger.nomads.buildings.TownHall;
+import net.grosinger.nomads.buildings.UpgradeShop;
+import net.grosinger.nomads.buildings.Building.Structure;
+import net.grosinger.nomads.drones.Drone;
+import net.grosinger.nomads.drones.DroneListItem;
+import net.grosinger.nomads.drones.DroneTeam;
+import net.grosinger.nomads.drones.NeighborDrone;
 
 /**
  * Tools for the Drone to use. Only place methods in here that you want the
@@ -147,40 +158,33 @@ public class DroneTools {
 		int maxDistance = listItem.getVisibleDistance();
 		for (int i = maxDistance * -1; i <= maxDistance; i++) {
 			for (int j = maxDistance * -1; j <= maxDistance; j++) {
-				if (getX() + i >= worldSize - 1 || getX() + i < 0
-						|| getY() + j >= worldSize - 1 || getY() + j < 0) {
+				if (getX() + i >= worldSize - 1 || getX() + i < 0 || getY() + j >= worldSize - 1
+						|| getY() + j < 0) {
 
 				} else if (i != 0 && j != 0) {
-					GameObject objectHere = worldReference.getObjectAt(getX()
-							+ i, getY() + j);
+					GameObject objectHere = worldReference.getObjectAt(getX() + i, getY() + j);
 					if (objectHere instanceof Building) {
 						Building buildingHere = (Building) objectHere;
 						NeighborBuilding aWildNeighbor;
 
 						if (buildingHere.getType() == Structure.TOWNHALL) {
-							aWildNeighbor = new TownHall(buildingHere.getX(),
-									buildingHere.getY(),
-									buildingHere.getName(), buildingHere,
-									listItem);
+							aWildNeighbor = new TownHall(buildingHere.getX(), buildingHere.getY(),
+									buildingHere.getName(), buildingHere, listItem);
 						} else if (buildingHere.getType() == Structure.REPAIRSHOP) {
 							aWildNeighbor = new RepairShop(buildingHere.getX(),
-									buildingHere.getY(),
-									buildingHere.getName(), buildingHere,
+									buildingHere.getY(), buildingHere.getName(), buildingHere,
 									listItem);
 						} else if (buildingHere.getType() == Structure.UPGRADESHOP) {
-							aWildNeighbor = new UpgradeShop(
-									buildingHere.getX(), buildingHere.getY(),
-									buildingHere.getName(), buildingHere,
+							aWildNeighbor = new UpgradeShop(buildingHere.getX(),
+									buildingHere.getY(), buildingHere.getName(), buildingHere,
 									listItem);
 						} else if (buildingHere.getType() == Structure.POLICESTATION) {
-							aWildNeighbor = new PoliceStation(
-									buildingHere.getX(), buildingHere.getY(),
-									buildingHere.getName(), buildingHere,
+							aWildNeighbor = new PoliceStation(buildingHere.getX(),
+									buildingHere.getY(), buildingHere.getName(), buildingHere,
 									listItem);
 						} else {
-							aWildNeighbor = new NeighborBuilding(
-									buildingHere.getX(), buildingHere.getY(),
-									buildingHere.getName(), buildingHere,
+							aWildNeighbor = new NeighborBuilding(buildingHere.getX(),
+									buildingHere.getY(), buildingHere.getName(), buildingHere,
 									listItem);
 						}
 
@@ -203,25 +207,46 @@ public class DroneTools {
 		int maxDistance = listItem.getVisibleDistance();
 		for (int i = maxDistance * -1; i <= maxDistance; i++) {
 			for (int j = maxDistance * -1; j <= maxDistance; j++) {
-				if (getX() + i >= worldSize - 1 || getX() + i < 0
-						|| getY() + j >= worldSize - 1 || getY() + j < 0) {
+				if (getX() + i >= worldSize - 1 || getX() + i < 0 || getY() + j >= worldSize - 1
+						|| getY() + j < 0) {
 
 				} else if (i != 0 && j != 0) {
-					GameObject objectHere = worldReference.getObjectAt(getX()
-							+ i, getY() + j);
+					GameObject objectHere = worldReference.getObjectAt(getX() + i, getY() + j);
 					if (objectHere instanceof Drone) {
 						Drone droneHere = (Drone) objectHere;
-						DroneListItem listItemHere = Nomads
-								.droneToListItem(droneHere);
-						NeighborDrone aWildNeighbor = new NeighborDrone(
-								listItemHere.getX(), listItemHere.getY(),
-								droneHere.getName(), droneHere.getUID());
+						DroneListItem listItemHere = Nomads.droneToListItem(droneHere);
+						NeighborDrone aWildNeighbor = new NeighborDrone(listItemHere.getX(),
+								listItemHere.getY(), droneHere.getName(), droneHere.getUID());
 						neighbors.add(aWildNeighbor);
 					}
 				}
 			}
 		}
 		return neighbors;
+	}
+
+	/**
+	 * Retrieve a list of all MoneyPiles that are visible from this drone.
+	 * Does not return the money pile itself, rather just a point where one
+	 * lies.
+	 * 
+	 * @return ArrayList of Points
+	 */
+	public ArrayList<Point> checkLumaLocator() {
+		// TODO - Implement LumaLocator
+		return null;
+	}
+
+	/**
+	 * Retrieve a list of all objectives that are visible from this drone.
+	 * Will tell if the objective belongs to this drone or not.
+	 * 
+	 * @return ArrayList of ObjectiveReferences
+	 */
+	public ArrayList<Objective> checkObjectiveLocator() {
+		// TODO - Implement ObjectiveLocator
+		// Should not actually return an Objective
+		return null;
 	}
 
 	/**
@@ -237,8 +262,8 @@ public class DroneTools {
 			Point intendedPoint = new Point(getX(), getY());
 			findEmptyPoint(intendedPoint);
 
-			House newHouse = new House(Structure.HOUSE, intendedPoint.getX(),
-					intendedPoint.getY(), currentTeam);
+			House newHouse = new House(Structure.HOUSE, intendedPoint.getX(), intendedPoint.getY(),
+					currentTeam);
 			worldReference.placeNewBuilding(newHouse);
 			currentTeam.deductFromBalance(Nomads.HOUSEPRICE);
 			listItem.setWaiting(Nomads.CREATIONTIME);
@@ -268,8 +293,7 @@ public class DroneTools {
 	 */
 	private Point findEmptyPoint(Point currentPoint) {
 		// Current point is where the drone is
-		boolean validSpace = worldReference.getObjectAt(currentPoint.getX(),
-				currentPoint.getY()) == null;
+		boolean validSpace = worldReference.getObjectAt(currentPoint.getX(), currentPoint.getY()) == null;
 		Point tryThis = new Point(currentPoint.getX(), currentPoint.getY());
 		int outX = 1;
 		int outY = 0;

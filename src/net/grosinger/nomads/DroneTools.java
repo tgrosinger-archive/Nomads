@@ -233,8 +233,24 @@ public class DroneTools {
 	 * @return ArrayList of Points
 	 */
 	public ArrayList<Point> checkLumaLocator() {
-		// TODO - Implement LumaLocator
-		return null;
+		ArrayList<Point> neighbors = new ArrayList<Point>();
+		int maxDistance = listItem.getLumaLocatorDistance();
+		for (int i = maxDistance * -1; i <= maxDistance; i++) {
+			for (int j = maxDistance * -1; j <= maxDistance; j++) {
+				if (getX() + i >= worldSize - 1 || getX() + i < 0 || getY() + j >= worldSize - 1
+						|| getY() + j < 0) {
+
+				} else if (i != 0 && j != 0) {
+					GameObject objectHere = worldReference.getObjectAt(getX() + i, getY() + j);
+					if (objectHere instanceof MoneyPile) {
+						MoneyPile pile = (MoneyPile) objectHere;
+						Point location = new Point(getX() + i, getY() + j);
+						neighbors.add(location);
+					}
+				}
+			}
+		}
+		return neighbors;
 	}
 
 	/**

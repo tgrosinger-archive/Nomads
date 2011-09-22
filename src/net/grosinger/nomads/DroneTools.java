@@ -243,7 +243,6 @@ public class DroneTools {
 				} else if (i != 0 && j != 0) {
 					GameObject objectHere = worldReference.getObjectAt(getX() + i, getY() + j);
 					if (objectHere instanceof MoneyPile) {
-						MoneyPile pile = (MoneyPile) objectHere;
 						Point location = new Point(getX() + i, getY() + j);
 						neighbors.add(location);
 					}
@@ -259,10 +258,28 @@ public class DroneTools {
 	 * 
 	 * @return ArrayList of ObjectiveReferences
 	 */
-	public ArrayList<Objective> checkObjectiveLocator() {
-		// TODO - Implement ObjectiveLocator
-		// Should not actually return an Objective
-		return null;
+	public ArrayList<NeighborObjective> checkObjectiveLocator() {
+		ArrayList<NeighborObjective> neighbors = new ArrayList<NeighborObjective>();
+		int maxDistance = listItem.getObjectLocatorDistance();
+		for (int i = maxDistance * -1; i <= maxDistance; i++) {
+			for (int j = maxDistance * -1; j <= maxDistance; j++) {
+				if (getX() + i >= worldSize - 1 || getX() + i < 0 || getY() + j >= worldSize - 1
+						|| getY() + j < 0) {
+
+				} else if (i != 0 && j != 0) {
+					GameObject objectHere = worldReference.getObjectAt(getX() + i, getY() + j);
+					if (objectHere instanceof Objective) {
+						Objective objectiveHere = (Objective) objectHere;
+						if (objectiveHere.getUID().equals(referredDrone.getUID())) {
+							NeighborObjective reference = new NeighborObjective(getX() + i, getY()
+									+ j, objectiveHere);
+							neighbors.add(reference);
+						}
+					}
+				}
+			}
+		}
+		return neighbors;
 	}
 
 	/**

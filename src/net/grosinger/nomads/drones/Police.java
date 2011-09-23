@@ -33,6 +33,7 @@ public class Police implements Drone {
 	private static Point backupRequestedHere;
 
 	private Point iAmGoingToGiveBackup;
+	private String UIDofDroneIAmFollowing;
 
 	// Leave these methods alone, they are required //
 
@@ -69,7 +70,9 @@ public class Police implements Drone {
 			System.out.println("Policeman about to move");
 		}
 
-		if (iAmGoingToGiveBackup != null) {
+		if(UIDofDroneIAmFollowing != null){
+			//TODO
+		}else if (iAmGoingToGiveBackup != null) {
 			// If I am not at this point already, go there
 
 			// If I am at that point, unset the variable and start looking for
@@ -127,8 +130,26 @@ public class Police implements Drone {
 	 * @return <code>EnumMove</code>
 	 */
 	private EnumMove pickRandomDirection() {
-		// TODO - Implement pickRandomDirection
-		return EnumMove.South;
+		// Min + (int)(Math.random() * ((Max - Min) + 1))
+		int rand = 1 + (int) (Math.random() * ((4 - 1) + 1));
+		
+		switch (rand) {
+		case (1): {
+			return EnumMove.North;
+		}
+		case (2): {
+			return EnumMove.South;
+		}
+		case (3): {
+			return EnumMove.East;
+		}
+		case (4): {
+			return EnumMove.West;
+		}
+		default: {
+			return EnumMove.NoMove;
+		}
+		}
 	}
 
 	/**

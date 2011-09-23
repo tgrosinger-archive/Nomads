@@ -57,6 +57,9 @@ public class Police implements Drone {
 
 	@Override
 	public EnumMove move() {
+		if (DEBUGGINGALL) {
+			System.out.println("Policeman about to move");
+		}
 		// A police drone will move semi-randomly, looking for neighbors.
 		// Upon finding neighbors it will scan them to see if any of them are
 		// wanted. If one is wanted it will start to pursue them and attempt to
@@ -78,5 +81,9 @@ public class Police implements Drone {
 		// 2x the damage that was done to itself.
 		// TODO - Implement Police Attack
 		return null;
+	}
+
+	public void requestBackup() {
+
 	}
 }

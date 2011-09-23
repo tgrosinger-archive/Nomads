@@ -3,9 +3,9 @@ package net.grosinger.nomads;
 public class NeighborObjective implements GameObject {
 
 	private String name;
-	int x;
-	int y;
-	Objective reference;
+	private int x;
+	private int y;
+	private Objective reference;
 
 	public NeighborObjective(int x, int y, Objective obj) {
 		reference = obj;

@@ -1,5 +1,6 @@
 package net.grosinger.nomads.exceptions;
 
+@SuppressWarnings("serial")
 public class ObjectReferenceOutdatedException extends Exception {
 
 	public ObjectReferenceOutdatedException() {

@@ -12,6 +12,6 @@ public class PoliceStation extends NeighborBuilding {
 		super(x, y, name, building, drone);
 	}
 
-	// TODO - Implement Police Station
+	// There are no special actions performed from a Police Station
 
 }

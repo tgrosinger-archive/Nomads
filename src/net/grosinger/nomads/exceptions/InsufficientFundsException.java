@@ -1,5 +1,6 @@
 package net.grosinger.nomads.exceptions;
 
+@SuppressWarnings("serial")
 public class InsufficientFundsException extends Exception {
 
 	public InsufficientFundsException() {

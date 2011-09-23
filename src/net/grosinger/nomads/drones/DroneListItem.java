@@ -8,7 +8,6 @@ import net.grosinger.nomads.Inventory;
 import net.grosinger.nomads.MoneyPile;
 import net.grosinger.nomads.Nomads;
 import net.grosinger.nomads.Objective;
-import net.grosinger.nomads.Upgrade;
 import net.grosinger.nomads.Upgrade.UpgradeType;
 import net.grosinger.nomads.exceptions.FullInventoryException;
 
@@ -502,6 +501,7 @@ public class DroneListItem {
 	 * Finds who the drone wants to attack and attempts to perform attack.
 	 */
 	private void doAttack() {
+		// TODO - Add damage, instead of just killing instantly
 		NeighborDrone victimNeighbor = current.attack();
 
 		if (victimNeighbor == null) {

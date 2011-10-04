@@ -70,13 +70,26 @@ public class Police implements Drone {
 			System.out.println("Policeman about to move");
 		}
 
-		if(UIDofDroneIAmFollowing != null){
-			//TODO
-		}else if (iAmGoingToGiveBackup != null) {
-			// If I am not at this point already, go there
+		if (UIDofDroneIAmFollowing != null) {
+			// Look to see if I can see that drone still, if I can then go
+			// towards it.
 
-			// If I am at that point, unset the variable and start looking for
-			// people
+			for (NeighborDrone aDrone : tools.checkRadar()) {
+				if (aDrone.getUID().equals(UIDofDroneIAmFollowing)) {
+					// If I am within 1 space of it, attack
+					// TODO
+					// Else move towards it
+				}
+			}
+		} else if (iAmGoingToGiveBackup != null) {
+			// If I am not at this point already, go there
+			if (!atPoint(iAmGoingToGiveBackup)) {
+				return goToPoint(iAmGoingToGiveBackup);
+			} else {
+				// If I am at that point, unset the variable and start looking
+				// for people
+				iAmGoingToGiveBackup = null;
+			}
 		} else if (backupRequestedHere != null) {
 			// Another policeman needs backup, go there
 			EnumMove returnThis = goToPoint(backupRequestedHere);
@@ -132,7 +145,7 @@ public class Police implements Drone {
 	private EnumMove pickRandomDirection() {
 		// Min + (int)(Math.random() * ((Max - Min) + 1))
 		int rand = 1 + (int) (Math.random() * ((4 - 1) + 1));
-		
+
 		switch (rand) {
 		case (1): {
 			return EnumMove.North;
@@ -191,5 +204,17 @@ public class Police implements Drone {
 		} else {
 			return EnumMove.NoMove;
 		}
+	}
+
+	/**
+	 * Decides if this police drone is at the point that is passed.
+	 * 
+	 * @param here
+	 *            A point to test for
+	 * @return <code>Boolean</code>
+	 */
+	private Boolean atPoint(Point here) {
+		// TODO - Implement atPoint
+		return null;
 	}
 }

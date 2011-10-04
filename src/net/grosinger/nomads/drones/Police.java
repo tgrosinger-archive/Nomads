@@ -77,8 +77,12 @@ public class Police implements Drone {
 			for (NeighborDrone aDrone : tools.checkRadar()) {
 				if (aDrone.getUID().equals(UIDofDroneIAmFollowing)) {
 					// If I am within 1 space of it, attack
-					// TODO
-					// Else move towards it
+					Point droneBeingFollowed = new Point(aDrone.getX(), aDrone.getY());
+					if (tools.distanceFromPoint(droneBeingFollowed) <= 1) {
+						return EnumMove.Attack;
+					} else {
+						goToPoint(droneBeingFollowed);
+					}
 				}
 			}
 		} else if (iAmGoingToGiveBackup != null) {

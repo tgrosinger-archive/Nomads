@@ -387,4 +387,17 @@ public class DroneTools {
 	public int getTeamBalance() {
 		return currentTeam.getBalance();
 	}
+
+	/**
+	 * Calculates and returns the distance of the drone from a provided point.
+	 * Number is rounded up to nearest whole number >= actual distance.
+	 * 
+	 * @param p
+	 *            Point to find distance to
+	 * @return <code>int</code>
+	 */
+	public int distanceFromPoint(Point p) {
+		return 1;
+		// TODO - Implement distanceFromePoint
+	}
 }
